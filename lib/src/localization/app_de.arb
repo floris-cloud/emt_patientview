@@ -44,5 +44,6 @@
 
   "search":"Suche",
 
-  "noData":"keine Daten"
+  "noData":"keine Daten",
+  "waitingArea":"Wartbereich"
 }

@@ -47,6 +47,7 @@
 
   "search": "search",
 
-  "noData":"no data"     
+  "noData":"no data",
+  "waitingArea":"waiting area"
 
 }

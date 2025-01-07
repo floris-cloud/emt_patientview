@@ -12,4 +12,6 @@ class AppColor {
   static Color genderMale= Colors.blue;
   static Color genderFemale = Colors.pink;
   static Color genderOther = Colors.green;
+
+  static Color buttonBackgroundColor =Colors.blueGrey;
 }

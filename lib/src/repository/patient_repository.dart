@@ -10,6 +10,7 @@ class PatientStorage {
   static Future<void> savePatient(Patient patient) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<Patient> patients = await loadPatients();
+    print(100);
     patients.add(patient);
     String patientsJson = jsonEncode(patients);
     await prefs.setString(_key, patientsJson);
@@ -19,6 +20,9 @@ class PatientStorage {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = [];
     String? patientsJson = prefs.getString(_key);
+    if (patientsJson == null) {
+      return [];
+    }
     List<dynamic> patientListMap = jsonDecode(patientsJson!);
     for (dynamic patientMap in patientListMap) {
       patients.add(Patient.fromMap(patientMap));
