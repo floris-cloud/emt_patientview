@@ -1,0 +1,52 @@
+{
+  "@@locale": "en",
+  "appTitle": "emt_patientview",
+  "newPatient": "New Patient",
+  "allPatients": "All Patients",
+  "settings": "Settings",
+  "switchLanguage": "English",
+  "switchTheme": "Nightmode",
+
+  "allPatientsTitle": "All Patients",
+
+  "anamnese":"anamnese",
+  "enterProtocol": "Enter Protocol for {patientPrename}",
+  "notes": "Notes",
+  "bloodPressure":"Bloodpressure in mmHg: ",
+  "systolic": "Systolic",
+  "diastolic": "Diastolic",
+  "respiratoryRate": "Respiratory Rate",
+  "pulse": "Pulse",
+  "oxygenSaturation": "Oxygene Saturation",
+  "temperature": "Temperature in °C",
+  "bloodSugar": "Blood Sugar in mg/dl",
+  "submit": "Submit",
+
+  "patientInputTitle": "Patient Input",
+  "birthdate": "birthdate",
+  "prename": "prename",
+  "surname": "surname",
+  "addPatient": "Add Patient",
+
+  "changePatient":"Change patient Data",
+
+
+  "errorNotNumeric": "Enter a Number",
+  "errorNoText":"Please enter a Text",
+  "errorDisGreaterSys": "Diastol can not be greater then Systol",
+
+  "noPatients": "No Patients",
+
+
+
+  "emergency": "emergency",    
+  "veryUrgent": "very urgent",
+  "urgent": "urgent",  
+  "normal": "normal",
+  "noUrgent":"no urgent",
+
+  "search": "search",
+
+  "noData":"no data"     
+
+}

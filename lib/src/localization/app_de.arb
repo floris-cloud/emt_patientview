@@ -1,0 +1,48 @@
+{
+  "@@locale": "de",
+  "newPatient": "Neuer Patient",
+  "allPatients": "Alle Patienten",
+  "settings": "Einstellungen",
+  "switchLanguage": "Deutsch",
+  "switchTheme": "Nachtmodus",
+
+  "allPatientsTitle": "Alle Patienten",
+
+  "anamnese":"Anamnese",
+  "enterProtocol": "Geben Sie das Protokoll für {patientPrename} ein",
+  "bloodPressure":"Blutdruck in mmHg: ",
+  "notes": "Notizen",
+  "systolic": "Systolisch",
+  "diastolic": "Diastolisch",
+  "respiratoryRate": "Atemfrequenz",
+  "pulse": "Puls",
+  "oxygenSaturation": "Sauerstoffsättigung",
+  "temperature": "Temperatur in °C",
+  "bloodSugar": "Blutzucker in mg/dl",
+  "submit": "Absenden",
+
+  "patientInputTitle": "Patienteneingabe",
+  "birthdate": "Geburtsdatum",
+  "prename": "Vorname",
+  "surname": "Nachname",
+  "addPatient": "Patient hinzufügen",
+
+  "changePatient":"Patientendaten ändern",
+
+  "errorNotNumeric": "Bitte gebe eine Zahl ein",
+  "errorNoText":"Bitte gebe einen Text ein",
+  "errorDisGreaterSys": "Die Systole muss größer als die Diastole sein",
+
+  "noPatients": "Keine Patienten vorhanden",
+
+
+  "emergency": "Notfall",    
+  "veryUrgent": "sehr drigend",
+  "urgent": "drigend",  
+  "normal": "normal",
+  "noUrgent":"keine Dringlichkeit",
+
+  "search":"Suche",
+
+  "noData":"keine Daten"
+}
