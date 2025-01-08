@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/patient_input_user_journey.dart';
+import 'package:provider/provider.dart';
+import '../widgets/patient_input/patient_input_controller.dart';
+import '../widgets/patient_input/patient_input_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PatientInputScreen extends StatelessWidget {
@@ -9,9 +11,12 @@ class PatientInputScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: PatientInputUserJourney(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ChangeNotifierProvider(
+          create: (context) => PatientInputController(),
+          child: PatientInputView(),
+        ),
       ),
     );
   }
