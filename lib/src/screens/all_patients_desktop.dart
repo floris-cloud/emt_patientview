@@ -1,14 +1,16 @@
+import 'package:emt_patientview/src/widgets/treatment_station_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../models/patient.dart';
 import '../models/person.dart';
+import '../models/treatment_station.dart';
 import '../models/triage_category.dart';
 import '../repository/patient_repository.dart';
 //import '../widgets/patient_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/addPatientButton.dart';
-import '../widgets/patientCard_widget.dart';
+import '../widgets/patient_card_widget.dart';
 import '../widgets/patient_widget_small.dart';
 import '../widgets/appBar.dart';
 
@@ -66,7 +68,15 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           Flexible(flex:3, child:Container(color: Colors.red,)), 
         ]
         )), 
-        Flexible(flex: 2, child: Container( color: Colors.blue)),
+        Column(
+          children: [
+          Flexible(flex: 2, child: Container( color: Colors.blue)),
+          Wrap(
+            children: [
+              TreatmentStationWidget(treatmentStation: TreatmentStation(id: 1, name: "Station 1", color: Colors.red)),
+          ],
+        ),]
+        ),
             Flexible(flex: 1, child: Container( color: Colors.red)),
       ]),);
     

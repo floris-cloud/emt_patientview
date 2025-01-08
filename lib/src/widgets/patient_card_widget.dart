@@ -51,7 +51,7 @@ class PatientCard extends StatelessWidget {
                   Row(children: [
                     
                   Text(
-                    _formatDate(patient.birthDate),
+                    patient.formatedBirthDate(),
                     style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey[700],
@@ -89,7 +89,5 @@ class PatientCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
-    return "${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}";
-  }
+ 
 }

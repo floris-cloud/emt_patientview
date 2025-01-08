@@ -4,21 +4,30 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/person.dart';
 import '../../themes/app_color.dart';
+
 import 'patient_input_controller.dart';
 
 class PatientInputView extends StatelessWidget {
   const PatientInputView({super.key});
+  final double max = 800;
+  final double min = 200;
+
  @override
   Widget build(BuildContext context) {
     final controller = Provider.of<PatientInputController>(context);
-    return Column(
+    return
+    Column(
       children: <Widget>[
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
+     Wrap(
+      spacing: 10,
+      runSpacing: 5,
+      children: <Widget>[
+     Container(
+              constraints: BoxConstraints(
+                minWidth: min,
+                maxWidth: max
+              ),
+              child: TextField(
                   controller: controller.birthDateController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -28,10 +37,13 @@ class PatientInputView extends StatelessWidget {
                   onTap: () => controller.selectDate(context),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+          
+     Container(
+              constraints: BoxConstraints(
+                minWidth: min,
+                maxWidth: max
+              ),
+  
                 child: TextField(
                   controller: controller.preNameController,
                   decoration: InputDecoration(
@@ -40,18 +52,28 @@ class PatientInputView extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child:DropdownButtonFormField(
+                             Container(
+              constraints: BoxConstraints(
+                minWidth: min,
+                maxWidth: max
+              ),
+              child: 
+                  TextField(
+                  controller: controller.surNameController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)!.surname,
+                  ),
+                ),),
+
+            Container(
+              constraints: BoxConstraints(
+                minWidth: min,
+                maxWidth: max
+              ),
+              child:            
+                        DropdownButtonFormField(
+                    
                         value: controller.triageCategory,
                         items: [
                           DropdownMenuItem(
@@ -104,7 +126,7 @@ class PatientInputView extends StatelessWidget {
                           controller.setTriageCategory(value!);
                         },
                       ),
-                    ),
+            ),
                     IconButton(
                       icon: Icon(Icons.male,
                       color: controller.gender == Gender.male
@@ -126,24 +148,12 @@ class PatientInputView extends StatelessWidget {
                           : AppColor.notSelected,),
                       onPressed: () => controller.setGender(Gender.other),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: controller.surNameController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: AppLocalizations.of(context)!.surname,
-                  ),
-                ),
-              ),
-            ),
+    
           ],
-        ),
+              ),
+  
+     
+ 
         const Spacer(flex: 4),
     
         ElevatedButton(
@@ -161,6 +171,7 @@ class PatientInputView extends StatelessWidget {
           onPressed: () async {
            controller.savePatient();
             const Spacer(flex: 1);
+            Navigator.of(context).pop();
           },
         ),
       ],

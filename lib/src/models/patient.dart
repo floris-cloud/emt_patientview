@@ -67,4 +67,9 @@ class Patient extends Person {
   getAge() {
     return DateTime.now().difference(birthDate).inDays ~/ 365;
   }
+
+ String formatedBirthDate() {
+    
+    return "${birthDate.day.toString().padLeft(2, '0')}.${birthDate.month.toString().padLeft(2, '0')}.${birthDate.year}";
+  }
 }
