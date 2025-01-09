@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/appBar.dart';
+import '../widgets/app_bar.dart';
 
 class AllPatMobileScreen extends StatefulWidget {
   const AllPatMobileScreen({super.key});

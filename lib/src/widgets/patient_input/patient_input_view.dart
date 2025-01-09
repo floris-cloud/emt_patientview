@@ -9,7 +9,7 @@ import 'patient_input_controller.dart';
 
 class PatientInputView extends StatelessWidget {
   const PatientInputView({super.key});
-  final double max = 800;
+  final double max = 600;
   final double min = 200;
 
  @override

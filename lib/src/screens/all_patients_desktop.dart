@@ -1,4 +1,6 @@
-import 'package:emt_patientview/src/widgets/treatment_station_widget.dart';
+import 'package:emt_patientview/src/widgets/patient_card_draggable.dart';
+import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_drop.dart';
+import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_view.dart';
 import 'package:flutter/material.dart';
 
 import '../models/patient.dart';
@@ -9,10 +11,9 @@ import '../repository/patient_repository.dart';
 //import '../widgets/patient_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/addPatientButton.dart';
+import '../widgets/add_patient_button.dart';
 import '../widgets/patient_card_widget.dart';
-import '../widgets/patient_widget_small.dart';
-import '../widgets/appBar.dart';
+import '../widgets/app_bar.dart';
 
 class AllPatDeskScreen extends StatefulWidget {
   const AllPatDeskScreen({super.key});
@@ -49,11 +50,12 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
         children: [
 
         Flexible(flex: 1, 
-        child: Column(children: [
+        child: 
+        Column(children: [
           Flexible(flex:1, child:Container(color: Colors.red,)), 
           Text(AppLocalizations.of(context)!.waitingArea, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
           
-          PatientCard
+          PatientCardDraggable
             (patient: Patient(surName: "Müller", preName: "preName", gender: Gender.male, triageCategory: TriageCategory(2)),),
          Expanded(
                   child: ListView.builder(
@@ -68,15 +70,20 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           Flexible(flex:3, child:Container(color: Colors.red,)), 
         ]
         )), 
-        Column(
+        
+        Expanded(flex: 2, child: Container( color: Colors.blue,
+         child:  
+         Column(
           children: [
-          Flexible(flex: 2, child: Container( color: Colors.blue)),
           Wrap(
             children: [
-              TreatmentStationWidget(treatmentStation: TreatmentStation(id: 1, name: "Station 1", color: Colors.red)),
+              TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 1, name: "Station 1", color: Colors.red)),
           ],
-        ),]
         ),
+        ]
+        ),
+        ),),
+      
             Flexible(flex: 1, child: Container( color: Colors.red)),
       ]),);
     

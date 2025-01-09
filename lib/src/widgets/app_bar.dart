@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../settings/settings_view.dart';
-import '../widgets/addPatientButton.dart';
+import 'add_patient_button.dart';
 import '../settings/settings_controller.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

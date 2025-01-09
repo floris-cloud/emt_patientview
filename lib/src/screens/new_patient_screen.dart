@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/appBar.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/patient_input/patient_input_controller.dart';
 import '../widgets/patient_input/patient_input_view.dart';
 

@@ -22,7 +22,7 @@ class PatientStorage {
     if (patientsJson == null) {
       return [];
     }
-    List<dynamic> patientListMap = jsonDecode(patientsJson!);
+    List<dynamic> patientListMap = jsonDecode(patientsJson);
     for (dynamic patientMap in patientListMap) {
       patients.add(Patient.fromMap(patientMap));
     }

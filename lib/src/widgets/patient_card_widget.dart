@@ -13,9 +13,7 @@ class PatientCard extends StatelessWidget {
     return 
     Container(
       height: 86.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2000.0),
-      ),
+      constraints: BoxConstraints(maxWidth: 500),
       child:
     Stack(
       children: [
@@ -87,6 +85,7 @@ class PatientCard extends StatelessWidget {
       ],
     ),
     );
+      
   }
 
  

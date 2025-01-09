@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import '../models/treatment_station.dart';
-import '../models/patient.dart';
+import '../../models/treatment_station.dart';
+import '../../models/patient.dart';
 
-class TreatmentStationWidget extends StatelessWidget {
+class TreatmentStationView extends StatefulWidget {
   final TreatmentStation treatmentStation;
 
-  TreatmentStationWidget({super.key, required this.treatmentStation});
+  const TreatmentStationView({super.key, required this.treatmentStation});
+  
+  @override
+  State<StatefulWidget> createState() {
+    return _TreatmentStationViewState();
+  }
+}
+class _TreatmentStationViewState extends State<TreatmentStationView> {
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +21,10 @@ class TreatmentStationWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            color: treatmentStation.color,
+            color: widget.treatmentStation.color,
             padding: EdgeInsets.all(8.0),
             child: Text(
-              '${treatmentStation.id} ${treatmentStation.name}',
+              '${widget.treatmentStation.id} ${widget.treatmentStation.name}',
               textAlign: TextAlign.left,
             ),
           ),
@@ -25,7 +32,7 @@ class TreatmentStationWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                color: Colors.grey[200],
+                color: widget.treatmentStation.patient?.triageCategory.getColor()?? Colors.grey[200],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -44,7 +51,7 @@ class TreatmentStationWidget extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
-                        // Handle delete button press
+                        widget.treatmentStation.patient = null;
                       },
                     ),
                     IconButton(
@@ -62,7 +69,7 @@ class TreatmentStationWidget extends StatelessWidget {
             child:Column(
             children: [
               Text(
-                    (treatmentStation.patient?.surName ?? "") + ", " + (treatmentStation.patient?.preName ?? ""),
+                    (widget.treatmentStation.patient?.surName ?? "") + ", " + (widget.treatmentStation.patient?.preName ?? ""),
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -72,15 +79,15 @@ class TreatmentStationWidget extends StatelessWidget {
                   Row(children: [
                     
                   Text(
-                    treatmentStation.patient?.formatedBirthDate() ?? "",
+                    widget.treatmentStation.patient?.formatedBirthDate() ?? "",
                     style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey[700],
                     ),
-                  ),Icon(treatmentStation.patient?.gender.icon, color: Colors.black,),
+                  ),Icon(widget.treatmentStation.patient?.gender.icon),
                 
                   Text(
-                    treatmentStation.patient?.diagnose ?? " ",
+                    widget.treatmentStation.patient?.diagnose ?? " ",
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
