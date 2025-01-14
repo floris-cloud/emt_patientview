@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../models/patient.dart';
 import '../../models/person.dart';
 import '../../models/triage_category.dart';
 import '../../repository/patient_repository.dart';
+import '../patient_list/patient_list_controller.dart';
 
 class PatientInputController with ChangeNotifier {
   final preNameController = TextEditingController();
@@ -15,17 +17,20 @@ class PatientInputController with ChangeNotifier {
   
 
 
-
-
-  Future<void> savePatient() async {
-    Patient patient = Patient(
+  Patient createPatient() {
+      Patient patient = Patient(
       surName: surNameController.text,
       preName: preNameController.text,
       birthDate: DateTime.tryParse(birthDateController.text) ?? DateTime.now(),
       gender: gender,
       triageCategory: TriageCategory(triageCategory),
     );
-    await PatientStorage.savePatient(patient);
+    return patient;
+  }
+
+  Future<void> savePatient() async {
+     Patient patient = createPatient();
+     await PatientStorage.savePatient(patient);
 
   }
 

@@ -1,7 +1,9 @@
+import 'package:emt_patientview/src/widgets/patient_list/patient_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../models/patient_list.dart';
 import '../../models/person.dart';
 import '../../themes/app_color.dart';
 
@@ -169,6 +171,9 @@ class PatientInputView extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: Text(AppLocalizations.of(context)!.addPatient),
           onPressed: () async {
+            print("add Pressed");
+            Provider.of<PatientListModel>(context, listen: false)
+                .add(controller.createPatient());
            controller.savePatient();
             const Spacer(flex: 1);
             Navigator.of(context).pop();

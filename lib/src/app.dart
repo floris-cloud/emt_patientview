@@ -7,18 +7,9 @@ import 'screens/all_patients_desktop.dart';
 import 'settings/settings_controller.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-    required this.settingsController,
-  });
-
-  final SettingsController settingsController;
-
    @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SettingsController>(
-      create: (context) => settingsController,
-      child: Consumer<SettingsController>(
+return Consumer<SettingsController>(
         builder: (context, settingsController, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -40,7 +31,6 @@ class MyApp extends StatelessWidget {
             home: AllPatDeskScreen(),
           );
         },
-      ),
     );
   }
 }

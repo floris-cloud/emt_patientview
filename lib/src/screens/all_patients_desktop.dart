@@ -1,19 +1,22 @@
 import 'package:emt_patientview/src/widgets/patient_card_draggable.dart';
+import 'package:emt_patientview/src/widgets/patient_list/patient_list_controller.dart';
 import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_drop.dart';
 import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/patient.dart';
-import '../models/person.dart';
 import '../models/treatment_station.dart';
-import '../models/triage_category.dart';
+
 import '../repository/patient_repository.dart';
 //import '../widgets/patient_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/add_patient_button.dart';
-import '../widgets/patient_card_widget.dart';
+
 import '../widgets/app_bar.dart';
+
+import '../widgets/patient_list/patint_list_view.dart';
 
 class AllPatDeskScreen extends StatefulWidget {
   const AllPatDeskScreen({super.key});
@@ -26,7 +29,6 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
   TextEditingController editingController = TextEditingController();
   List<Patient> allPatients = [];
   List<Patient> filteredPatients = [];
-
   @override
   void initState() {
     super.initState();
@@ -55,17 +57,18 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           Flexible(flex:1, child:Container(color: Colors.red,)), 
           Text(AppLocalizations.of(context)!.waitingArea, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
           
-          PatientCardDraggable
-            (patient: Patient(surName: "Müller", preName: "preName", gender: Gender.male, triageCategory: TriageCategory(2)),),
-         Expanded(
-                  child: ListView.builder(
-                    itemCount: filteredPatients.length,
-                    itemBuilder: (context, index) {
-                      return PatientCard(patient: filteredPatients[index]);
-                    },
-                  ),
-                ),
+          // PatientCardDraggable
+          //   (patient: Patient(surName: "Müller", preName: "preName", gender: Gender.male, triageCategory: TriageCategory(2)),),
+          Flexible(
+            fit: FlexFit.loose,
+            child:  ChangeNotifierProvider(
+              create: (context) => PatientListController(),
+              child: PatientListView(),
+       
+            ),
+          ),
           AddPatientButton(),
+          SizedBox(height: 20),
         
           Flexible(flex:3, child:Container(color: Colors.red,)), 
         ]
@@ -77,7 +80,7 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           children: [
           Wrap(
             children: [
-              TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 1, name: "Station 1", color: Colors.red)),
+              TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 1, name: "Intensivplatz", color: Colors.red)),
           ],
         ),
         ]
