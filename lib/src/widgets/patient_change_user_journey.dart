@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../models/patient_list.dart';
 import '../models/person.dart';
 import '../models/triage_category.dart';
 import '../repository/patient_repository.dart';
@@ -22,7 +24,7 @@ class PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
   final surNameController = TextEditingController();
   final birthDateController = TextEditingController();
   late Gender gender;
-  late int _triageCategory;
+  late TriageCategory _triageCategory;
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,7 @@ class PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
     surNameController.text = widget.patient.surName;
     birthDateController.text =
         widget.patient.birthDate.toLocal().toString().split(' ')[0];
-    _triageCategory = widget.patient.triageCategory.triageCategory;
+    _triageCategory = widget.patient.triageCategory;
   }
 
   void _setGender(Gender selectedGender) {
@@ -91,44 +93,44 @@ class PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                               value: _triageCategory,
                               items: [
                                 DropdownMenuItem(
-                                    value: 0,
+                                    value: TriageCategory.emergency,
                                     child: Text(
                                       AppLocalizations.of(context)!.emergency,
                                       style: TextStyle(
                                           backgroundColor:
-                                              AppColor.triageCategoryRed,),
+                                              TriageCategory.emergency.getColor(),),
                                     ),),
                                 DropdownMenuItem(
-                                    value: 1,
+                                    value: TriageCategory.veryUrgent,
                                     child: Text(
                                       AppLocalizations.of(context)!.veryUrgent,
                                       style: TextStyle(
                                           backgroundColor:
-                                              AppColor.triageCategoryOrange,),
+                                              TriageCategory.veryUrgent.getColor(),),
                                     ),),
                                 DropdownMenuItem(
-                                    value: 2,
+                                    value: TriageCategory.urgent,
                                     child: Text(
                                       AppLocalizations.of(context)!.urgent,
                                       style: TextStyle(
                                           backgroundColor:
-                                              AppColor.triageCategoryYellow,),
+                                              TriageCategory.veryUrgent.getColor(),),
                                     ),),
                                 DropdownMenuItem(
-                                    value: 3,
+                                    value: TriageCategory.normal,
                                     child: Text(
                                       AppLocalizations.of(context)!.normal,
                                       style: TextStyle(
                                           backgroundColor:
-                                              AppColor.triageCategoryGreen,),
+                                              TriageCategory.normal.getColor(),),
                                     ),),
                                 DropdownMenuItem(
-                                    value: 4,
+                                    value: TriageCategory.noUrgent,
                                     child: Text(
                                       AppLocalizations.of(context)!.noUrgent,
                                       style: TextStyle(
                                           backgroundColor:
-                                              AppColor.triageCategoryBlue,),
+                                              TriageCategory.noUrgent.getColor(),),
                                     ),),
                               ],
                               onChanged: (value) {
@@ -191,11 +193,13 @@ class PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                   widget.patient.birthDate =
                       DateTime.parse(birthDateController.text);
                   widget.patient.gender = gender;
-                  widget.patient.triageCategory =
-                      TriageCategory(_triageCategory);
+                  widget.patient.triageCategory = _triageCategory;
 
                 PatientStorage.changePatient(widget.patient);
-              },
+                Provider.of<PatientListModel>(context, listen: false)
+                .change(widget.patient);
+                },
+                
             ),
           ],
         ),

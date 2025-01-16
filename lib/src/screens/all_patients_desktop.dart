@@ -1,21 +1,11 @@
-import 'package:emt_patientview/src/widgets/patient_card_draggable.dart';
-import 'package:emt_patientview/src/widgets/patient_list/patient_list_controller.dart';
-import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_drop.dart';
-import 'package:emt_patientview/src/widgets/treatment_station_widget/treatment_station_widget_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../models/patient.dart';
-import '../models/treatment_station.dart';
-
-import '../repository/patient_repository.dart';
-//import '../widgets/patient_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/add_patient_button.dart';
-
+import '../models/patient.dart';
+import '../widgets/treatment_station_widget/treatment_station_widget_drop.dart';
+import '../models/treatment_station.dart';
+import '../repository/patient_repository.dart';
 import '../widgets/app_bar.dart';
-
 import '../widgets/patient_list/patint_list_view.dart';
 
 class AllPatDeskScreen extends StatefulWidget {
@@ -53,41 +43,43 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
 
         Flexible(flex: 1, 
         child: 
-        Column(children: [
-          Flexible(flex:1, child:Container(color: Colors.red,)), 
-          Text(AppLocalizations.of(context)!.waitingArea, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-          
-          // PatientCardDraggable
-          //   (patient: Patient(surName: "Müller", preName: "preName", gender: Gender.male, triageCategory: TriageCategory(2)),),
-          Flexible(
-            fit: FlexFit.loose,
-            child:  ChangeNotifierProvider(
-              create: (context) => PatientListController(),
-              child: PatientListView(),
-       
-            ),
-          ),
-          AddPatientButton(),
-          SizedBox(height: 20),
-        
-          Flexible(flex:3, child:Container(color: Colors.red,)), 
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+          Flexible(flex:1, child:Container()),  
+          PatientListView(),
+          Flexible(flex:3, child:Container()), 
         ]
         )), 
-        
-        Expanded(flex: 2, child: Container( color: Colors.blue,
-         child:  
+                 const VerticalDivider(
+            width: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 0,
+          ),
+        Expanded(flex: 2, child: 
          Column(
           children: [
           Wrap(
             children: [
               TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 1, name: "Intensivplatz", color: Colors.red)),
+                TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 2, name: "Intensivplatz", color: Colors.red)),
+                  TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 3, name: "Intensivplatz", color: Colors.red)),
+                    TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 4, name: "Intensivplatz", color: Colors.green)),
           ],
         ),
         ]
         ),
-        ),),
+        ),
+                   const VerticalDivider(
+            width: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 0,
+          ),
       
-            Flexible(flex: 1, child: Container( color: Colors.red)),
+            Flexible(flex: 1, child: Container( )),
       ]),);
     
   }

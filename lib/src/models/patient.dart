@@ -6,7 +6,7 @@ import 'person.dart';
 class Patient extends Person {
    String? diagnose;
   final String id;
-    TriageCategory triageCategory;
+  TriageCategory triageCategory;
   final DateTime firstContact;
    bool timeExpired = false;
 
@@ -30,7 +30,7 @@ class Patient extends Person {
       gender: Gender.values.byName('male'),
       diagnose: map['diagnose'],
       id: map['id'],
-      triageCategory: TriageCategory(map['triageCategory']),
+      triageCategory: TriageCategory.values.byName(map['triageCategory']),
       firstContact: DateTime.tryParse(map['firstContact']) ?? DateTime.now(),
     );
 
@@ -44,14 +44,14 @@ class Patient extends Person {
     Map<String, dynamic> map = super.toJson();
     map['diagnose'] = diagnose ?? '';
     map['id'] = id;
-    map['triageCategory'] = triageCategory.triageCategory;
+    map['triageCategory'] = triageCategory.name;
     map['firstContact'] = firstContact.toIso8601String();
     return map;
   }
 
 
-  setTriageCategory(int triageInt) {
-    triageCategory = TriageCategory(triageInt);
+  setTriageCategory(TriageCategory triageCategory) {
+    triageCategory = triageCategory;
   }
 
   Timer timer(Function callback) {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
+import '../../screens/new_patient_screen.dart';
+import '../../screens/protocol_entry_screen.dart';
 
 class TreatmentStationView extends StatefulWidget {
   final TreatmentStation treatmentStation;
@@ -45,7 +48,12 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                        // Handle edit button press
+                            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProtocolEntryScreen(patient: widget.treatmentStation.patient!),
+                ),
+              );
                       },
                     ),
                     IconButton(
@@ -57,8 +65,13 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.add),
                       onPressed: () {
-                        // Handle add button press
-                      },
+                        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PatientInputScreen(treatmentStation: widget.treatmentStation),
+          ),
+        );
+                                             },
                     ),
                   ],
                 ),

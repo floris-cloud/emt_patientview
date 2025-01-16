@@ -6,8 +6,6 @@ import '../models/patient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import '../widgets/patient_list/patient_list_controller.dart';
-
 
 class PatientStorage {
   static const String _key = 'patient';

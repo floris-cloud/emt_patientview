@@ -45,5 +45,6 @@
   "search":"Suche",
 
   "noData":"keine Daten",
-  "waitingArea":"Wartbereich"
+  "waitingArea":"Wartbereich",
+  "noPatientsFound":"Keine Patienten gefunden"
 }

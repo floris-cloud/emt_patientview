@@ -48,6 +48,7 @@
   "search": "search",
 
   "noData":"no data",
-  "waitingArea":"waiting area"
+  "waitingArea":"waiting area",
+  "noPatientsFound":"No Patients found"
 
 }

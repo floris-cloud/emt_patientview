@@ -1,18 +1,20 @@
+import 'package:emt_patientview/src/models/treatment_station.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/patient.dart';
 import '../../models/person.dart';
 import '../../models/triage_category.dart';
 import '../../repository/patient_repository.dart';
-import '../patient_list/patient_list_controller.dart';
 
 class PatientInputController with ChangeNotifier {
+  final TreatmentStation? treatmentStation;
+  PatientInputController({this.treatmentStation});
   final preNameController = TextEditingController();
   final surNameController = TextEditingController();
   final ageController = TextEditingController();
   final birthDateController = TextEditingController();
   Gender gender = Gender.male;
-  int triageCategory = 1;
+  TriageCategory triageCategory = TriageCategory.veryUrgent;
 
   
 
@@ -23,8 +25,11 @@ class PatientInputController with ChangeNotifier {
       preName: preNameController.text,
       birthDate: DateTime.tryParse(birthDateController.text) ?? DateTime.now(),
       gender: gender,
-      triageCategory: TriageCategory(triageCategory),
+      triageCategory: triageCategory,
     );
+    if (treatmentStation != null) {
+      treatmentStation!.patient = patient;
+    }
     return patient;
   }
 
@@ -39,7 +44,7 @@ class PatientInputController with ChangeNotifier {
     notifyListeners();
   }
 
-  void setTriageCategory(int newCategory) {
+  void setTriageCategory(TriageCategory newCategory) {
     triageCategory = newCategory;
     notifyListeners();
   }

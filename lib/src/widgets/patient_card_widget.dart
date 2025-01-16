@@ -1,6 +1,6 @@
-import 'package:emt_patientview/src/screens/protocol_entry_screen.dart';
 import 'package:flutter/material.dart';
-
+import '../models/triage_category.dart';
+import '../screens/protocol_entry_screen.dart';
 import '../models/patient.dart';
 
 class PatientCard extends StatelessWidget {
@@ -10,6 +10,7 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(patient.triageCategory.name);
     return 
     Container(
       height: 86.0,

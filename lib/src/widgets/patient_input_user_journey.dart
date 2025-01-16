@@ -22,7 +22,7 @@ class PatientInputUserJourneyState extends State<PatientInputUserJourney> {
   final ageController = TextEditingController();
   final birthDateController = TextEditingController();
   Gender gender = Gender.male;
-  int _triageCategory = 1;
+  TriageCategory _triageCategory = TriageCategory.veryUrgent;
   void _setGender(Gender selectedGender) {
     setState(() {
       gender = selectedGender;
@@ -75,47 +75,47 @@ class PatientInputUserJourneyState extends State<PatientInputUserJourney> {
                         value: _triageCategory,
                         items: [
                           DropdownMenuItem(
-                            value: 0,
+                            value: TriageCategory.emergency,
                             child: Text(
                               AppLocalizations.of(context)!.emergency,
                               style: TextStyle(
-                                backgroundColor: AppColor.triageCategoryRed,
+                                backgroundColor: TriageCategory.emergency.getColor(),
                               ),
                             ),
                           ),
                           DropdownMenuItem(
-                            value: 1,
+                            value: TriageCategory.veryUrgent,
                             child: Text(
                               AppLocalizations.of(context)!.veryUrgent,
                               style: TextStyle(
-                                backgroundColor: AppColor.triageCategoryOrange,
+                                backgroundColor: TriageCategory.veryUrgent.getColor(),
                               ),
                             ),
                           ),
                           DropdownMenuItem(
-                            value: 2,
+                            value: TriageCategory.urgent,
                             child: Text(
                               AppLocalizations.of(context)!.urgent,
                               style: TextStyle(
-                                backgroundColor: AppColor.triageCategoryYellow,
+                                backgroundColor: TriageCategory.veryUrgent.getColor(),
                               ),
                             ),
                           ),
                           DropdownMenuItem(
-                            value: 3,
+                            value: TriageCategory.normal,
                             child: Text(
                               AppLocalizations.of(context)!.normal,
                               style: TextStyle(
-                                backgroundColor: AppColor.triageCategoryGreen,
+                                backgroundColor: TriageCategory.normal.getColor(),
                                 ),
                             ),
                           ),
                           DropdownMenuItem(
-                            value: 4,
+                            value: TriageCategory.noUrgent,
                             child: Text(
                               AppLocalizations.of(context)!.noUrgent,
                               style: TextStyle(
-                                backgroundColor: AppColor.triageCategoryBlue,
+                                backgroundColor: TriageCategory.noUrgent.getColor(),
                               ),
                             ),
                           ),
@@ -186,7 +186,7 @@ class PatientInputUserJourneyState extends State<PatientInputUserJourney> {
               birthDate:
                   DateTime.tryParse(birthDateController.text) ?? DateTime.now(),
               gender: Gender.male,
-              triageCategory: TriageCategory(_triageCategory),
+              triageCategory: _triageCategory,
             );
             PatientStorage.savePatient(patient);
             const Spacer(flex: 1);

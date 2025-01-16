@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import '../themes/app_color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TriageCategory {
-  final int triageCategory;
-
-  const TriageCategory(this.triageCategory);
-
+ enum TriageCategory {
+  emergency,
+  veryUrgent,
+  urgent,
+  normal,
+  noUrgent,
+}
+extension TriageCategoryExtension on TriageCategory {
   Duration getDuration() {
-    switch (triageCategory) {
-      case 0:
+    switch (this) {
+      case TriageCategory.emergency:
         return const Duration(seconds: 0);
-      case 1:
+      case TriageCategory.veryUrgent:
         return const Duration(seconds: 20);
-      case 2:
+      case TriageCategory.urgent:
         return const Duration(minutes: 30);
-      case 3:
+      case TriageCategory.normal:
         return const Duration(minutes: 90);
-      case 4:
+      case TriageCategory.noUrgent:
         return const Duration(hours: 2); //
       default:
         return const Duration(seconds: 0);
@@ -25,16 +28,16 @@ class TriageCategory {
   }
 
    Color getColor() {
-    switch (triageCategory) {
-      case 0:
+    switch (this) {
+      case TriageCategory.emergency:
         return AppColor.triageCategoryRed;
-      case 1:
+      case TriageCategory.veryUrgent:
         return AppColor.triageCategoryOrange;
-      case 2:
+      case TriageCategory.urgent:
         return AppColor.triageCategoryYellow;
-      case 3:
+      case TriageCategory.normal:
         return AppColor.triageCategoryGreen;
-      case 4:
+      case TriageCategory.noUrgent:
         return AppColor.triageCategoryBlue;
       default:
         return AppColor.noTriageCategory;
@@ -42,16 +45,16 @@ class TriageCategory {
   }
   String getText(BuildContext context){
     // return("TODO");  
-  switch (triageCategory) {
-      case 0:
+  switch (this) {
+      case TriageCategory.emergency:
         return AppLocalizations.of(context)!.emergency;
-      case 1:
+      case TriageCategory.veryUrgent:
         return AppLocalizations.of(context)!.veryUrgent;
-      case 2:
+      case TriageCategory.urgent:
         return AppLocalizations.of(context)!.urgent;
-      case 3:
+      case TriageCategory.normal:
         return AppLocalizations.of(context)!.normal;
-      case 4:
+      case TriageCategory.noUrgent:
         return AppLocalizations.of(context)!.noUrgent;
       default:
         return AppLocalizations.of(context)!.urgent;
