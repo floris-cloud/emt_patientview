@@ -1,3 +1,4 @@
+import 'package:emt_patientview/src/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import '../models/triage_category.dart';
 import '../screens/protocol_entry_screen.dart';
@@ -68,7 +69,7 @@ class PatientCard extends StatelessWidget {
                   ],)
                 ],
               ),
-   
+          TimerWidget(startTime: patient.firstContact),
           IconButton(
             icon: Icon(Icons.edit, color: Colors.grey[600]),
             onPressed: () {

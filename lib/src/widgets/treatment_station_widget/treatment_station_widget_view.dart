@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/patient_list.dart';
 import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
 import '../../screens/new_patient_screen.dart';
 import '../../screens/protocol_entry_screen.dart';
+import 'pop_up_patient_information.dart';
+import 'pop_up_patient_list.dart';
 
 class TreatmentStationView extends StatefulWidget {
   final TreatmentStation treatmentStation;
@@ -20,12 +24,19 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       width: 200,
       child: Column(
         children: [
           Container(
             color: widget.treatmentStation.color,
-            padding: EdgeInsets.all(8.0),
+          
             child: Text(
               '${widget.treatmentStation.id} ${widget.treatmentStation.name}',
               textAlign: TextAlign.left,
@@ -35,7 +46,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
             Expanded(
               flex: 1,
               child: Container(
-                color: widget.treatmentStation.patient?.triageCategory.getColor()?? Colors.grey[200],
+                color: widget.treatmentStation.patient?.triageCategory.getColor()?? Theme.of(context).secondaryHeaderColor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -48,30 +59,50 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProtocolEntryScreen(patient: widget.treatmentStation.patient!),
-                ),
+                            if(widget.treatmentStation.patient != null) {
+                              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return PopUpPatientInformation(
+                    patient: widget.treatmentStation.patient!,
+                    onPatientUpdated: (Patient updatedPatient) {
+                      setState(() {
+                        widget.treatmentStation.patient = updatedPatient;
+                      });
+                    },
+                  );
+                },
               );
+                            }
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: Icon(Icons.arrow_back),
+                       color: widget.treatmentStation.patient != null ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
                       onPressed: () {
                         widget.treatmentStation.patient = null;
+                        setState((){});
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: Icon(Icons.arrow_forward),
+                      color: widget.treatmentStation.patient == null ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,  
                       onPressed: () {
-                        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PatientInputScreen(treatmentStation: widget.treatmentStation),
-          ),
-        );
-                                             },
+                        if (widget.treatmentStation.patient == null) {
+                                    showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return PopUpPatientList(
+                    onPatientSelected: (Patient patient) {
+                      setState(() {
+                        widget.treatmentStation.patient = patient;
+                      });
+                    },
+                  );
+                },
+              );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -123,8 +154,6 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                   labelText: 'Allergien/Infektionen',
                 ),
               ), 
-        
-        
           ],
           ),
           ),

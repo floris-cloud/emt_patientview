@@ -8,21 +8,18 @@ import '../widgets/patient_input/patient_input_controller.dart';
 import '../widgets/patient_input/patient_input_view.dart';
 
 class PatientInputScreen extends StatelessWidget {
-    final TreatmentStation? treatmentStation;
-    
-  const PatientInputScreen({Key? key, this.treatmentStation}) : super(key: key);
+
 
   @override
   Widget build
   (BuildContext context) {
-    print(treatmentStation?.name ?? 'No treatment station');
     return Scaffold(
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.newPatient),
       
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ChangeNotifierProvider(
-          create: (context) => PatientInputController(treatmentStation: treatmentStation),
+          create: (context) => PatientInputController(),
           child: PatientInputView(),
         ),
       ),

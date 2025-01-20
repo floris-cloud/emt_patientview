@@ -7,8 +7,7 @@ import '../../models/triage_category.dart';
 import '../../repository/patient_repository.dart';
 
 class PatientInputController with ChangeNotifier {
-  final TreatmentStation? treatmentStation;
-  PatientInputController({this.treatmentStation});
+
   final preNameController = TextEditingController();
   final surNameController = TextEditingController();
   final ageController = TextEditingController();
@@ -27,9 +26,6 @@ class PatientInputController with ChangeNotifier {
       gender: gender,
       triageCategory: triageCategory,
     );
-    if (treatmentStation != null) {
-      treatmentStation!.patient = patient;
-    }
     return patient;
   }
 
