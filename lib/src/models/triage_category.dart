@@ -43,8 +43,7 @@ extension TriageCategoryExtension on TriageCategory {
         return AppColor.noTriageCategory;
     }
   }
-  String getText(BuildContext context){
-    // return("TODO");  
+  String getText(BuildContext context){  
   switch (this) {
       case TriageCategory.emergency:
         return AppLocalizations.of(context)!.emergency;

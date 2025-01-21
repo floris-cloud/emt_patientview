@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
+
 class Person {
   String preName;
   String surName;
   DateTime birthDate;
-  late Gender gender;
+  Gender gender;
 
   Person({
      DateTime? birthDate,
     required this.preName,
     required this.surName,
-     
     required this.gender,
   }): birthDate= birthDate?? DateTime.now();
 
@@ -27,13 +27,14 @@ class Person {
     'birthDate': birthDate.toIso8601String(),
     'gender': gender.toString(),
   };
-
+   
 }
 
 enum Gender {
   male(name:"male", icon:Icons.male),
   female(name:"female", icon:Icons.female),
-  other(name:"other", icon:Icons.transgender);
+  other(name:"other", icon:Icons.transgender),
+  unknown(name:"unkown",icon:Icons.question_mark);
   
   const Gender({
     required this.name,

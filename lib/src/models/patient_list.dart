@@ -14,7 +14,7 @@ class PatientListModel extends ChangeNotifier {
 
 
    List<Patient> _patients = [];
-   Set<TriageCategory> filterTriageCategory = {};
+   Set<TriageCategory> filterTriageCategory = TriageCategory.values.toSet();
   PatientListModel() {
     init();
   }
@@ -31,7 +31,6 @@ class PatientListModel extends ChangeNotifier {
   }
   void add(Patient patient) {
     _patients.add(patient);
-    PatientStorage.savePatient(patient);
     notifyListeners();
   }
 
@@ -45,12 +44,39 @@ class PatientListModel extends ChangeNotifier {
     notifyListeners();
   }
   
-  List<Patient> getFilteredPatients() {
-    if (filterTriageCategory.isEmpty) {
-      return _patients;
-    } else {
-      List<Patient> _filterdPatients =  _patients.where((element) => filterTriageCategory.contains(element.triageCategory)).toList();
-      return _filterdPatients;
+  List<Patient> getFilteredPatients(bool filterNoTreatmentStation) {
+    List<Patient> filterdPatients = [..._patients];
+    if (filterNoTreatmentStation) {
+     filterdPatients.removeWhere((element) => element.treatmentStationId != null);
     }
+   filterdPatients.removeWhere((element) => !filterTriageCategory.contains(element.triageCategory));
+   return filterdPatients;
+    
   }
+
+  sortPatientsTimeAsc() {
+    _patients.sort((a, b) => a.firstContact.compareTo(b.firstContact));
+    notifyListeners();
+  }
+    sortPatientsTimeDesc() {
+    _patients.sort((a, b) => b.firstContact.compareTo(a.firstContact));
+    notifyListeners();
+  }
+  sortPatientsTriageCategoryAsc() {
+    _patients.sort((a, b) => a.triageCategory.index.compareTo(b.triageCategory.index));
+    notifyListeners();
+  }
+  sortPatientsTriageCategoryDesc() {
+    _patients.sort((a, b) => b.triageCategory.index.compareTo(a.triageCategory.index));
+    notifyListeners();
+  }
+  sortPatientsAlphabeticalAsc() {
+    _patients.sort((a, b) => a.surName.compareTo(b.surName));
+    notifyListeners();
+  }
+  sortPatientsAlphabeticalDesc() {
+    _patients.sort((a, b) => b.surName.compareTo(a.surName));
+    notifyListeners();
+  }
+
 }

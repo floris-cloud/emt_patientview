@@ -1,12 +1,13 @@
+import 'package:emt_patientview/src/widgets/patient_input/pop_up_contact_points.dart';
+import 'package:fhir/r4/general_types/general_types.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../models/patient_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
-import '../../screens/new_patient_screen.dart';
-import '../../screens/protocol_entry_screen.dart';
-import 'pop_up_patient_information.dart';
+
+import '../patient_input/pop_up_patient_information.dart';
 import 'pop_up_patient_list.dart';
 
 class TreatmentStationView extends StatefulWidget {
@@ -60,26 +61,26 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                       icon: Icon(Icons.edit),
                       onPressed: () {
                             if(widget.treatmentStation.patient != null) {
-                              showDialog(
+             
+                                    showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return PopUpPatientInformation(
-                    patient: widget.treatmentStation.patient!,
-                    onPatientUpdated: (Patient updatedPatient) {
-                      setState(() {
-                        widget.treatmentStation.patient = updatedPatient;
-                      });
+                  return PopUpContactPoints(
+                     patient: widget.treatmentStation.patient!, onContactPointsUpdated: (List<ContactPoint> contactPoints ) { widget.treatmentStation.patient!.contactPoints=contactPoints; }, 
+                     );
                     },
                   );
+
+                      };
                 },
-              );
-                            }
-                      },
                     ),
+                
+            
                     IconButton(
                       icon: Icon(Icons.arrow_back),
                        color: widget.treatmentStation.patient != null ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
                       onPressed: () {
+                        widget.treatmentStation.patient!.patTreatmentStationId = null;
                         widget.treatmentStation.patient = null;
                         setState((){});
                       },
@@ -112,48 +113,59 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
             flex: 5,
             child:Column(
             children: [
-              Text(
-                    (widget.treatmentStation.patient?.surName ?? "") + ", " + (widget.treatmentStation.patient?.preName ?? ""),
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              widget.treatmentStation.patient != null
+                  ? Column(
+                      children: [
+                        Text(
+                          (widget.treatmentStation.patient?.surName ?? "") + ", " + (widget.treatmentStation.patient?.preName ?? ""),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              widget.treatmentStation.patient?.formatedBirthDate() ?? "",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                            Icon(widget.treatmentStation.patient?.gender.icon),
+                            Text(
+                              widget.treatmentStation.patient?.diagnose ?? " ",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: '',
+                            hintText: AppLocalizations.of(context)!.diagnose,
+                          ),
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Allergien/Infektionen',
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(
+                      child: Text(
+                        AppLocalizations.of(context)!.dragPatientHere,
+                        style: TextStyle(color: Colors.grey),
+                      ),
                   ),
-
-                  Row(children: [
-                    
-                  Text(
-                    widget.treatmentStation.patient?.formatedBirthDate() ?? "",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey[700],
-                    ),
-                  ),Icon(widget.treatmentStation.patient?.gender.icon),
-                
-                  Text(
-                    widget.treatmentStation.patient?.diagnose ?? " ",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-                  ],),
-           
-                  TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Weitere Diagnosen',
-                ),
-              ),
-             
-           
-           TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Allergien/Infektionen',
-                ),
-              ), 
+        
           ],
           ),
           ),

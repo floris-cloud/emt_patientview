@@ -46,5 +46,18 @@
 
   "noData":"keine Daten",
   "waitingArea":"Wartbereich",
-  "noPatientsFound":"Keine Patienten gefunden"
+  "noPatientsFound":"Keine Patienten gefunden",
+  "dragPatientHere":"Ziehe Patienten hierher",
+  "close":"Schließen",
+  "phone":"Telefon",
+  "email":"E-Mail",
+  "fax":"Fax",
+  "sms":"SMS",
+  "other":"Andere",
+  "diagnose":"Diagnose",
+  "sortTimeDesc":"Zeit absteigend",
+  "sortTimeAsc":"Zeit aufsteigend",
+  "sortAlphabeticalAsc":"Alphabetisch aufsteigend",
+  "sortAlpahebticalDesc":"Alphabetisch absteigend",
+  "sortUrgency":"Dringlichkeit"
 }

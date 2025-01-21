@@ -171,7 +171,6 @@ class PatientInputView extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: Text(AppLocalizations.of(context)!.addPatient),
           onPressed: () async {
-            print("add Pressed");
             Provider.of<PatientListModel>(context, listen: false)
                 .add(controller.createPatient());
            controller.savePatient();

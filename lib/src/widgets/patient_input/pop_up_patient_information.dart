@@ -5,7 +5,7 @@ import '../../models/patient.dart';
 import '../../models/patient_list.dart';
 import '../../models/person.dart';
 import '../../models/triage_category.dart';
-import '../patient_input/patient_input_controller.dart';
+import 'patient_input_controller.dart';
 
 class PopUpPatientInformation extends StatefulWidget {
   final Patient patient;

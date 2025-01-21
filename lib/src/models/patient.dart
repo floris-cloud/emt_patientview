@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fhir/r4.dart' as r4;
 import 'package:uuid/uuid.dart';
 import 'triage_category.dart';
 import 'person.dart';
@@ -9,7 +10,9 @@ class Patient extends Person {
   TriageCategory triageCategory;
   final DateTime firstContact;
    bool timeExpired = false;
-
+  int? treatmentStationId;
+  List<r4.ContactPoint> contactPoints = [];
+  bool active = true;
   Patient(
       {String? id,
       DateTime? firstContact,
@@ -50,10 +53,13 @@ class Patient extends Person {
   }
 
 
-  setTriageCategory(TriageCategory triageCategory) {
+  set patTriageCategory(TriageCategory triageCategory) {
     triageCategory = triageCategory;
   }
 
+  set patTreatmentStationId(int? id) {
+    treatmentStationId = id;
+  }
   Timer timer(Function callback) {
     return Timer(
       firstContact
@@ -63,7 +69,9 @@ class Patient extends Person {
           }
     );
   }
-
+  addContactPoint(r4.ContactPointSystem system, String value, ){
+    contactPoints.add(r4.ContactPoint(system: system,value: value));
+  }
   getAge() {
     return DateTime.now().difference(birthDate).inDays ~/ 365;
   }
@@ -72,4 +80,38 @@ class Patient extends Person {
     
     return "${birthDate.day.toString().padLeft(2, '0')}.${birthDate.month.toString().padLeft(2, '0')}.${birthDate.year}";
   }
+
+  r4.Patient getFhirPatient() {
+    return r4.Patient(
+      fhirId: id,
+      telecom: contactPoints ,
+      name: [
+        r4.HumanName(
+          family: surName,
+          given: [preName],
+        ),
+      ],
+
+      birthDate: r4.FhirDate(birthDate.toIso8601String()),
+      gender: _getFhirGender(),
+      active: r4.FhirBoolean(active),
+    );
+  }
+
+  r4.FhirCode _getFhirGender() {
+    switch (gender) {
+      case Gender.male:
+        return r4.FhirCode('male');
+      case Gender.female:
+        return r4.FhirCode('female');
+      case Gender.other:
+        return r4.FhirCode('other');
+      case Gender.unknown:
+      default:
+        return r4.FhirCode('unkown');
+    }
+  }
 }
+
+
+

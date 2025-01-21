@@ -11,7 +11,6 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(patient.triageCategory.name);
     return 
     Container(
       height: 86.0,

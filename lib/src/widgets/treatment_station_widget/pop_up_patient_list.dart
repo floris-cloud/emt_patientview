@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../models/patient_list.dart';
 import '../../models/patient.dart';
@@ -17,7 +18,7 @@ class _PopUpPatientListState extends State<PopUpPatientList> {
   Widget build(BuildContext context) {
     var patientListModel = Provider.of<PatientListModel>(context);
     return AlertDialog(
-      title: Text('Patientenliste'),
+      title: Text(AppLocalizations.of(context)!.allPatients,),
       content: Container(
         width: double.maxFinite,
         child: ListView.builder(
@@ -37,7 +38,7 @@ class _PopUpPatientListState extends State<PopUpPatientList> {
       ),
       actions: [
         TextButton(
-          child: Text('Schließen'),
+          child: Text(AppLocalizations.of(context)!.close),
           onPressed: () {
             Navigator.of(context).pop();
           },

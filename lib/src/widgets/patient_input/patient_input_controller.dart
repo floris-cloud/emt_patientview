@@ -12,7 +12,7 @@ class PatientInputController with ChangeNotifier {
   final surNameController = TextEditingController();
   final ageController = TextEditingController();
   final birthDateController = TextEditingController();
-  Gender gender = Gender.male;
+  Gender gender = Gender.unknown;
   TriageCategory triageCategory = TriageCategory.veryUrgent;
 
   

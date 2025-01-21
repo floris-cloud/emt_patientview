@@ -17,8 +17,8 @@ class TreatmentStationWidgetDrop extends StatelessWidget {
         builder: (context, treatmentStation, child) {
           return DragTarget<Patient>(
             onAcceptWithDetails: (details) {
-              treatmentStation.patient = details.data;  
-            
+              treatmentStation.patient = details.data;
+              details.data.patTreatmentStationId = treatmentStation.id;
             },
             builder: (context, candidateData, rejectedData) {
               return TreatmentStationView(treatmentStation: treatmentStation);

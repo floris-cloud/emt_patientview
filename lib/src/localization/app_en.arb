@@ -49,6 +49,19 @@
 
   "noData":"no data",
   "waitingArea":"waiting area",
-  "noPatientsFound":"No Patients found"
+  "noPatientsFound":"No Patients found",
+  "dragPatientHere":"Drag Patients here",
+  "close":"close",
+  "phone":"phone",
+  "email":"E-email",
+  "fax":"fax",
+  "sms":"sms",
+  "other":"other",
+  "diagnose":"diagnose",
+  "sortTimeDesc":"Time descending",
+  "sortTimeAsc":"Time ascending",
+  "sortAlphabeticalAsc":"Alphabetical ascending",
+  "sortAlphabeticalDesc":"Alphabetical descending",
+  "sortUrgency":"Urgency"
 
 }
