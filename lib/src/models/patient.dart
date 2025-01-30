@@ -41,7 +41,19 @@ class Patient extends Person {
     });
     return p;
   }
-
+  factory Patient.fhirJson(Map<String, dynamic> json) {
+    print(json);
+    Patient p = Patient(
+      preName: json['name'][0]['given'][0],
+      surName: json['name'][0]['family'],
+      gender: Gender.unknown,
+      id: json['id'],
+      triageCategory: TriageCategory.emergency,
+      firstContact: DateTime.now(),
+    );
+    return p;
+    
+  }
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = super.toJson();
@@ -80,6 +92,8 @@ class Patient extends Person {
     
     return "${birthDate.day.toString().padLeft(2, '0')}.${birthDate.month.toString().padLeft(2, '0')}.${birthDate.year}";
   }
+
+
 
   r4.Patient getFhirPatient() {
     return r4.Patient(

@@ -17,10 +17,12 @@ dependencies:
   flutter_bloc: ^9.0.0
   flutter_localizations:
     sdk: flutter
+  google_fonts: ^6.2.1
   group_button: ^5.3.4
+  material_symbols_icons: ^4.2801.1
   provider: ^6.1.2
   shared_preferences: ^2.3.5
-  speech_to_text: ^7.0.0
+ # speech_to_text: ^7.0.0
   web_socket_channel: ^3.0.1
 
 dev_dependencies:

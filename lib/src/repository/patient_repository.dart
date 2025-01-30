@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 
 import '../models/patient.dart';
+import '../repository/rest_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -21,15 +22,19 @@ class PatientStorage {
   static Future<List<Patient>> loadPatients() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = [];
+    List<Patient> patientList = await RestApi.getPatientList();
+  
     String? patientsJson = prefs.getString(_key);
     
     if (patientsJson == null) {
-      return [];
+      await prefs.setString(_key, jsonEncode(patientList));
+      return patientList;
     }
     List<dynamic> patientListMap = jsonDecode(patientsJson);
     for (dynamic patientMap in patientListMap) {
       patients.add(Patient.fromMap(patientMap));
     }
+      patientList.where((p) => !patients.any((patient) => patient.id == p.id)).forEach((p) => patients.add(p));
       return patients;
   }
 

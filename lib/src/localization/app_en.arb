@@ -62,6 +62,7 @@
   "sortTimeAsc":"Time ascending",
   "sortAlphabeticalAsc":"Alphabetical ascending",
   "sortAlphabeticalDesc":"Alphabetical descending",
-  "sortUrgency":"Urgency"
+  "sortUrgency":"Urgency",
+  "filterNoTreatmentStation":"Patients without treatment station"
 
 }

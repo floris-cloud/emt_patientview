@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../models/patient.dart';
+import '../models/treatment_station_list.dart';
 import '../widgets/treatment_station_widget/treatment_station_widget_drop.dart';
 import '../models/treatment_station.dart';
 import '../repository/patient_repository.dart';
@@ -10,7 +12,7 @@ import '../widgets/patient_list/patint_list_view.dart';
 
 class AllPatDeskScreen extends StatefulWidget {
   const AllPatDeskScreen({super.key});
-
+  
   @override
   State<AllPatDeskScreen> createState() =>_AllPatDeskcreenState();
 }
@@ -19,10 +21,12 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
   TextEditingController editingController = TextEditingController();
   List<Patient> allPatients = [];
   List<Patient> filteredPatients = [];
+   List<TreatmentStation> tsList = [];
   @override
   void initState() {
     super.initState();
     _loadPatients();
+    //_loadTreatmentStations();
   }
 
   void _loadPatients() async {
@@ -31,8 +35,15 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
       filteredPatients = patients;
     });
   }
+
+  // void _loadTreatmentStations() async {
+  // tsList = await TreatmentStationList.loadTreatmentStations();
+  // }
+   
   @override
   Widget build(BuildContext context) {
+    var treatmentStations =   context.watch<TreatmentStationList>();
+   // treatmentStations.treatmentStations = tsList;
     return
     Scaffold(
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.allPatients),
@@ -62,11 +73,10 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
          Column(
           children: [
           Wrap(
+            spacing: 8.0,
             children: [
-              TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 1, name: "Intensivplatz", color: Colors.red)),
-                TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 2, name: "Intensivplatz", color: Colors.red)),
-                  TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 3, name: "Intensivplatz", color: Colors.red)),
-                    TreatmentStationWidgetDrop(treatmentStation: TreatmentStation(id: 4, name: "Intensivplatz", color: Colors.green)),
+              ...treatmentStations.treatmentStations.map((treatmentStation) => TreatmentStationWidgetDrop(treatmentStation: treatmentStation)).toList(),
+
           ],
         ),
         ]

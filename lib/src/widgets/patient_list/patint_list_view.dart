@@ -2,6 +2,8 @@ import 'package:emt_patientview/src/repository/patient_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:material_symbols_icons/symbols.dart';
+
 
 import '../../models/patient_list.dart';
 import '../../models/triage_category.dart';
@@ -15,17 +17,19 @@ class PatientListView extends StatefulWidget {
 }
 
 class _PatientListViewState extends State<PatientListView> {
-  
+    bool sortPatientsTimeAsc = true;
+    bool sortPatientsAlphabeticalAsc = true;
+    bool filterNoTreatmentStation = false;
+    bool sortPatientsTriageCategoryAsc = true;
   
   @override
   Widget build(BuildContext context) {
     var patientListModel = context.watch<PatientListModel>();
     final double maxHeigt = 0.25 * MediaQuery.of(context).size.height;
-    final int patientCount = patientListModel.getFilteredPatients(false).length;
+    final int patientCount = patientListModel.getFilteredPatients(filterNoTreatmentStation).length;
     final double itemHeight = 100.0 * patientCount;
     final double listHeight = (itemHeight < maxHeigt ? itemHeight : maxHeigt);
-    bool sortPatientsTimeAsc = false;
-    bool sortPatientsAlphabeticalAsc = true;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
@@ -56,41 +60,59 @@ class _PatientListViewState extends State<PatientListView> {
               children: [
               sortPatientsTimeAsc? IconButton(
                   tooltip: AppLocalizations.of(context)!.sortTimeAsc,
-                  icon: Icon(Icons.arrow_upward),
+                  icon: Icon(Symbols.timer_arrow_up),
                   onPressed: () {
-                    
-                    sortPatientsTimeAsc = false;
+                   setState(() {
                     patientListModel.sortPatientsTimeAsc();
+                    sortPatientsTimeAsc = false;
+                   }); 
 
                  },
                 ) :
                 IconButton(
                   tooltip: AppLocalizations.of(context)!.sortTimeDesc,
-                  icon: Icon(Icons.arrow_downward),
+                  icon: Icon(Symbols.timer_arrow_down_rounded),
                   onPressed: () {
+                    setState(() {
                     sortPatientsTimeAsc = true;
                     patientListModel.sortPatientsTimeDesc();
                   },
+                );}
                 ),
                 sortPatientsAlphabeticalAsc? IconButton(
                   tooltip: AppLocalizations.of(context)!.sortAlphabeticalAsc,
                   icon: Icon(Icons.sort_by_alpha),
                   onPressed: () {
+                    setState(() {
                     sortPatientsAlphabeticalAsc = false;
                     patientListModel.sortPatientsAlphabeticalAsc();
+                    },);
                   },
                 ) :
                 IconButton(
                   tooltip: AppLocalizations.of(context)!.sortAlphabeticalDesc,
                   icon: Icon(Icons.sort_by_alpha),
                   onPressed: () {
+                    setState(() {
                     sortPatientsAlphabeticalAsc = true;
                     patientListModel.sortPatientsAlphabeticalDesc();
+                    },);
                   },
                 ),
+                IconButton(
+                  tooltip: AppLocalizations.of(context)!.filterNoTreatmentStation,
+                  icon: Icon(Icons.medical_services),
+                  color: filterNoTreatmentStation ? Colors.red : Colors.grey,
+                  onPressed: () {
+                    setState(() {
+                    filterNoTreatmentStation = !filterNoTreatmentStation;
+                    },);
+                  },
+                ),
+
               ],),
            
-                  patientListModel.getFilteredPatients(false).length > 0
+                  patientListModel.getFilteredPatients(filterNoTreatmentStation).length > 0
                   ?
                
             Container(
@@ -103,7 +125,7 @@ class _PatientListViewState extends State<PatientListView> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: PatientCardDraggable(patient: patientListModel.getFilteredPatients(false)[index]),
+                    child: PatientCardDraggable(patient: patientListModel.getFilteredPatients(filterNoTreatmentStation)[index]),
                   );
                 },
               )

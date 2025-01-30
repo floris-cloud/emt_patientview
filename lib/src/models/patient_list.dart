@@ -56,27 +56,26 @@ class PatientListModel extends ChangeNotifier {
 
   sortPatientsTimeAsc() {
     _patients.sort((a, b) => a.firstContact.compareTo(b.firstContact));
-    notifyListeners();
   }
     sortPatientsTimeDesc() {
     _patients.sort((a, b) => b.firstContact.compareTo(a.firstContact));
-    notifyListeners();
+
   }
   sortPatientsTriageCategoryAsc() {
     _patients.sort((a, b) => a.triageCategory.index.compareTo(b.triageCategory.index));
-    notifyListeners();
+
   }
   sortPatientsTriageCategoryDesc() {
     _patients.sort((a, b) => b.triageCategory.index.compareTo(a.triageCategory.index));
-    notifyListeners();
+
   }
   sortPatientsAlphabeticalAsc() {
     _patients.sort((a, b) => a.surName.compareTo(b.surName));
-    notifyListeners();
+
   }
   sortPatientsAlphabeticalDesc() {
     _patients.sort((a, b) => b.surName.compareTo(a.surName));
-    notifyListeners();
+
   }
 
 }

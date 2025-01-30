@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../themes/app_color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fhir/r4.dart' as r4;
 
+import 'patient.dart';
  enum TriageCategory {
   emergency,
   veryUrgent,
@@ -10,6 +12,105 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
   noUrgent,
 }
 extension TriageCategoryExtension on TriageCategory {
+
+  r4.Observation getFhirTriage(Patient p)
+  {
+    switch(this){
+      case TriageCategory.emergency:
+      {
+        return r4.Observation(
+          status: r4.FhirCode('final'),
+          code: 
+            r4.CodeableConcept(
+              coding: [
+                r4.Coding(
+                  code: r4.FhirCode('MTS-1'),
+                )
+              ]
+            ),
+          subject: r4.Reference(
+            reference: 'Patient/${p.id}'
+          ),
+          effectiveDateTime: r4.FhirDateTime(p.firstContact),
+          );
+}  
+      case TriageCategory.veryUrgent:
+      {
+       return r4.Observation(
+          status: r4.FhirCode('final'),
+          code: 
+            r4.CodeableConcept(
+              coding: [
+                r4.Coding(
+                  code: r4.FhirCode('MTS-2'),
+                )
+              ]
+            ),
+          subject: r4.Reference(
+            reference: 'Patient/${p.id}'
+          ),
+          effectiveDateTime: r4.FhirDateTime(p.firstContact),
+          );}
+          case TriageCategory.urgent:
+          {
+             return r4.Observation(
+          status: r4.FhirCode('final'),
+          code: 
+            r4.CodeableConcept(
+              coding: [
+                r4.Coding(
+                  code: r4.FhirCode('MTS-3'),
+                )
+              ]
+            ),
+          subject: r4.Reference(
+            reference: 'Patient/${p.id}'
+          ),
+          effectiveDateTime: r4.FhirDateTime(p.firstContact),
+          );
+          }
+          case TriageCategory.normal:
+          
+          {
+
+          return r4.Observation(
+          status: r4.FhirCode('final'),
+          code: 
+            r4.CodeableConcept(
+              coding: [
+                r4.Coding(
+                  code: r4.FhirCode('MTS-4'),
+                )
+              ]
+            ),
+          subject: r4.Reference(
+            reference: 'Patient/${p.id}'
+          ),
+          effectiveDateTime: r4.FhirDateTime(p.firstContact),
+          );
+    }
+    case TriageCategory.noUrgent:
+   {
+
+     return r4.Observation(
+          status: r4.FhirCode('final'),
+          code: 
+            r4.CodeableConcept(
+              coding: [
+                r4.Coding(
+                  code: r4.FhirCode('MTS-5'),
+                )
+              ]
+            ),
+          subject: r4.Reference(
+            reference: 'Patient/${p.id}'
+          ),
+          effectiveDateTime: r4.FhirDateTime(p.firstContact),
+          );
+    }
+    }
+  }
+
   Duration getDuration() {
     switch (this) {
       case TriageCategory.emergency:
