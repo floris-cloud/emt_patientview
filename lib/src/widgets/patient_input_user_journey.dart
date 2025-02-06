@@ -97,7 +97,7 @@ class PatientInputUserJourneyState extends State<PatientInputUserJourney> {
                             child: Text(
                               AppLocalizations.of(context)!.urgent,
                               style: TextStyle(
-                                backgroundColor: TriageCategory.veryUrgent.getColor(),
+                                backgroundColor: TriageCategory.urgent.getColor(),
                               ),
                             ),
                           ),

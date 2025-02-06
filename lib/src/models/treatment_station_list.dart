@@ -16,12 +16,17 @@ class TreatmentStationList extends ChangeNotifier {
   }
 
   void removeTreatmentStation(TreatmentStation treatmentStation) {
+    TreatmentStationRepository.deleteTreatmentStation(treatmentStation);
     _treatmentStations.remove(treatmentStation);
+    
     notifyListeners();
   }
 
-//  static  Future<List<TreatmentStation>> loadTreatmentStations() async {
-//     return await TreatmentStationRepository.getTreatmentStations();
+
+
+ static  Future<List<TreatmentStation>> loadTreatmentStations() async {
+
+    return await TreatmentStationRepository.getTreatmentStations();
   
-//   }
+  }
 }

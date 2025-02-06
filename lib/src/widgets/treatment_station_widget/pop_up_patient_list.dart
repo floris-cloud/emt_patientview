@@ -22,11 +22,14 @@ class _PopUpPatientListState extends State<PopUpPatientList> {
       content: Container(
         width: double.maxFinite,
         child: ListView.builder(
+         itemExtent: 50,
           shrinkWrap: true,
           itemCount: patientListModel.patients.length,
           itemBuilder: (context, index) {
             final patient = patientListModel.patients[index];
             return ListTile(
+              tileColor: Theme.of(context).colorScheme.primaryContainer,
+              hoverColor: Theme.of(context).colorScheme.secondaryContainer,
               title: Text('${patient.preName} ${patient.surName}'),
               onTap: () {
                 widget.onPatientSelected(patient);

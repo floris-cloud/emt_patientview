@@ -72,6 +72,9 @@ class SettingsView extends StatelessWidget {
                       return ListTile(
                         title: Text(treatmentPlace.id.toString()),
                         subtitle: Text(treatmentPlace.name),
+                        trailing: IconButton(icon: Icon(Icons.delete), onPressed: (){
+                          treatmentStationList.removeTreatmentStation(treatmentPlace);
+                        }),
                       );
                     },
                   );

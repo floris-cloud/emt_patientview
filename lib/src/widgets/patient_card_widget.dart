@@ -13,6 +13,7 @@ class PatientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
     Container(
+      color: Theme.of(context).secondaryHeaderColor,
       height: 86.0,
       constraints: BoxConstraints(maxWidth: 500),
       child:

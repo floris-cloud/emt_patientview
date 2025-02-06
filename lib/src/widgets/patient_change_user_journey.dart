@@ -15,11 +15,11 @@ class PatientChangeUserJourney extends StatefulWidget {
   const PatientChangeUserJourney({super.key, required this.patient});
 
   @override
-  PatientChangeUserJourneyState createState()
-      => PatientChangeUserJourneyState();
+  _PatientChangeUserJourneyState createState()
+      => _PatientChangeUserJourneyState();
 }
 
-class PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
+class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
   final preNameController = TextEditingController();
   final surNameController = TextEditingController();
   final birthDateController = TextEditingController();

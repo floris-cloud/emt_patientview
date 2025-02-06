@@ -10,23 +10,34 @@ class RestApi {
 
   static Future<List<Patient>> getPatientList() async {
     var url = 'http://$uri/patients';
+    try {
     var response = await http.get(Uri.parse(url));
-    if(response.statusCode == 200) {
+      if(response.statusCode == 200) {
       List<Patient> patients = [];
       List<dynamic> json = jsonDecode(response.body);
       print(json);
       json.forEach((jsonP) {patients.add(Patient.fhirJson(jsonP));});
       return patients;
-    }else{
-      throw Exception('Failed to load patients');
+      
+      }
+      else{
+        print(response.statusCode);
+        return [];
+      }
+    }
+    catch(e) {
+      print(e);
+      return [];
     }
 }
 
 static postTreatmentStation(TreatmentStation ts) async {
   var url = 'http://$uri/treatmentStation';
+  print(jsonEncode(ts));
+
   var response = await http.post(Uri.parse(url), body: jsonEncode(ts.toJson()));
   if(response.statusCode != 200) {
-    throw Exception('Failed to load patients');
+    throw Exception('Failed to post TreatmentStation');
   }
 }
 static Future<List<TreatmentStation>> getTreatmentStations() async {
@@ -40,4 +51,12 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonP));});
   return treatmentStations;
 }
+
+  static void deleteTreatmentStation(TreatmentStation treatmentStation) {
+    if(treatmentStation.dbId == null) {
+      return;
+    }
+    var url = 'http://$uri/treatmentStation/';
+    http.delete(Uri.parse(url), body: treatmentStation.dbId);
+  }
 }

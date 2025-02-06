@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 
+import '../../models/patient.dart';
 import '../../models/patient_list.dart';
 import '../../models/triage_category.dart';
 import '../add_patient_button.dart';
@@ -21,11 +22,23 @@ class _PatientListViewState extends State<PatientListView> {
     bool sortPatientsAlphabeticalAsc = true;
     bool filterNoTreatmentStation = false;
     bool sortPatientsTriageCategoryAsc = true;
-  
+    late PatientListModel _patientsList;
+  @override
+  void initState() {
+    super.initState();
+    _loadPatients();
+  }
+
+      void _loadPatients() async {
+    final patients = await PatientStorage.loadPatients();
+    setState(() {
+      _patientsList.patient = patients;
+    });
+    }
   @override
   Widget build(BuildContext context) {
     var patientListModel = context.watch<PatientListModel>();
-    final double maxHeigt = 0.25 * MediaQuery.of(context).size.height;
+    final double maxHeigt = 0.5 * MediaQuery.of(context).size.height;
     final int patientCount = patientListModel.getFilteredPatients(filterNoTreatmentStation).length;
     final double itemHeight = 100.0 * patientCount;
     final double listHeight = (itemHeight < maxHeigt ? itemHeight : maxHeigt);

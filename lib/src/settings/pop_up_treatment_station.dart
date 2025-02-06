@@ -71,7 +71,7 @@ class _AddTreatmentStationDialogState extends State<AddTreatmentStationDialog> {
               Provider.of<TreatmentStationList>(context, listen: false).addTreatmentStation(
                 ts
               );
-              // TreatmentStationRepository.postTreatmentStation(ts);
+              TreatmentStationRepository().postTreatmentStation(ts);
               Navigator.of(context).pop();
             }
           },

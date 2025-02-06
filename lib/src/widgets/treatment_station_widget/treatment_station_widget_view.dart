@@ -1,5 +1,4 @@
-import 'package:emt_patientview/src/widgets/patient_input/pop_up_contact_points.dart';
-import 'package:fhir/r4/general_types/general_types.dart';
+import 'package:emt_patientview/src/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -7,7 +6,8 @@ import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
 
-import '../patient_input/pop_up_patient_information.dart';
+
+import '../pop_up_change_patient.dart';
 import 'pop_up_patient_list.dart';
 
 class TreatmentStationView extends StatefulWidget {
@@ -54,7 +54,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.info),
                       onPressed: () {
-                        // Handle info button press
+
                       },
                     ),
                     IconButton(
@@ -65,16 +65,14 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                                     showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return PopUpContactPoints(
-                     patient: widget.treatmentStation.patient!, onContactPointsUpdated: (List<ContactPoint> contactPoints ) { widget.treatmentStation.patient!.contactPoints=contactPoints; }, 
-                     );
-                    },
-                  );
-
-                      };
+                  return PopUpChangePatient(patient: widget.treatmentStation.patient!);
                 },
-                    ),
-                
+              );
+                            }
+                      },
+                     ),
+                    
+               
             
                     IconButton(
                       icon: Icon(Icons.arrow_back),
@@ -143,21 +141,12 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                             ),
                           ],
                         ),
-                        TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: '',
-                            hintText: AppLocalizations.of(context)!.diagnose,
+                        TimerWidget(startTime: widget.treatmentStation.patient!.firstContact),
+                        Text(
+                          AppLocalizations.of(context)!.diagnose + (widget.treatmentStation.patient?.diagnose ?? " ")
                           ),
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Allergien/Infektionen',
-                          ),
-                        ),
-                      ],
+                        
+                                          ],
                     )
                   : Container(
                       child: Text(
