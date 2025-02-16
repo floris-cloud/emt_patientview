@@ -44,10 +44,7 @@ class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-        title: Text(AppLocalizations.of(context)!.changePatient),
-        children: [
-          Column(
+    return Column(
             children: <Widget>[
               Row(
                 children: [
@@ -202,9 +199,8 @@ class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                 
             ),
           ],
-        ),
-      ],
-    );
+        );
+     
   }
 
   Future<void> _selectDate(BuildContext context) async {

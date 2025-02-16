@@ -15,8 +15,9 @@ class PatientStorage {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<Patient> patients = await loadPatients();
     patients.add(patient);
+    await RestApi.postPatient(patient);
     String patientsJson = jsonEncode(patients);
-      await prefs.setString(_key, patientsJson);
+    await prefs.setString(_key, patientsJson);
   }
 
   static Future<List<Patient>> loadPatients() async {
@@ -43,6 +44,7 @@ class PatientStorage {
     List<Patient> patients = await loadPatients();
     patients.removeWhere((p) => p.id == patient.id);
     patients.add(patient);
+    RestApi.changePatient(patient);
     String patientsJson = jsonEncode(patients);
     await prefs.setString(_key, patientsJson);
   }

@@ -101,12 +101,13 @@ class Patient extends Person {
       telecom: contactPoints ,
       name: [
         r4.HumanName(
-          family: surName,
-          given: [preName],
+          
+          family: surName.isEmpty? 'unkown': surName,
+          given: preName.isEmpty? ['unkown'] : [preName],
         ),
       ],
 
-      birthDate: r4.FhirDate(birthDate.toIso8601String()),
+      birthDate: r4.FhirDate(birthDate.toIso8601String().split('T').first),
       gender: _getFhirGender(),
       active: r4.FhirBoolean(active),
     );

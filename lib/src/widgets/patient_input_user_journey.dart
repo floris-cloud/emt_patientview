@@ -184,7 +184,7 @@ class PatientInputUserJourneyState extends State<PatientInputUserJourney> {
               surName: surNameController.text,
               preName: preNameController.text,
               birthDate:
-                  DateTime.tryParse(birthDateController.text) ?? DateTime.now(),
+                  DateTime.tryParse(birthDateController.text) ,
               gender: Gender.male,
               triageCategory: _triageCategory,
             );

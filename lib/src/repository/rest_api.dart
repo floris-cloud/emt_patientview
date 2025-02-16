@@ -30,7 +30,21 @@ class RestApi {
       return [];
     }
 }
-
+static postPatient(Patient patient) async {
+  var url = 'http://$uri/patient';
+  print(jsonEncode(patient.getFhirPatient()));
+  var response = await http.post(Uri.parse(url), body: jsonEncode(patient.getFhirPatient()));
+  if(response.statusCode != 200) {
+    throw Exception('Failed to post Patient');
+  }
+}
+static changePatient(Patient patient) async {
+  var url = 'http://$uri/patient';
+  var response = await http.put(Uri.parse(url), body: jsonEncode(patient.getFhirPatient()));
+  if(response.statusCode != 200) {
+    throw Exception('Failed to change Patient');
+  }
+}
 static postTreatmentStation(TreatmentStation ts) async {
   var url = 'http://$uri/treatmentStation';
   print(jsonEncode(ts));

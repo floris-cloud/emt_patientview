@@ -12,7 +12,7 @@ class Person {
     required this.preName,
     required this.surName,
     required this.gender,
-  }): birthDate= birthDate?? DateTime.now();
+  }): birthDate= birthDate?? DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
 
   Person.fromJson(Map<String, dynamic> json)
