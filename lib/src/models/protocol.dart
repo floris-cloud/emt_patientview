@@ -1,16 +1,21 @@
 import 'dart:convert';
 
+import 'icd.dart';
 import 'medical_values.dart';
+
 
 class Protocol {
   String patientId;
-  String notes;
+  String? notes;
+  Icd? mainDiagnose;
+  List<Icd>? otherDiagnoses;
+
   List<MedicalValues> medicalValuesList;
 
   Protocol({
     required this.patientId,
-    required this.notes,
-    List<MedicalValues>? medicalValuesList,
+     this.notes,
+    List<MedicalValues>? medicalValuesList, this.mainDiagnose,
   }) : medicalValuesList = medicalValuesList ?? [];
 
   void addMedicalValues(MedicalValues values) {
@@ -32,14 +37,21 @@ class Protocol {
   factory Protocol.fromMap(Map<String, dynamic> map) {
     var medicalValuesList = map['medicalValuesList'];
     List<MedicalValues> valuesList = [];
+    Icd? mainDiagnose;
     if (medicalValuesList != null && medicalValuesList is List) {
       valuesList = medicalValuesList.map((item) {
         return MedicalValues.fromMap(item);
       }).toList();
     }
+    if (map['mainDiagnose'] != null) {
+      mainDiagnose = Icd.fromJson(jsonDecode(map['mainDiagnose']));
+    }
     return Protocol(
       patientId: map['patientId'],
       notes: map['notes'],
-      medicalValuesList: valuesList,);
+      medicalValuesList: valuesList,
+      mainDiagnose: mainDiagnose,
+      );
   }
 }
+

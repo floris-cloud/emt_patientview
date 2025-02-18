@@ -6,7 +6,8 @@ import '../models/patient.dart';
 import '../models/treatment_station.dart';
 
 class RestApi {
-  static String uri = 'localhost:8020';
+  // static String uri = 'localhost:8020';
+  static String uri = 'floris-20df0051ge.local:8020';
 
   static Future<List<Patient>> getPatientList() async {
     var url = 'http://$uri/patients';
@@ -15,18 +16,15 @@ class RestApi {
       if(response.statusCode == 200) {
       List<Patient> patients = [];
       List<dynamic> json = jsonDecode(response.body);
-      print(json);
       json.forEach((jsonP) {patients.add(Patient.fhirJson(jsonP));});
       return patients;
       
       }
       else{
-        print(response.statusCode);
         return [];
       }
     }
     catch(e) {
-      print(e);
       return [];
     }
 }
@@ -62,7 +60,7 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   }
   List<TreatmentStation> treatmentStations = [];
   List<dynamic> json = jsonDecode(response.body);
-  json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonP));});
+  json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));});
   return treatmentStations;
 }
 

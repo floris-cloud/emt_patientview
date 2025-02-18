@@ -2,6 +2,7 @@
   "@@locale": "de",
   "newPatient": "Neuer Patient",
   "allPatients": "Alle Patienten",
+  "patientData" : "Patientendaten",
   "settings": "Einstellungen",
   "switchLanguage": "Deutsch",
   "switchTheme": "Nachtmodus",
@@ -9,8 +10,11 @@
   "allPatientsTitle": "Alle Patienten",
 
   "anamnese":"Anamnese",
+  "medicalValues": "Messwerte",
   "enterProtocol": "Geben Sie das Protokoll für {patientPrename} ein",
   "bloodPressure":"Blutdruck in mmHg: ",
+  "nibp": "NIBP",
+  "mmHg": "mmHg",
   "notes": "Notizen",
   "systolic": "Systolisch",
   "diastolic": "Diastolisch",
@@ -60,5 +64,6 @@
   "sortAlphabeticalAsc":"Alphabetisch aufsteigend",
   "sortAlpahebticalDesc":"Alphabetisch absteigend",
   "sortUrgency":"Dringlichkeit",
-  "filterNoTreatmentStation":"Patienten ohne Behandlungsstation"
+  "filterNoTreatmentStation":"Patienten ohne Behandlungsstation",
+   "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation"
 }

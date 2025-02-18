@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/medical_values.dart';
-import '../models/patient.dart';
-import '../models/protocol.dart';
-import '../repository/protocol_repository.dart';
+import '../../models/medical_values.dart';
+import '../../models/patient.dart';
+import '../../models/protocol.dart';
+import '../../repository/protocol_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ProtocollInputUserJourney extends StatefulWidget {
   final Patient patient;
@@ -15,7 +15,7 @@ class ProtocollInputUserJourney extends StatefulWidget {
 
 class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
   final _formKey = GlobalKey<FormState>();
-  final _notesController = TextEditingController();
+  // final _notesController = TextEditingController();
   final _systolicController = TextEditingController();
   final _diastolicController = TextEditingController();
   final _respiratoryRateController = TextEditingController();
@@ -40,7 +40,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
 
       Protocol protocol = await ProtocolRepository.loadProtocol(
               widget.patient,) ??
-          Protocol(notes: _notesController.text, patientId: widget.patient.id);
+          Protocol(patientId: widget.patient.id, notes: '', mainDiagnose: null);
       protocol.addMedicalValues(medicalValues);
       ProtocolRepository.saveProtocol(protocol);
     }
@@ -57,64 +57,83 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
                Text(AppLocalizations.of(context)!
             .enterProtocol(widget.patient.preName),),
           
-              Row(
-                children: [
-                  
-                      
-                  Text(AppLocalizations.of(context)!.bloodPressure),
-                  Expanded(child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0,left: 8.0),
-                    child: TextFormField(
-                      
-                      controller: _systolicController,
-                      decoration: InputDecoration(
-                      
-                      border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.systolic,
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          if (double.tryParse(value) == null) {
-                            return AppLocalizations.of(context)!
-                                .errorNotNumeric;
-                          }
-                        }
-                        return null;
-                      },
-                    ),
-                  ),),
-                  Expanded(child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0,right: 8.0),
-                    child: TextFormField(
-                      controller: _diastolicController,
-                      decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.diastolic,
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          if (double.tryParse(value) == null) {
-                            return AppLocalizations.of(context)!
-                                .errorNotNumeric;
-                          }
-                          if (double.tryParse(_systolicController.text) !=
-                              null) {
-                            if (double.parse(_systolicController.text) <
-                                double.parse(value)) {
-                              return AppLocalizations.of(context)!
-                                  .errorDisGreaterSys;
-                            }
-                          }
-                        }
-                        return null;
-                      },
-                    ),
-                    ),
-                  ),
-                ],
+  
+     Container(
+      constraints: BoxConstraints(
+        maxWidth:  0.25*MediaQuery.of(context).size.width,
+        minWidth: 0.15*MediaQuery.of(context).size.width,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: const EdgeInsets.all(8),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        AppLocalizations.of(context)!.nibp,
+        style: TextStyle(fontWeight: FontWeight.bold)
+      ),
+
+      Wrap(
+        spacing: 8.0,
+        crossAxisAlignment: WrapCrossAlignment.center,
+          direction: Axis.vertical,
+        children: [
+       TextFormField(
+              controller: _systolicController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)!.systolic,
               ),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value != null && value.isNotEmpty) {
+                  if (double.tryParse(value) == null) {
+                    return AppLocalizations.of(context)!
+                        .errorNotNumeric;
+                  }
+                }
+                return null;
+              },
+            ),           
+            TextFormField(
+              controller: _diastolicController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)!.diastolic,
+              ),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value != null && value.isNotEmpty) {
+                  if (double.tryParse(value) == null) {
+                    return AppLocalizations.of(context)!
+                        .errorNotNumeric;
+                  }
+                  if (double.tryParse(_systolicController.text) != null) {
+                    if (double.parse(_systolicController.text) <
+                        double.parse(value)) {
+                      return AppLocalizations.of(context)!
+                          .errorDisGreaterSys;
+                    }
+                  }
+                }
+                return null;
+              },
+            ),
+        ],
+      ),
+      SizedBox(height: 8),
+      Text(
+        AppLocalizations.of(context)!.mmHg,
+        style: TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+    ],
+  ),
+),
+           
+          
               Row(
                 children: [
                   Expanded(
@@ -190,24 +209,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
                   ),
                 ],
               ),
-               Padding(
-                      padding: const EdgeInsets.all(8.0),
-                child:   TextFormField(
-                controller: _notesController,
-                decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.anamnese,
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppLocalizations.of(context)!.errorNoText;
-                  }
-                  return null;
-                },
-              ),
-              ),
+               
               ElevatedButton(
                 onPressed: _submitForm,
                 child: Text(AppLocalizations.of(context)!.submit),

@@ -22,7 +22,7 @@ class _PatientListViewState extends State<PatientListView> {
     bool sortPatientsAlphabeticalAsc = true;
     bool filterNoTreatmentStation = false;
     bool sortPatientsTriageCategoryAsc = true;
-    late PatientListModel _patientsList;
+    PatientListModel _patientsList = PatientListModel();
   @override
   void initState() {
     super.initState();
@@ -51,8 +51,10 @@ class _PatientListViewState extends State<PatientListView> {
             Wrap(
             children: [                
               ...TriageCategory.values.map((TriageCategory triageCategory) =>
+        
               FilterChip(
-                
+                elevation: 15.0,
+                showCheckmark: false,
                 label: Text(triageCategory.getText(context)),
                 selectedColor: triageCategory.getColor(),
                 selected: patientListModel.filterTriageCategory.contains(triageCategory),
@@ -65,9 +67,12 @@ class _PatientListViewState extends State<PatientListView> {
                   }
                   });
                 },
-              )).toList(),
+              ),
+            ),
             ],
             ),
+
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -113,7 +118,7 @@ class _PatientListViewState extends State<PatientListView> {
                   },
                 ),
                 IconButton(
-                  tooltip: AppLocalizations.of(context)!.filterNoTreatmentStation,
+                  tooltip: filterNoTreatmentStation ? AppLocalizations.of(context)!.filterTreatmentStation : AppLocalizations.of(context)!.filterNoTreatmentStation,
                   icon: Icon(Icons.medical_services),
                   color: filterNoTreatmentStation ? Colors.red : Colors.grey,
                   onPressed: () {
@@ -124,12 +129,10 @@ class _PatientListViewState extends State<PatientListView> {
                 ),
 
               ],),
-           
                   patientListModel.getFilteredPatients(filterNoTreatmentStation).length > 0
                   ?
                
             Container(
-
               height: listHeight,
               
               child:

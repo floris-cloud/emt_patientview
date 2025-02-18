@@ -1,8 +1,9 @@
 {
   "@@locale": "en",
   "appTitle": "emt_patientview",
-  "newPatient": "New Patient",
-  "allPatients": "All Patients",
+  "newPatient": "new Patient",
+  "allPatients": "all Patients",
+  "patientData" : "patient data",
   "settings": "Settings",
   "switchLanguage": "English",
   "switchTheme": "Nightmode",
@@ -12,7 +13,10 @@
   "anamnese":"anamnese",
   "enterProtocol": "Enter Protocol for {patientPrename}",
   "notes": "Notes",
+  "medicalValues": "medical values",
   "bloodPressure":"Bloodpressure in mmHg: ",
+  "nibp": "NIBP",
+  "mmHg": "mmHg",
   "systolic": "Systolic",
   "diastolic": "Diastolic",
   "respiratoryRate": "Respiratory Rate",
@@ -49,11 +53,11 @@
 
   "noData":"no data",
   "waitingArea":"waiting area",
-  "noPatientsFound":"No Patients found",
-  "dragPatientHere":"Drag Patients here",
+  "noPatientsFound":"No patients found",
+  "dragPatientHere":"Drag patient here",
   "close":"close",
   "phone":"phone",
-  "email":"E-email",
+  "email":"e-email",
   "fax":"fax",
   "sms":"sms",
   "other":"other",
@@ -63,6 +67,7 @@
   "sortAlphabeticalAsc":"Alphabetical ascending",
   "sortAlphabeticalDesc":"Alphabetical descending",
   "sortUrgency":"Urgency",
-  "filterNoTreatmentStation":"Patients without treatment station"
+  "filterNoTreatmentStation":"Patients without treatment station",
+  "filterTreatmentStation":"Patients with and without treatment station"
 
 }

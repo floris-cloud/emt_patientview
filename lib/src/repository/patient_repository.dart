@@ -23,6 +23,7 @@ class PatientStorage {
   static Future<List<Patient>> loadPatients() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = [];
+    
     List<Patient> patientList = await RestApi.getPatientList();
   
     String? patientsJson = prefs.getString(_key);
