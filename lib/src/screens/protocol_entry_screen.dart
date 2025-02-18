@@ -38,6 +38,7 @@ class ProtocolEntryScreen extends StatefulWidget {
         child: Row(
           children: [
          NavigationRail(
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
       selectedIndex: _selectedIndex,
       useIndicator: true,
       labelType: NavigationRailLabelType.all,

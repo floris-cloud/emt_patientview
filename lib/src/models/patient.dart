@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:fhir/r4.dart' as r4;
 import 'package:uuid/uuid.dart';
+import 'protocol.dart';
 import 'triage_category.dart';
 import 'person.dart';
 
@@ -13,6 +15,7 @@ class Patient extends Person {
   int? treatmentStationId;
   List<r4.ContactPoint> contactPoints = [];
   bool active = true;
+  List<Protocol> protocls = [];
   Patient(
       {String? id,
       DateTime? firstContact,
@@ -91,6 +94,11 @@ class Patient extends Person {
  String formatedBirthDate() {
     
     return "${birthDate.day.toString().padLeft(2, '0')}.${birthDate.month.toString().padLeft(2, '0')}.${birthDate.year}";
+  }
+
+  String formatedFirstContact() { 
+    // return "${firstContact.day.toString().padLeft(2, '0')}"+" "+ "${firstContact.hour.toString().padLeft(2, '0')}:${firstContact.minute.toString().padLeft(2, '0')}";
+    return "${firstContact.day.toString().padLeft(2, '0')}${firstContact.hour.toString().padLeft(2, '0')}${firstContact.minute.toString().padLeft(2, '0')}";
   }
 
 

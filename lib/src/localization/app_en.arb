@@ -9,7 +9,7 @@
   "switchTheme": "Nightmode",
 
   "allPatientsTitle": "All Patients",
-
+  "mainDiagnose": "main diagnose",
   "anamnese":"anamnese",
   "enterProtocol": "Enter Protocol for {patientPrename}",
   "notes": "Notes",
@@ -68,6 +68,8 @@
   "sortAlphabeticalDesc":"Alphabetical descending",
   "sortUrgency":"Urgency",
   "filterNoTreatmentStation":"Patients without treatment station",
-  "filterTreatmentStation":"Patients with and without treatment station"
+  "filterTreatmentStation":"Patients with and without treatment station",
+
+     "arrivedAt": "Arrived at"
 
 }

@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
+  "appTitle": "emt_patientview",
   "newPatient": "Neuer Patient",
   "allPatients": "Alle Patienten",
   "patientData" : "Patientendaten",
@@ -10,6 +11,7 @@
   "allPatientsTitle": "Alle Patienten",
 
   "anamnese":"Anamnese",
+  "mainDiagnose": "Hauptdiagnose",
   "medicalValues": "Messwerte",
   "enterProtocol": "Geben Sie das Protokoll für {patientPrename} ein",
   "bloodPressure":"Blutdruck in mmHg: ",
@@ -62,8 +64,10 @@
   "sortTimeDesc":"Zeit absteigend",
   "sortTimeAsc":"Zeit aufsteigend",
   "sortAlphabeticalAsc":"Alphabetisch aufsteigend",
-  "sortAlpahebticalDesc":"Alphabetisch absteigend",
+  "sortAlphabeticalDesc":"Alphabetisch absteigend",
   "sortUrgency":"Dringlichkeit",
   "filterNoTreatmentStation":"Patienten ohne Behandlungsstation",
-   "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation"
+   "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation",
+   "arrivedAt": "Aaufnahme um"
+
 }

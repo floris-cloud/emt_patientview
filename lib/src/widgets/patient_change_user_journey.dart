@@ -111,7 +111,7 @@ class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                                       AppLocalizations.of(context)!.urgent,
                                       style: TextStyle(
                                           backgroundColor:
-                                              TriageCategory.veryUrgent.getColor(),),
+                                              TriageCategory.urgent.getColor(),),
                                     ),),
                                 DropdownMenuItem(
                                     value: TriageCategory.normal,

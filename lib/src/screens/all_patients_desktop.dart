@@ -1,5 +1,9 @@
+import 'package:emt_patientview/src/models/triage_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../models/patient.dart';
+import '../models/person.dart';
+import '../widgets/patient_detail.dart';
 import '../widgets/treatment_station_list_view.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/patient_list/patint_list_view.dart';
@@ -25,9 +29,9 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
-          Flexible(flex:1, child:Container()),  
+
           PatientListView(),
-          Flexible(flex:3, child:Container()), 
+
         ]
         )), 
                  const VerticalDivider(
@@ -45,7 +49,7 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
             indent: 20,
             endIndent: 0,
           ),
-                  Flexible(flex: 1, child: Container( )),
+                  Flexible(flex: 1, child: PatientDetail(patient: Patient(id: '1', surName: 'Mustermann', preName: 'Max', birthDate: DateTime.now(), gender: Gender.male, triageCategory: TriageCategory.noUrgent))),
       ]),);
     
   }

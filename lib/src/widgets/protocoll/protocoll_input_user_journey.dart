@@ -57,7 +57,75 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
                Text(AppLocalizations.of(context)!
             .enterProtocol(widget.patient.preName),),
           
-  
+    //AB
+     Row(
+     children: [  //AF
+       Container(
+        constraints: BoxConstraints(
+          maxWidth:  0.25*MediaQuery.of(context).size.width,
+          minWidth: 0.15*MediaQuery.of(context).size.width,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+                      controller: _respiratoryRateController,
+                      decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                        labelText:
+                            AppLocalizations.of(context)!.respiratoryRate,
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+               SizedBox(height: 8),
+      Text(
+        "1/min",
+        style: TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+          ],
+        ), 
+       ),
+      //SPO2
+       Container(
+        constraints: BoxConstraints(
+          maxWidth:  0.25*MediaQuery.of(context).size.width,
+          minWidth: 0.15*MediaQuery.of(context).size.width,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+                      controller: _oxygenSaturationController,
+                      decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                        labelText:
+                            AppLocalizations.of(context)!.oxygenSaturation,
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+               SizedBox(height: 8),
+      Text(
+        "%",
+        style: TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+          ],
+        ), 
+       ),
+     ],
+     ),
+    
+
+      //NIBP
      Container(
       constraints: BoxConstraints(
         maxWidth:  0.25*MediaQuery.of(context).size.width,
@@ -76,54 +144,65 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         style: TextStyle(fontWeight: FontWeight.bold)
       ),
 
-      Wrap(
-        spacing: 8.0,
-        crossAxisAlignment: WrapCrossAlignment.center,
-          direction: Axis.vertical,
-        children: [
-       TextFormField(
-              controller: _systolicController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: AppLocalizations.of(context)!.systolic,
-              ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value != null && value.isNotEmpty) {
-                  if (double.tryParse(value) == null) {
-                    return AppLocalizations.of(context)!
-                        .errorNotNumeric;
-                  }
-                }
-                return null;
-              },
-            ),           
-            TextFormField(
-              controller: _diastolicController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: AppLocalizations.of(context)!.diastolic,
-              ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value != null && value.isNotEmpty) {
-                  if (double.tryParse(value) == null) {
-                    return AppLocalizations.of(context)!
-                        .errorNotNumeric;
-                  }
-                  if (double.tryParse(_systolicController.text) != null) {
-                    if (double.parse(_systolicController.text) <
-                        double.parse(value)) {
-                      return AppLocalizations.of(context)!
-                          .errorDisGreaterSys;
-                    }
-                  }
-                }
-                return null;
-              },
-            ),
-        ],
+    Wrap(
+  direction: Axis.horizontal,
+  spacing: 8.0,
+  crossAxisAlignment: WrapCrossAlignment.start,
+  children: [
+    Container(
+          constraints: BoxConstraints(
+            maxWidth:  0.1*MediaQuery.of(context).size.width,
+          ),
+           child: TextFormField(
+        controller: _systolicController,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: AppLocalizations.of(context)!.systolic,
+        ),
+        keyboardType: TextInputType.number,
+        validator: (value) {
+          if (value != null && value.isNotEmpty) {
+            if (double.tryParse(value) == null) {
+              return AppLocalizations.of(context)!
+                  .errorNotNumeric;
+            }
+          }
+          return null;
+        },
       ),
+    ),
+       Container(
+          constraints: BoxConstraints(
+            maxWidth:  0.1*MediaQuery.of(context).size.width,
+          ),
+      child: TextFormField(
+        controller: _diastolicController,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: AppLocalizations.of(context)!.diastolic,
+        ),
+        keyboardType: TextInputType.number,
+        validator: (value) {
+          if (value != null && value.isNotEmpty) {
+            if (double.tryParse(value) == null) {
+              return AppLocalizations.of(context)!
+                  .errorNotNumeric;
+            }
+            if (double.tryParse(_systolicController.text) != null) {
+              if (double.parse(_systolicController.text) <
+                  double.parse(value)) {
+                return AppLocalizations.of(context)!
+                    .errorDisGreaterSys;
+              }
+            }
+          }
+          return null;
+        },
+      ),
+    ),
+  ],
+),
+
       SizedBox(height: 8),
       Text(
         AppLocalizations.of(context)!.mmHg,
@@ -136,20 +215,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
           
               Row(
                 children: [
-                  Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _respiratoryRateController,
-                      decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                        labelText:
-                            AppLocalizations.of(context)!.respiratoryRate,
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                  ),
+               
                   Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
