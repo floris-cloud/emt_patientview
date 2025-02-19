@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/patient.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../models/protocol.dart';
 import '../widgets/protocoll/anamnese.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/patient_change_user_journey.dart';
@@ -21,17 +22,32 @@ class ProtocolEntryScreen extends StatefulWidget {
   class _ProtocolEntryScreenState extends State<ProtocolEntryScreen> {
     late Widget w;
     int _selectedIndex = 1;
+    late Protocol protocol;
+    late String title;  
+    bool changeTitle = false;
+    
     @override
     void initState() {
       super.initState();
-      w = ProtocollInputUserJourney(patient: widget.patient);
+      if(widget.patient.protocls != null){
+        if(widget.patient.protocls!.isNotEmpty)
+        protocol = widget.patient.protocls!.first;
+      }
+      else{
+     protocol = Protocol(patientId: widget.patient.id);
+     widget.patient.protocls = [protocol];
+      }
+      w = ProtocollInputUserJourney(patient: widget.patient, protocol: protocol);
       
+
     }
   Widget build(BuildContext context) {
-   
+    if(!changeTitle){
+      title = AppLocalizations.of(context)!.patientData;
+    }
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.patientInputTitle
+        title: title,
       ),
       body:Expanded(
      
@@ -71,13 +87,18 @@ class ProtocolEntryScreen extends StatefulWidget {
           ),);
             break;
           case 1:          
-            w = PatientChangeUserJourney(patient: widget.patient);         
+            w = PatientChangeUserJourney(patient: widget.patient); 
+            changeTitle = true;
+            title = AppLocalizations.of(context)!.patientData;      
             break;
           case 2:
-            w = ProtocollInputUserJourney(patient: widget.patient);
+            w = ProtocollInputUserJourney(patient: widget.patient, protocol: protocol);
+            changeTitle = true;
+            title = AppLocalizations.of(context)!.medicalValues;  
             break;
           case 3:
             w = AnamneseInputUserJourney(patient: widget.patient);
+            changeTitle = true;
             break;
         }
       });

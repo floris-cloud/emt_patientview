@@ -4,10 +4,12 @@ import '../../models/patient.dart';
 import '../../models/protocol.dart';
 import '../../repository/protocol_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../medicalValueView.dart';
 class ProtocollInputUserJourney extends StatefulWidget {
   final Patient patient;
-
-   const ProtocollInputUserJourney({super.key, required this.patient});
+  final Protocol protocol;
+   const ProtocollInputUserJourney({super.key, required this.patient, required this.protocol});
 
   @override
   ProtocollInputUserJourneyState createState() => ProtocollInputUserJourneyState();
@@ -37,12 +39,10 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         temperature: double.tryParse(_temperatureController.text),
         bloodSugar: double.tryParse(_bloodSugarController.text),
         createdAt: DateTime.now(),);
-
-      Protocol protocol = await ProtocolRepository.loadProtocol(
-              widget.patient,) ??
-          Protocol(patientId: widget.patient.id, notes: '', mainDiagnose: null);
-      protocol.addMedicalValues(medicalValues);
-      ProtocolRepository.saveProtocol(protocol);
+      ProtocolRepository.saveProtocol(widget.protocol);
+      setState(() {
+        widget.protocol.medicalValuesList.add(medicalValues);
+      });
     }
   }
 
@@ -53,10 +53,21 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
                Text(AppLocalizations.of(context)!
-            .enterProtocol(widget.patient.preName),),
-          
+            .enterProtocol(widget.patient.id.split('-').first),),
+            SizedBox(height: 8),
+            //all medicalValues
+            ListView(
+              shrinkWrap: true,
+              children: [
+                  ...widget.protocol.medicalValuesList.map((medicalValue) {
+                return Medicalvalueview(medicalValue: medicalValue);
+
+                  })
+              ],
+            ),
     //AB
      Row(
      children: [  //AF
@@ -69,7 +80,8 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(2),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,6 +103,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         ), 
        ),
       //SPO2
+      SizedBox(width: 8),
        Container(
         constraints: BoxConstraints(
           maxWidth:  0.25*MediaQuery.of(context).size.width,
@@ -100,7 +113,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -124,7 +137,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
      ],
      ),
     
-
+      SizedBox(height: 8),
       //NIBP
      Container(
       constraints: BoxConstraints(
@@ -135,7 +148,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
       ),
-      padding: const EdgeInsets.all(8),
+     padding: const EdgeInsets.all(2),
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -143,8 +156,9 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         AppLocalizations.of(context)!.nibp,
         style: TextStyle(fontWeight: FontWeight.bold)
       ),
-
+SizedBox(height: 8),
     Wrap(
+  
   direction: Axis.horizontal,
   spacing: 8.0,
   crossAxisAlignment: WrapCrossAlignment.start,
@@ -210,16 +224,26 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
       ),
     ],
   ),
-),
-           
-          
-              Row(
-                children: [
-               
-                  Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
+),         
+
+SizedBox(height: 8),
+            Row(
+              children: [
+              //Pulse
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth:  0.25*MediaQuery.of(context).size.width,
+                  minWidth: 0.15*MediaQuery.of(context).size.width,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.all(2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
                       controller: _pulseController,
                       decoration: InputDecoration(
                       border: const OutlineInputBorder(),
@@ -227,56 +251,93 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
                       ),
                       keyboardType: TextInputType.number,
                     ),
-                  ),
-                  ),
-                  Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _oxygenSaturationController,
-                      decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                        labelText:
-                            AppLocalizations.of(context)!.oxygenSaturation,
-                      ),
-                      keyboardType: TextInputType.number,
+                    SizedBox(height: 8),
+                    Text(
+                      "1/min",
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
-                  ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              
+              SizedBox(width: 8),
+                            
+              ],
+           
+             
+              ),
+              SizedBox(height: 8),
               Row(
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _temperatureController,
-                      decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.temperature,
-                      ),
-                      keyboardType: TextInputType.number,
+                  //Temperature
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth:  0.25*MediaQuery.of(context).size.width,
+                      minWidth: 0.15*MediaQuery.of(context).size.width,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          controller: _temperatureController,
+                          decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                            labelText: AppLocalizations.of(context)!.temperature,
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "°C",
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(width: 8),
+                  //Blood Sugar
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth:  0.25*MediaQuery.of(context).size.width,
+                      minWidth: 0.15*MediaQuery.of(context).size.width,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          controller: _bloodSugarController,
+                          decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                            labelText: AppLocalizations.of(context)!.bloodSugar,
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "mg/dl",
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                      ],
+                        )
                   ),
 
-                  Expanded(child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _bloodSugarController,
-                      decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.bloodSugar,
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                  ),
                 ],
               ),
-               
+              SizedBox(height: 8),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size( 0.1* MediaQuery.of(context).size.width, 0.05 * MediaQuery.of(context).size.height),
+                ),
                 onPressed: _submitForm,
                 child: Text(AppLocalizations.of(context)!.submit),
               ),

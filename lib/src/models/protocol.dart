@@ -8,7 +8,7 @@ class Protocol {
   String patientId;
   String? notes;
   Icd? mainDiagnose;
-  List<Icd>? otherDiagnoses;
+  List<Icd> otherDiagnoses = [];
 
   List<MedicalValues> medicalValuesList;
 

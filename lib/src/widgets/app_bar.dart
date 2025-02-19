@@ -14,27 +14,36 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final settingsController = Provider.of<SettingsController>(context);
 
     return AppBar(
-      leading: Row(
-        children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // do something
-            },
-          ),
-          AddPatientButton(),
-        ],
-      ),
+      // leading: Row(
+      //   children: <Widget>[
+      //     IconButton(
+      //       icon: Icon(Icons.search),
+      //       onPressed: () {
+      //         // do something
+      //       },
+      //     ),
+      //     AddPatientButton(),
+      //   ],
+      // ),
       leadingWidth: 112,
-      title: Row(children: 
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: 
       [
         Text(title),
+        SizedBox(width: 0.25* MediaQuery.of(context).size.width,),
         Container(
           constraints: BoxConstraints(maxHeight: kToolbarHeight-8),
           child:
         Image(image: AssetImage('assets/images/johanniter_international_logo.png'), fit: BoxFit.fitHeight,)),
         ]),
       actions: <Widget>[
+             IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // do something
+            },
+          ),
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {

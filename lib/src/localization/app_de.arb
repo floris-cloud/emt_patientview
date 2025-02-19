@@ -12,6 +12,7 @@
 
   "anamnese":"Anamnese",
   "mainDiagnose": "Hauptdiagnose",
+  "otherDiagnose": "Weitere Diagnosen",
   "medicalValues": "Messwerte",
   "enterProtocol": "Geben Sie das Protokoll für {patientPrename} ein",
   "bloodPressure":"Blutdruck in mmHg: ",
@@ -67,7 +68,13 @@
   "sortAlphabeticalDesc":"Alphabetisch absteigend",
   "sortUrgency":"Dringlichkeit",
   "filterNoTreatmentStation":"Patienten ohne Behandlungsstation",
-   "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation",
-   "arrivedAt": "Aaufnahme um"
+  "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation",
+  "filterInactive":"Nur aktive Patienten",
+  "filterNoInactive":"Inaktive Patienten anzeigen",
+  "arrivedAt": "Aaufnahme um",
+  "discharge": "Entlassen",
+  "noPatientSelected": "Kein Patient ausgewählt",
+  "addAnamese": "Anamnese hinzufügen",
 
+  "overView": "Gesamtübersicht"
 }

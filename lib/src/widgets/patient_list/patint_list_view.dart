@@ -21,6 +21,7 @@ class _PatientListViewState extends State<PatientListView> {
     bool sortPatientsTimeAsc = true;
     bool sortPatientsAlphabeticalAsc = true;
     bool filterNoTreatmentStation = false;
+    bool filterInactive = false;
     bool sortPatientsTriageCategoryAsc = true;
     PatientListModel _patientsList = PatientListModel();
   @override
@@ -39,7 +40,7 @@ class _PatientListViewState extends State<PatientListView> {
   Widget build(BuildContext context) {
     var patientListModel = context.watch<PatientListModel>();
     final double maxHeigt = 0.5 * MediaQuery.of(context).size.height;
-    final int patientCount = patientListModel.getFilteredPatients(filterNoTreatmentStation).length;
+    final int patientCount = patientListModel.getFilteredPatients(filterNoTreatmentStation, filterInactive).length;
     final double itemHeight = 100.0 * patientCount;
     final double listHeight = (itemHeight < maxHeigt ? itemHeight : maxHeigt);
 
@@ -127,9 +128,19 @@ class _PatientListViewState extends State<PatientListView> {
                     },);
                   },
                 ),
+                IconButton(
+                  tooltip: filterInactive ? AppLocalizations.of(context)!.filterInactive : AppLocalizations.of(context)!.filterNoInactive,
+                  icon: Icon(Icons.place_outlined),
+                  color: filterInactive ? Colors.red : Colors.grey,
+                  onPressed: () {
+                    setState(() {
+                    filterInactive = !filterInactive;
+                    },);
+                  },
+                ),
 
               ],),
-                  patientListModel.getFilteredPatients(filterNoTreatmentStation).length > 0
+                  patientListModel.getFilteredPatients(filterNoTreatmentStation, filterInactive).length > 0
                   ?
                
             Container(
@@ -141,7 +152,7 @@ class _PatientListViewState extends State<PatientListView> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: PatientCardDraggable(patient: patientListModel.getFilteredPatients(filterNoTreatmentStation)[index]),
+                    child: PatientCardDraggable(patient: patientListModel.getFilteredPatients(filterNoTreatmentStation, filterInactive)[index]),
                   );
                 },
               )

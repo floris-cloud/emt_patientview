@@ -1,12 +1,15 @@
 import 'package:emt_patientview/src/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/treatment_station_list.dart';
 import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
 
 
+import '../../screens/protocol_entry_screen.dart';
 import '../pop_up_change_patient.dart';
 import 'pop_up_patient_list.dart';
 
@@ -54,7 +57,9 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.info),
                       onPressed: () {
-
+                        if(widget.treatmentStation.patient != null){           
+                         Provider.of<TreatmentStationList>(context, listen: false).setShowPatient(widget.treatmentStation.patient!);
+                        }
                       },
                     ),
                     IconButton(
@@ -62,11 +67,11 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                       onPressed: () {
                             if(widget.treatmentStation.patient != null) {
              
-                                    showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return PopUpChangePatient(patient: widget.treatmentStation.patient!);
-                },
+                                    Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProtocolEntryScreen(patient: widget.treatmentStation.patient!),
+                ),
               );
                             }
                       },
@@ -131,20 +136,20 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                               ),
                             ),
                             Icon(widget.treatmentStation.patient?.gender.icon),
-                            Text(
-                              widget.treatmentStation.patient?.diagnose ?? " ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[800],
-                              ),
-                            ),
+                            // Text(
+                            //   widget.treatmentStation.patient?.diagnose ?? " ",
+                            //   style: TextStyle(
+                            //     fontSize: 14.0,
+                            //     fontWeight: FontWeight.w500,
+                            //     color: Colors.grey[800],
+                            //   ),
+                            // ),
                           ],
                         ),
                         TimerWidget(startTime: widget.treatmentStation.patient!.firstContact),
-                        Text(
-                          AppLocalizations.of(context)!.diagnose + (widget.treatmentStation.patient?.diagnose ?? " ")
-                          ),
+                        // Text(
+                        //   AppLocalizations.of(context)!.diagnose + (widget.treatmentStation.patient?.diagnose ?? " ")
+                        //   ),
                         
                                           ],
                     )

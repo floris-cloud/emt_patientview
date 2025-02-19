@@ -1,23 +1,23 @@
 class Icd {
-  String code;
+  String title;
   String description;
 
-  Icd({required this.code, required this.description});
+  Icd({required this.title, required this.description});
 
   factory Icd.fromJson(Map<String, dynamic> json) {
     return Icd(
-      code: json['code'],
+      title: json['title'],
       description: json['description'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'code': code,
+    'title': title,
     'description': description,
   };
 
   @override
   String toString() {
-    return 'Icd{code: $code, description: $description}';
+    return 'Icd{title: $title, description: $description}';
   }
 }

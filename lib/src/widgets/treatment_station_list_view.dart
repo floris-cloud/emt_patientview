@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/patient.dart';
 import '../models/treatment_station.dart';
 import '../models/treatment_station_list.dart';
 import 'treatment_station_widget/treatment_station_widget_drop.dart';
@@ -8,11 +9,10 @@ class TreatmentStationListView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => TreatmentStationListViewState();
-
-
 }
 
 class TreatmentStationListViewState extends State<TreatmentStationListView> {
+
   late TreatmentStationList treatmentStationList;
   @override
 void initState() {
@@ -25,7 +25,7 @@ void initState() {
       treatmentStationList.treatmentStations = ts;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
      treatmentStationList = context.watch<TreatmentStationList>();

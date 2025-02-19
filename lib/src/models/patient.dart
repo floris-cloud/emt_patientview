@@ -15,10 +15,13 @@ class Patient extends Person {
   int? treatmentStationId;
   List<r4.ContactPoint> contactPoints = [];
   bool active = true;
-  List<Protocol> protocls = [];
+  List<Protocol>? protocls;
+  DateTime? lastContact;
+  
   Patient(
       {String? id,
       DateTime? firstContact,
+      List<Protocol>? protocls,
       this.diagnose = "",
       required super.surName,
       required super.preName,

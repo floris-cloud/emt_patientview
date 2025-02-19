@@ -20,9 +20,10 @@ class IcdRepository {
   }
   static Future<Icd> getIcd(String id) async {
     Map<String, dynamic> entity =  jsonDecode(await getEntity(id));
+    print(entity);
     String title = entity["title"]["@value"];
-    String description = entity["definition"]["@value"];
-    return Icd(code: title, description: description);
+    String description = entity["definition"]?["@value"]??'';
+    return Icd(title: title, description: description);
 
-  }
+  }                   
 }

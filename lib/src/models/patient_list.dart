@@ -44,8 +44,11 @@ class PatientListModel extends ChangeNotifier {
     notifyListeners();
   }
   
-  List<Patient> getFilteredPatients(bool filterNoTreatmentStation) {
+  List<Patient> getFilteredPatients(bool filterNoTreatmentStation, bool filterInactive) {
     List<Patient> filterdPatients = [..._patients];
+    if (filterInactive){
+      filterdPatients.removeWhere((element) => element.active == false);
+    }
     if (filterNoTreatmentStation) {
      filterdPatients.removeWhere((element) => element.treatmentStationId != null);
     }

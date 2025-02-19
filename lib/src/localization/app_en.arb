@@ -10,6 +10,7 @@
 
   "allPatientsTitle": "All Patients",
   "mainDiagnose": "main diagnose",
+  "otherDiagnose": "other diagnose",
   "anamnese":"anamnese",
   "enterProtocol": "Enter Protocol for {patientPrename}",
   "notes": "Notes",
@@ -69,7 +70,12 @@
   "sortUrgency":"Urgency",
   "filterNoTreatmentStation":"Patients without treatment station",
   "filterTreatmentStation":"Patients with and without treatment station",
-
-     "arrivedAt": "Arrived at"
+  "filterInactive":"Only active patients",
+  "filterNoInactive":"Show inactive patients",
+  "arrivedAt": "Arrived at",
+  "discharge" : "discharge",
+  "noPatientSelected": "No patient selected",
+  "addAnamnese": "Add anamnese",
+  "overView":"Overview"
 
 }
