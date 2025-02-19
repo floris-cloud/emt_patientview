@@ -1,0 +1,29 @@
+name: Flutter Web Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.5' # Specify the Flutter version you want to use
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build Flutter web
+      run: flutter build web
+
+    - name: Upload build artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        name: web-build
+        path: build/web
