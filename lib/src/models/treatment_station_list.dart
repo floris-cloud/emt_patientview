@@ -40,4 +40,13 @@ class TreatmentStationList extends ChangeNotifier {
     showPatient = patient;
     notifyListeners();
   }
+
+  void reorder(int oldIndex, int newIndex) {
+    TreatmentStation old = treatmentStations[oldIndex];
+    treatmentStations.removeAt(oldIndex);
+    treatmentStations.insert(newIndex, old);
+    TreatmentStationRepository.rearrangeTreatmentStations(treatmentStations);
+
+    notifyListeners();
+  }
 }

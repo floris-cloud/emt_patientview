@@ -33,6 +33,7 @@ void initState() {
           children: [
           Wrap(
             spacing: 8.0,
+            runSpacing: 4.0,
             children: [
               ...treatmentStationList.treatmentStations.map((treatmentStation) => TreatmentStationWidgetDrop(treatmentStation: treatmentStation)),
 

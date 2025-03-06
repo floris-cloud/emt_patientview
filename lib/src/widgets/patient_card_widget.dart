@@ -32,7 +32,7 @@ class PatientCard extends StatelessWidget {
            ),
         ),
         Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -40,6 +40,12 @@ class PatientCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 
                 children: [
+                  Text(
+                    patient.id.split('-').first,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                    ),
+                  ),
                   Text(
                     patient.surName+", "+patient.preName,
                     style: TextStyle(

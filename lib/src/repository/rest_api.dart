@@ -16,7 +16,7 @@ class RestApi {
       if(response.statusCode == 200) {
       List<Patient> patients = [];
       List<dynamic> json = jsonDecode(response.body);
-      json.forEach((jsonP) {patients.add(Patient.fhirJson(jsonP));});
+      json.forEach((jsonP) {patients.add(Patient.fromMap(jsonP));});
       return patients;
       
       }
@@ -31,14 +31,14 @@ class RestApi {
 static postPatient(Patient patient) async {
   var url = 'http://$uri/patient';
   print(jsonEncode(patient.getFhirPatient()));
-  var response = await http.post(Uri.parse(url), body: jsonEncode(patient.getFhirPatient()));
+  var response = await http.post(Uri.parse(url), body: jsonEncode(patient));
   if(response.statusCode != 200) {
     throw Exception('Failed to post Patient');
   }
 }
 static changePatient(Patient patient) async {
   var url = 'http://$uri/patient';
-  var response = await http.put(Uri.parse(url), body: jsonEncode(patient.getFhirPatient()));
+  var response = await http.put(Uri.parse(url), body: jsonEncode(patient));
   if(response.statusCode != 200) {
     throw Exception('Failed to change Patient');
   }
@@ -60,15 +60,45 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   }
   List<TreatmentStation> treatmentStations = [];
   List<dynamic> json = jsonDecode(response.body);
+  if(json.isEmpty) {
+    return treatmentStations;
+  }
   json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));});
   return treatmentStations;
 }
 
+  static void postTreatmentStations(List<TreatmentStation> treatmentStations) async {
+    var url = 'http://$uri/treatmentStations';
+    try {
+      var response = await http.post(Uri.parse(url), body: jsonEncode(treatmentStations));
+      if(response.statusCode != 200) {
+        print('Failed to post TreatmentStations');
+      }
+    }
+    catch(e) {
+      print(e);
+    }
+  }
+  static void rearrangeTreatmentStations(List<TreatmentStation> treatmentStations) async {
+      var url = 'http://$uri/treatmentStations';
+    try {
+      var response = await http.put(Uri.parse(url), body: jsonEncode(treatmentStations));
+      if(response.statusCode != 200) {
+        print('Failed to rearrange TreatmentStations');
+      }
+    }
+    catch(e) {
+      print(e);
+    }
+  }
+  
   static void deleteTreatmentStation(TreatmentStation treatmentStation) {
     if(treatmentStation.dbId == null) {
       return;
     }
     var url = 'http://$uri/treatmentStation/';
-    http.delete(Uri.parse(url), body: treatmentStation.dbId);
+    http.delete(Uri.parse(url), body: jsonEncode(treatmentStation));
   }
+
+
 }

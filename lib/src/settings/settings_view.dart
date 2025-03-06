@@ -61,15 +61,20 @@ class SettingsView extends StatelessWidget {
               ],
             ),
           
-          Text('Treatment Places'),
             Expanded(
               child: Consumer<TreatmentStationList>(
                 builder: (context, treatmentStationList, child) {
-                  return ListView.builder(
+                  return ReorderableListView.builder(
+                    header: Text('Treatment Places'),
+                    onReorder: (oldIndex, newIndex) {
+                      treatmentStationList.reorder(oldIndex, newIndex);
+                        
+                    },
                     itemCount: treatmentStationList.treatmentStations.length,
                     itemBuilder: (context, index) {
                       final treatmentPlace = treatmentStationList.treatmentStations[index];
                       return ListTile(
+                        key: ValueKey(treatmentPlace.idString),
                         title: Text(treatmentPlace.id.toString()),
                         subtitle: Text(treatmentPlace.name),
                         trailing: IconButton(icon: Icon(Icons.delete), onPressed: (){

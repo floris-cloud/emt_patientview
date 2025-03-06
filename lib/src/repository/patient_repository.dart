@@ -32,7 +32,9 @@ class PatientStorage {
       await prefs.setString(_key, jsonEncode(patientList));
       return patientList;
     }
+
     List<dynamic> patientListMap = jsonDecode(patientsJson);
+
     for (dynamic patientMap in patientListMap) {
       patients.add(Patient.fromMap(patientMap));
     }
@@ -48,5 +50,13 @@ class PatientStorage {
     RestApi.changePatient(patient);
     String patientsJson = jsonEncode(patients);
     await prefs.setString(_key, patientsJson);
+  }
+
+  static Future<Patient> getPatientbyID(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<Patient> patients = await loadPatients();
+    return patients.firstWhere((p) => p.id== id);
+
+
   }
 }

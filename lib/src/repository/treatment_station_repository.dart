@@ -7,6 +7,8 @@ import '../models/treatment_station.dart';
 
 class TreatmentStationRepository {
   static const String _key = "treatmentStations";
+
+
    postTreatmentStation(TreatmentStation treatmentStation) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<TreatmentStation> treatmentStations = await loadTreatmentStations();
@@ -16,6 +18,15 @@ class TreatmentStationRepository {
 
     RestApi.postTreatmentStation(treatmentStation);
   }
+
+//  postTreatmentStation(TreatmentStation treatmentStation, int index) async {
+//     final SharedPreferences prefs = await SharedPreferences.getInstance();
+//     final List<TreatmentStation> treatmentStations = await loadTreatmentStations();
+//     treatmentStations.insert(index, treatmentStation);
+//     String treatmentStationsJson = jsonEncode(treatmentStations);
+//     await prefs.setString(_key, treatmentStationsJson);
+//  }
+
   static Future<List<TreatmentStation>> getTreatmentStations() async => RestApi.getTreatmentStations();
 
 
@@ -37,6 +48,16 @@ class TreatmentStationRepository {
     }
      
       return treatmentStations;
+  }
+  static rearrangeTreatmentStations(List<TreatmentStation> treatmentStations) async {
+    
+    String jsonTreatmentStations = jsonEncode(treatmentStations);
+    
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_key);
+    await prefs.setString(_key, jsonTreatmentStations);
+
+    RestApi.rearrangeTreatmentStations(treatmentStations);
   }
   static Future<void> deleteTreatmentStation(TreatmentStation treatmentStation) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
