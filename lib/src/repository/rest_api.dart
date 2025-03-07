@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/patient.dart';
+import '../models/protocol.dart';
 import '../models/treatment_station.dart';
 
 class RestApi {
@@ -63,6 +64,7 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   if(json.isEmpty) {
     return treatmentStations;
   }
+  print(json);
   json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));});
   return treatmentStations;
 }
@@ -99,6 +101,26 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
     var url = 'http://$uri/treatmentStation/';
     http.delete(Uri.parse(url), body: jsonEncode(treatmentStation));
   }
-
+  static Future<List<Protocol>> getProtocols(Patient patient) async {
+    var url = 'http://$uri/protocol/';
+    var request = http.Request('GET', Uri.parse(url));
+    request.body = patient.id;
+    var response = await request.send();
+    if(response.statusCode != 200) {
+      throw Exception('Failed to get Protocol');
+    }
+    List<Protocol> protocols = [];
+    List<dynamic> json = jsonDecode(response.stream.toString());
+    json.forEach((jsonP) {protocols.add(Protocol.fromMap(jsonP));});
+    return protocols;
+  }
+  
+  static void postProtocol(Protocol protocol) async {
+    var url = 'http://$uri/protocol';
+    var response = await http.post(Uri.parse(url), body: jsonEncode(protocol.toJson()));
+    if(response.statusCode != 200) {
+      throw Exception('Failed to post Protocol');
+    }
+  }
 
 }

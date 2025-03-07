@@ -5,6 +5,7 @@ import 'package:fhir/r4.dart' as r4;
 
 import 'patient.dart';
  enum TriageCategory {
+  noTriageCategory,
   emergency,
   veryUrgent,
   urgent,
@@ -13,106 +14,108 @@ import 'patient.dart';
 }
 extension TriageCategoryExtension on TriageCategory {
 
-  r4.Observation getFhirTriage(Patient p)
-  {
-    switch(this){
-      case TriageCategory.emergency:
-      {
-        return r4.Observation(
-          status: r4.FhirCode('final'),
-          code: 
-            r4.CodeableConcept(
-              coding: [
-                r4.Coding(
-                  code: r4.FhirCode('MTS-1'),
-                )
-              ]
-            ),
-          subject: r4.Reference(
-            reference: 'Patient/${p.id}'
-          ),
-          effectiveDateTime: r4.FhirDateTime(p.firstContact),
-          );
-}  
-      case TriageCategory.veryUrgent:
-      {
-       return r4.Observation(
-          status: r4.FhirCode('final'),
-          code: 
-            r4.CodeableConcept(
-              coding: [
-                r4.Coding(
-                  code: r4.FhirCode('MTS-2'),
-                )
-              ]
-            ),
-          subject: r4.Reference(
-            reference: 'Patient/${p.id}'
-          ),
-          effectiveDateTime: r4.FhirDateTime(p.firstContact),
-          );}
-          case TriageCategory.urgent:
-          {
-             return r4.Observation(
-          status: r4.FhirCode('final'),
-          code: 
-            r4.CodeableConcept(
-              coding: [
-                r4.Coding(
-                  code: r4.FhirCode('MTS-3'),
-                )
-              ]
-            ),
-          subject: r4.Reference(
-            reference: 'Patient/${p.id}'
-          ),
-          effectiveDateTime: r4.FhirDateTime(p.firstContact),
-          );
-          }
-          case TriageCategory.normal:
+//   r4.Observation getFhirTriage(Patient p)
+//   {
+//     switch(this){
+//       case TriageCategory.emergency:
+//       {
+//         return r4.Observation(
+//           status: r4.FhirCode('final'),
+//           code: 
+//             r4.CodeableConcept(
+//               coding: [
+//                 r4.Coding(
+//                   code: r4.FhirCode('MTS-1'),
+//                 )
+//               ]
+//             ),
+//           subject: r4.Reference(
+//             reference: 'Patient/${p.id}'
+//           ),
+//           effectiveDateTime: r4.FhirDateTime(p.firstContact),
+//           );
+// }  
+  //     case TriageCategory.veryUrgent:
+  //     {
+  //      return r4.Observation(
+  //         status: r4.FhirCode('final'),
+  //         code: 
+  //           r4.CodeableConcept(
+  //             coding: [
+  //               r4.Coding(
+  //                 code: r4.FhirCode('MTS-2'),
+  //               )
+  //             ]
+  //           ),
+  //         subject: r4.Reference(
+  //           reference: 'Patient/${p.id}'
+  //         ),
+  //         effectiveDateTime: r4.FhirDateTime(p.firstContact),
+  //         );}
+  //         case TriageCategory.urgent:
+  //         {
+  //            return r4.Observation(
+  //         status: r4.FhirCode('final'),
+  //         code: 
+  //           r4.CodeableConcept(
+  //             coding: [
+  //               r4.Coding(
+  //                 code: r4.FhirCode('MTS-3'),
+  //               )
+  //             ]
+  //           ),
+  //         subject: r4.Reference(
+  //           reference: 'Patient/${p.id}'
+  //         ),
+  //         effectiveDateTime: r4.FhirDateTime(p.firstContact),
+  //         );
+  //         }
+  //         case TriageCategory.normal:
           
-          {
+  //         {
 
-          return r4.Observation(
-          status: r4.FhirCode('final'),
-          code: 
-            r4.CodeableConcept(
-              coding: [
-                r4.Coding(
-                  code: r4.FhirCode('MTS-4'),
-                )
-              ]
-            ),
-          subject: r4.Reference(
-            reference: 'Patient/${p.id}'
-          ),
-          effectiveDateTime: r4.FhirDateTime(p.firstContact),
-          );
-    }
-    case TriageCategory.noUrgent:
-   {
+  //         return r4.Observation(
+  //         status: r4.FhirCode('final'),
+  //         code: 
+  //           r4.CodeableConcept(
+  //             coding: [
+  //               r4.Coding(
+  //                 code: r4.FhirCode('MTS-4'),
+  //               )
+  //             ]
+  //           ),
+  //         subject: r4.Reference(
+  //           reference: 'Patient/${p.id}'
+  //         ),
+  //         effectiveDateTime: r4.FhirDateTime(p.firstContact),
+  //         );
+  //   }
+  //   case TriageCategory.noUrgent:
+  //  {
 
-     return r4.Observation(
-          status: r4.FhirCode('final'),
-          code: 
-            r4.CodeableConcept(
-              coding: [
-                r4.Coding(
-                  code: r4.FhirCode('MTS-5'),
-                )
-              ]
-            ),
-          subject: r4.Reference(
-            reference: 'Patient/${p.id}'
-          ),
-          effectiveDateTime: r4.FhirDateTime(p.firstContact),
-          );
-    }
-    }
-  }
+  //    return r4.Observation(
+  //         status: r4.FhirCode('final'),
+  //         code: 
+  //           r4.CodeableConcept(
+  //             coding: [
+  //               r4.Coding(
+  //                 code: r4.FhirCode('MTS-5'),
+  //               )
+  //             ]
+  //           ),
+  //         subject: r4.Reference(
+  //           reference: 'Patient/${p.id}'
+  //         ),
+  //         effectiveDateTime: r4.FhirDateTime(p.firstContact),
+  //         );
+  //   }
+  //   }
+  // }
 
   Duration getDuration() {
     switch (this) {
+      case TriageCategory.noTriageCategory:
+        return const Duration(minutes: 10);
       case TriageCategory.emergency:
         return const Duration(seconds: 0);
       case TriageCategory.veryUrgent:
@@ -130,6 +133,8 @@ extension TriageCategoryExtension on TriageCategory {
 
    Color getColor() {
     switch (this) {
+      case TriageCategory.noTriageCategory:
+        return AppColor.noTriageCategory;
       case TriageCategory.emergency:
         return AppColor.triageCategoryRed;
       case TriageCategory.veryUrgent:
@@ -146,6 +151,8 @@ extension TriageCategoryExtension on TriageCategory {
   }
   String getText(BuildContext context){  
   switch (this) {
+      case TriageCategory.noTriageCategory:
+        return AppLocalizations.of(context)!.noTriageCategory;
       case TriageCategory.emergency:
         return AppLocalizations.of(context)!.emergency;
       case TriageCategory.veryUrgent:

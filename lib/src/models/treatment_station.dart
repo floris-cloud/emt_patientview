@@ -24,7 +24,7 @@ class TreatmentStation extends ChangeNotifier {
         id: json["id"],
         name: json["name"],
         patient: json['patientId'] == null ? null : json['patientId'],
-        color:  json['color'] == null ? null : Color(int.parse(json['color'].substring(1), radix: 16)),
+        //color:  json['color'] == null ? null : Color(int.parse(json['color'].substring(1), radix: 16)),
         dbId: json['dbId']==null ? null : json['dbId'],
   );
   }

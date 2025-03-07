@@ -43,7 +43,7 @@
   "noPatients": "No Patients",
 
 
-
+  "noTriageCategory": "No Triage Category",
   "emergency": "emergency",    
   "veryUrgent": "very urgent",
   "urgent": "urgent",  
@@ -76,6 +76,7 @@
   "discharge" : "discharge",
   "noPatientSelected": "No patient selected",
   "addAnamnese": "Add anamnese",
+  "finalProtocol": "send protocol",
   "overView":"Overview"
 
 }

@@ -8,6 +8,7 @@ import '../models/protocol.dart';
 import '../widgets/protocoll/anamnese.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/patient_change_user_journey.dart';
+import '../widgets/protocoll/final_protocol.dart';
 import '../widgets/protocoll/protocoll_input_user_journey.dart';
 
 
@@ -21,7 +22,7 @@ class ProtocolEntryScreen extends StatefulWidget {
 }
   class _ProtocolEntryScreenState extends State<ProtocolEntryScreen> {
     late Widget w;
-    int _selectedIndex = 1;
+    int _selectedIndex = 2;
     late Protocol protocol;
     late String title;  
     bool changeTitle = false;
@@ -31,7 +32,7 @@ class ProtocolEntryScreen extends StatefulWidget {
       super.initState();
       if(widget.patient.protocls != null){
         if(widget.patient.protocls!.isNotEmpty)
-        protocol = widget.patient.protocls!.first;
+        protocol = widget.patient.protocls!.last;
       }
       else{
      protocol = Protocol(patientId: widget.patient.id);
@@ -75,6 +76,11 @@ class ProtocolEntryScreen extends StatefulWidget {
         icon: Icon(Icons.notes),
         label: Text(AppLocalizations.of(context)!.anamnese),
       ),
+      NavigationRailDestination(
+        icon: Icon(Icons.list_alt),
+        label: Text(AppLocalizations.of(context)!.finalProtocol),
+      )
+
     ],
     onDestinationSelected: (int index) {
       setState(() {
@@ -99,6 +105,12 @@ class ProtocolEntryScreen extends StatefulWidget {
           case 3:
             w = AnamneseInputUserJourney(patient: widget.patient);
             changeTitle = true;
+            title = AppLocalizations.of(context)!.anamnese;
+            break;
+          case 4:
+            w = FinalProtocol(patient: widget.patient);
+            changeTitle = true;
+            title = AppLocalizations.of(context)!.finalProtocol;
             break;
         }
       });

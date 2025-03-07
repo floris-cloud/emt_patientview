@@ -42,7 +42,7 @@
 
   "noPatients": "Keine Patienten vorhanden",
 
-
+  "noTriageCategory": "Keine Triage-Kategorie",
   "emergency": "Notfall",    
   "veryUrgent": "sehr drigend",
   "urgent": "drigend",  
@@ -75,6 +75,6 @@
   "discharge": "Entlassen",
   "noPatientSelected": "Kein Patient ausgewählt",
   "addAnamese": "Anamnese hinzufügen",
-
+  "finalProtocol": "Protokoll abschließen",
   "overView": "Gesamtübersicht"
 }

@@ -88,48 +88,20 @@ class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                           Expanded(
                             child: DropdownButtonFormField(
                               value: _triageCategory,
-                              items: [
-                                DropdownMenuItem(
-                                    value: TriageCategory.emergency,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.emergency,
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              TriageCategory.emergency.getColor(),),
-                                    ),),
-                                DropdownMenuItem(
-                                    value: TriageCategory.veryUrgent,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.veryUrgent,
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              TriageCategory.veryUrgent.getColor(),),
-                                    ),),
-                                DropdownMenuItem(
-                                    value: TriageCategory.urgent,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.urgent,
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              TriageCategory.urgent.getColor(),),
-                                    ),),
-                                DropdownMenuItem(
-                                    value: TriageCategory.normal,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.normal,
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              TriageCategory.normal.getColor(),),
-                                    ),),
-                                DropdownMenuItem(
-                                    value: TriageCategory.noUrgent,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.noUrgent,
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              TriageCategory.noUrgent.getColor(),),
-                                    ),),
-                              ],
+                       
+                        items: [
+                         ...TriageCategory.values.map((category) {
+  return DropdownMenuItem(
+    value: category,
+    child: Text(
+      category.name, 
+      style: TextStyle(
+        backgroundColor: category.getColor(),
+      ),
+    ),
+  );
+})],
+                      
                               onChanged: (value) {
                                 _triageCategory = value!;
                               },

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:fhir/r4.dart' as r4;
 import 'package:uuid/uuid.dart';
+import 'mds.dart';
 import 'protocol.dart';
 import 'triage_category.dart';
 import 'person.dart';
@@ -17,7 +18,7 @@ class Patient extends Person {
   bool active = true;
   List<Protocol>? protocls;
   DateTime? lastContact;
-  
+  MDS? mds;
   Patient(
       {String? id,
       DateTime? firstContact,

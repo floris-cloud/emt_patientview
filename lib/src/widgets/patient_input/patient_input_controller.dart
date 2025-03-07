@@ -13,7 +13,7 @@ class PatientInputController with ChangeNotifier {
   final ageController = TextEditingController();
   final birthDateController = TextEditingController();
   Gender gender = Gender.unknown;
-  TriageCategory triageCategory = TriageCategory.veryUrgent;
+  TriageCategory triageCategory = TriageCategory.noTriageCategory;
 
   
 
@@ -22,6 +22,7 @@ class PatientInputController with ChangeNotifier {
       Patient patient = Patient(
       surName: surNameController.text,
       preName: preNameController.text,
+      protocls: [],
       birthDate: DateTime.tryParse(birthDateController.text) ?? DateTime.now(),
       gender: gender,
       triageCategory: triageCategory,
