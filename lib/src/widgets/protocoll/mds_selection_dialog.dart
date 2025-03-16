@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
 import '../../models/mds.dart';
+import '../../models/patient.dart';
 
 class MdsSelectionDialog extends StatefulWidget {
-  // final MDS initialMds;
-  // final Function(MDS) onMdsSaved;
-
+  final Patient patient;
   const MdsSelectionDialog({
-    // required this.initialMds,
-    // required this.onMdsSaved,
     super.key,
+    required this.patient,
   });
 
   @override
@@ -17,49 +14,59 @@ class MdsSelectionDialog extends StatefulWidget {
 }
 
 class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
-  late Map<Type, Set<dynamic>> selectedValues;
+  late MDS selectedValues;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.patient.protocls!.last.mds != null) {
+      selectedValues = widget.patient.protocls!.last.mds!;
+    } else {
+      widget.patient.protocls!.last.mds =
+          MDS(age: widget.patient.getAge(), id: widget.patient.id);
+      selectedValues = widget.patient.protocls!.last.mds!;
+    }
+      selectedValues.mdsFromPatient(widget.patient);
+  }
 
   final categories = [
     _MdsCategory(
       title: 'Sex',
       values: MDSSex.values,
-
     ),
     _MdsCategory(
       title: 'Trauma',
       values: MDSTrauma.values,
-
     ),
     _MdsCategory(
       title: 'Infection',
       values: MDSInfection.values,
-    )
-
-    // Füge alle anderen Kategorien hier hinzu
+    ),
+    _MdsCategory(
+      title: 'Additional',
+      values: MDSAdditional.values,
+    ),
+    _MdsCategory(
+      title: 'Other Keydiseases',
+      values: MDSOtherKeydiseases.values,
+    ),
+    _MdsCategory(
+      title: 'Procedure',
+      values: MDSProcedure.values,
+    ),
+    _MdsCategory(
+      title: 'Outcome',
+      values: MDSOutcome.values,
+    ),
+    _MdsCategory(
+      title: 'Relation',
+      values: MDSRelation.values,
+    ),
+    _MdsCategory(
+      title: 'Protection',
+      values: MDSProtection.values,
+    ),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    // selectedValues = {
-    //   for (var category in categories)
-    //     category.values.first.runtimeType: 
-    //       Set.from(category.getter(widget.initialMds))
-    // };
-  }
-
-  void _toggleSelection(dynamic value) {
-    setState(() {
-      final type = value.runtimeType;
-      final values = selectedValues[type] ?? Set();
-      if (values.contains(value)) {
-        values.remove(value);
-      } else {
-        values.add(value);
-      }
-      selectedValues[type] = values;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +80,7 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
           separatorBuilder: (context, _) => const Divider(height: 24),
           itemBuilder: (context, index) {
             final category = categories[index];
-            return _buildCategorySection(category);
+            return _buildCategorySection(category, index);
           },
         ),
       ),
@@ -90,29 +97,48 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
     );
   }
 
-  Widget _buildCategorySection(_MdsCategory category) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(
-            category.title,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+  Widget _buildCategorySection(_MdsCategory category, int index) {
+    final type = category.values.first.runtimeType;
+    final selectedInCategory =
+        selectedValues.mdsList.where((item) => item.runtimeType == type).toList();
+
+    return ExpansionTile(
+      initiallyExpanded: selectedInCategory.isEmpty,
+      title: RichText(
+        text: TextSpan(
+          style: DefaultTextStyle.of(context).style,
+          children: [
+            TextSpan(text: category.title),
+            if (selectedInCategory.isNotEmpty)
+              TextSpan(
+                text: ' (${selectedInCategory.map((e) => e.name).join(', ')})',
+                style: const TextStyle(color: Colors.grey),
+              ),
+          ],
         ),
+      ),
+      children: [
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: category.values.length,
-          itemBuilder: (context, index) {
-            final value = category.values[index];
+          itemBuilder: (context, valueIndex) {
+            final value = category.values[valueIndex];
             return CheckboxListTile(
               title: Text(value.name),
-              value: selectedValues[value.runtimeType]?.contains(value) ?? false,
-              onChanged: (_) => _toggleSelection(value),
-              dense: true,
-              contentPadding: EdgeInsets.zero,
+              value: selectedValues.mdsList.contains(value),
+              onChanged: (_) {
+                setState(() {
+                  if (selectedValues.mdsList.contains(value)) {
+                    selectedValues.mdsList.remove(value);
+                    selectedInCategory.remove(value);
+                  } else {
+                    selectedValues.mdsList.add(value);
+                    selectedInCategory.add(value);
+                  }
+                });
+              },
+              //dense: true,
             );
           },
         ),
@@ -121,16 +147,8 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
   }
 
   void _saveSelection() {
-    final newMds = MDS(id :"11", age: 0);
-      // Füge alle anderen Kategorien hier hinzu
-      
-
-    // widget.onMdsSaved(newMds);
+    widget.patient.protocls!.last.mds = selectedValues;
     Navigator.pop(context);
-  }
-
-  List<T> _getSelectedValues<T>() {
-    return selectedValues[T]?.toList().cast<T>() ?? [];
   }
 }
 

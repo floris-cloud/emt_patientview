@@ -1,7 +1,7 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:file_saver/file_saver.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/patient.dart';
 import '../models/protocol.dart';
 import '../models/treatment_station.dart';
@@ -122,5 +122,19 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
       throw Exception('Failed to post Protocol');
     }
   }
+  static void getMDS() async {
+    var url = 'http://$uri/mds';
+    var response = await http.get(Uri.parse(url));
+    if(response.statusCode != 200) {
+      throw Exception('Failed to get MDS');
+    }
+    
+    String filename = response.headers['filename']?? 'mds.xlsm';
+    await FileSaver.instance.saveFile(name: filename, bytes: response.bodyBytes, customMimeType: response.headers['media_type']);
+
+    print(response.headers);
+    print('MDS downloaded');
+  }
+
 
 }

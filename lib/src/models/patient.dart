@@ -12,13 +12,13 @@ class Patient extends Person {
   final String id;
   TriageCategory triageCategory;
   final DateTime firstContact;
-   bool timeExpired = false;
   int? treatmentStationId;
   List<r4.ContactPoint> contactPoints = [];
   bool active = true;
   List<Protocol>? protocls;
   DateTime? lastContact;
   MDS? mds;
+  Map<DateTime, dynamic> contacts = {};
   Patient(
       {String? id,
       DateTime? firstContact,
@@ -31,7 +31,7 @@ class Patient extends Person {
       required this.triageCategory,})
       : id = id ?? const Uuid().v4(),
         firstContact = firstContact ?? DateTime.now();
-
+  //TODO wie bei toJSON
   factory Patient.fromMap(Map<String, dynamic> map) {
     Patient p = Patient(
       preName: map['preName'],
@@ -48,19 +48,19 @@ class Patient extends Person {
     });
     return p;
   }
-  factory Patient.fhirJson(Map<String, dynamic> json) {
-    print(json);
-    Patient p = Patient(
-      preName: json['name'][0]['given'][0],
-      surName: json['name'][0]['family'],
-      gender: Gender.unknown,
-      id: json['id'],
-      triageCategory: TriageCategory.emergency,
-      firstContact: DateTime.now(),
-    );
-    return p;
+  // factory Patient.fhirJson(Map<String, dynamic> json) {
+  //   print(json);
+  //   Patient p = Patient(
+  //     preName: json['name'][0]['given'][0],
+  //     surName: json['name'][0]['family'],
+  //     gender: Gender.unknown,
+  //     id: json['id'],
+  //     triageCategory: TriageCategory.emergency,
+  //     firstContact: DateTime.now(),
+  //   );
+  //   return p;
     
-  }
+  // }
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = super.toJson();
@@ -68,6 +68,14 @@ class Patient extends Person {
     map['id'] = id;
     map['triageCategory'] = triageCategory.name;
     map['firstContact'] = firstContact.toIso8601String();
+    map['lastContact'] = lastContact?.toIso8601String();
+    map['treatmentStationId'] = treatmentStationId;
+    map['active'] = active;
+    map['protocls'] = protocls?.map((e) => e.toJson()).toList();
+    map['mds'] = mds?.toJson();
+    map['contacts'] = contacts.map((key, value) => MapEntry(key.toIso8601String(), value is TriageCategory ? value.name : value));
+
+
     return map;
   }
 

@@ -15,7 +15,7 @@ class FinalProtocol extends StatelessWidget{
       children: [
 
         PatientInformation(patient: patient),
-        MedicalValuesDiagramm(patient: patient),
+        // MedicalValuesDiagramm(patient: patient),
         Text('Anamnese: ${patient.protocls!.last.notes ?? ''}',),
         Text('Diagnose: ${patient.protocls!.last.mainDiagnose ?? ''}',),
          ElevatedButton(
@@ -23,12 +23,15 @@ class FinalProtocol extends StatelessWidget{
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return MdsSelectionDialog();
+                    return MdsSelectionDialog(patient: patient,);
                   },
                 );
               },
-              child: Text('Add Treatment Place'),
+              child: Text('MDS'),
             ),
+         ElevatedButton(onPressed: (){
+          patient.protocls!.last.sendProtocol();
+         }, child: Text('Send Protocoll'),)
       ]
     );
   }

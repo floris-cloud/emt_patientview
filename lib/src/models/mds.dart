@@ -1,12 +1,48 @@
+import 'icd.dart';
+import 'patient.dart';
+import 'person.dart';
+
 class MDS{
 String id;
 int age;
-List<dynamic> mdsList = [];
+Set<dynamic> mdsList = {};
 
 MDS({
   required this.id,
   required this.age
 });
+
+void mdsFromPatient(Patient patient){
+  Set<dynamic> mdsList =  patient.protocls!.last.mds!.mdsList;
+  //setGender
+  if(patient.gender == Gender.male){
+    mdsList.add(MDSSex.male); 
+  }
+  //check if patient is pregnant
+
+  if(patient.gender == Gender.female){
+    mdsList.add(MDSSex.femaleNotPregnant); 
+  }
+
+
+  if(patient.protocls!.last.mainDiagnose != null){
+         //check if maindiagnose has a mds
+      if (patient.protocls!.last.mainDiagnose!.mdsFromDiagnose() != null){
+        mdsList.add(patient.protocls!.last.mainDiagnose!.mdsFromDiagnose());
+        }
+      if(patient.protocls!.last.otherDiagnoses.isNotEmpty){
+        patient.protocls!.last.otherDiagnoses.forEach((element) {
+          if (element.mdsFromDiagnose() != null){
+        mdsList.add(element.mdsFromDiagnose());
+          }
+        });
+      
+      }  
+patient.protocls!.last.mds!.mdsList.addAll(mdsList);}
+
+}
+
+
 
 Map<String, dynamic> toJson() {
   List<int> mds = [];
@@ -19,8 +55,11 @@ Map<String, dynamic> toJson() {
   'mds': mds,
 };
 }
+
 }
+
 enum MDSSex{
+  unknown(name:"unkown", id:0),
   male(name:"male", id:1),
   femaleNotPregnant(name: "female", id:2),
   femalePregnant(name: "female pregnant", id:3),;

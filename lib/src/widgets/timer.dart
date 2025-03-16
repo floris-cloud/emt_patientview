@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-class TimerWidget extends StatefulWidget {
-  final DateTime startTime;
+import '../models/patient.dart';
 
-  const TimerWidget({Key? key, required this.startTime}) : super(key: key);
+class TimerWidget extends StatefulWidget {
+  final Patient patient;
+
+  const TimerWidget({Key? key, required this.patient}) : super(key: key);
 
   @override
   _TimerWidgetState createState() => _TimerWidgetState();
@@ -13,18 +15,19 @@ class TimerWidget extends StatefulWidget {
 class _TimerWidgetState extends State<TimerWidget> {
   late Timer _timer;
   late Duration _elapsed;
-
+  late DateTime time;
   @override
   void initState() {
     super.initState();
-    _elapsed = DateTime.now().difference(widget.startTime);
+    time = widget.patient.firstContact;
+    _elapsed = DateTime.now().difference(time);
     _startTimer();
   }
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _elapsed = DateTime.now().difference(widget.startTime);
+        _elapsed = DateTime.now().difference(time);
       });
     });
   }
@@ -37,7 +40,10 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return 
+    //TODO DropdownMenu für auswahl erst kontakt/ letzter Kontakt
+    //DropdownMenu(dropdownMenuEntries: dropdownMenuEntries)
+    Text(
       _formatDuration(_elapsed),
       style: TextStyle(fontSize: 24.0),
     );

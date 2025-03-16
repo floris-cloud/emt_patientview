@@ -4,7 +4,29 @@ import 'package:http/http.dart' as http;
 import '../models/icd.dart';
 
 class IcdRepository {
-  static Future<String> getEntity(String id) async {
+
+  static Future<String> getEntityId(String code) async {
+
+  
+    var url = 'http://floris-20df0051ge.local/icd/release/11/2024-01/mms/codeinfo/$code';
+    var response = await http.get(Uri.parse(url), headers: {
+      'accept': 'application/json',
+      'Accept-language': 'en',
+      'Api-version': 'v2',
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+      var codeinfo = jsonDecode(response.body);
+
+      return codeinfo["stemId"].split("/").last;
+    } else {
+      print(response.body);
+      throw Exception('Failed to get Entity ID');
+    }
+    
+  }
+
+  static Future<Map<String, dynamic>> getEntity(String id) async {
     var url = 'http://floris-20df0051ge.local:80/icd/entity/$id';
 
     var response = await http.get(Uri.parse(url), headers: {
@@ -13,17 +35,26 @@ class IcdRepository {
       'Api-version': 'v2',
     });
     if (response.statusCode == 200) {
-      return response.body;
+      var entity = jsonDecode(response.body);
+      
+      return entity;
     } else {
-      return '';
+      throw Exception('Failed to load entity');
     }
   }
-  static Future<Icd> getIcd(String id) async {
-    Map<String, dynamic> entity =  jsonDecode(await getEntity(id));
-    print(entity);
+  static Future<Icd> getIcd(String code) async {
+    print(code);
+    try{
+    String entityID=  await getEntityId(code);
+    Map<String, dynamic> entity = await getEntity(entityID);
     String title = entity["title"]["@value"];
     String description = entity["definition"]?["@value"]??'';
-    return Icd(title: title, description: description);
+    return Icd(title: title, description: description, entity: entityID, code: code);
 
+    }
+    catch(e){
+      print(e);
+      return Icd(title: '', description: '', entity: '', code: code);
+    }
   }                   
 }

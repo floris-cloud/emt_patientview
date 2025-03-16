@@ -146,7 +146,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                             // ),
                           ],
                         ),
-                        TimerWidget(startTime: widget.treatmentStation.patient!.firstContact),
+                        TimerWidget(patient: widget.treatmentStation.patient!),
                         // Text(
                         //   AppLocalizations.of(context)!.diagnose + (widget.treatmentStation.patient?.diagnose ?? " ")
                         //   ),

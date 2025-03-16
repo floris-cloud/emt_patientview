@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/treatment_station_list.dart';
+import '../repository/rest_api.dart';
 import 'pop_up_treatment_station.dart';
 import 'settings_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -44,6 +45,12 @@ class SettingsView extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                RestApi.getMDS();
+              },
+              child: Text('Add Treatment Place'),
+            ),
             DropdownButton<Locale>(
               value: controller.locale,
               onChanged: (Locale? newLocale) {

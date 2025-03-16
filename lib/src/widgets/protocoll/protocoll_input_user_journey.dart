@@ -4,7 +4,7 @@ import '../../models/patient.dart';
 import '../../models/protocol.dart';
 import '../../repository/protocol_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'medical_values_diagramm.dart';
 import '../medicalValueView.dart';
 class ProtocollInputUserJourney extends StatefulWidget {
   final Patient patient;
@@ -59,15 +59,19 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
             .enterProtocol(widget.patient.id.split('-').first),),
             SizedBox(height: 8),
             //all medicalValues
-            ListView(
-              shrinkWrap: true,
-              children: [
-                  ...widget.protocol.medicalValuesList.map((medicalValue) {
-                return Medicalvalueview(medicalValue: medicalValue);
+            // ListView(
+            //   shrinkWrap: true,
+            //   children: [
+            //       ...widget.protocol.medicalValuesList.map((medicalValue) {
+            //     return Medicalvalueview(medicalValue: medicalValue);
 
-                  })
-              ],
-            ),
+            //       })
+            //   ],
+            // ),
+        Container(
+          height: 300,
+          width: 600,
+          child: MedicalValuesDiagramm(patient: widget.patient)),
     //AB
      Row(
      children: [  //AF

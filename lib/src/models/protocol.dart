@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:emt_patientview/src/models/mds.dart';
+
+import '../repository/protocol_repository.dart';
 import 'icd.dart';
 import 'medical_values.dart';
 
@@ -11,7 +14,7 @@ class Protocol {
   List<Icd> otherDiagnoses = [];
 
   List<MedicalValues> medicalValuesList;
-
+  MDS? mds;
   Protocol({
     required this.patientId,
      this.notes,
@@ -27,6 +30,10 @@ class Protocol {
       'patientId': patientId,
       'notes': notes,
       'medicalValuesList': medicalValuesList,
+      'mds': mds?? [],
+      'mainDiagnose': mainDiagnose??' ',
+      'otherDiagnoses': otherDiagnoses,
+      'timeStamp': DateTime.now().toIso8601String(),
     };
   }
 
@@ -54,5 +61,9 @@ class Protocol {
       );
   }
 
+  void sendProtocol() {
+    ProtocolRepository.saveProtocol(this);
+    // send protocol to server
+  }
 }
 
