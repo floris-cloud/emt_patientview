@@ -26,28 +26,43 @@ class Icd {
     return 'Icd{title: $title, description: $description}';
   }
 
-   dynamic mdsFromDiagnose(){
-    List<String> icdMajorHeadInjury = ['NA00','NA01','NA02','NA03', 'NA06', 'NA08', 'NA09','NA0A'];
-    if (icdMajorHeadInjury.any((prefix) => code.startsWith(prefix))){
-      return MDSTrauma.majorExtremityInjury;
-    }
-    List<String> icdmajorTorsoInjury = [];
-    if (icdmajorTorsoInjury.any((prefix) => code.startsWith(prefix))){
-      return MDSTrauma.majorTorsoInjury;
-    }
-    List<String> icdmajorExtremityInjury = [];
-    if (icdmajorExtremityInjury.any((prefix) => code.startsWith(prefix))){
-      return MDSTrauma.majorExtremityInjury;
-    }
-    List<String> icdMadorateInjury = [];
-    if (icdMadorateInjury.any((prefix) => code.startsWith(prefix))){
-      return MDSTrauma.moderateInjury;
-    }
-    List<String> icdMinorInjury = [];
-    if (icdMinorInjury.any((prefix) => code.startsWith(prefix))){
-      return MDSTrauma.minorInjury;
-    }
 
-    return null;
+  dynamic mdsFromDiagnose() {
+  Map<List<String>, dynamic> icdMap = {
+     ['NA00','NA01','NA02','NA03', 'NA06', 'NA08', 'NA09','NA0A']: MDSTrauma.majorHeadSpineInjury,
+    []: MDSTrauma.majorTorsoInjury,
+    []: MDSTrauma.majorExtremityInjury,
+    []: MDSTrauma.moderateInjury,
+    []: MDSTrauma.minorInjury,
+    []: MDSInfection.acuteRespiratoryInfection,
+    ['ME05.1','1A40']: MDSInfection.acuteWateryDiarrhea,
+    []: MDSInfection.acuteBloodyDiarrhea,
+    []: MDSInfection.acuteIaundiceSyndrome,
+    []: MDSInfection.suspectedMeasles,
+    []: MDSInfection.suspectedMeningitis,
+    ['1C13']: MDSInfection.suspectedTetanus,
+    ['1A40', 'SM37']: MDSInfection.acuteFlaccidParalysis,
+    []: MDSInfection.acuteHaemorrhagicFever,
+    ['MG26']: MDSInfection.feverUnknownOrigin,
+    []: MDSEmergency.surgicalEmergencyNonTrauma,
+    []: MDSEmergency.medicalEmergencyNonInfectious,
+    []: MDSOtherKeydiseases.skinDisease,
+    []: MDSOtherKeydiseases.acuteMentalHealth,
+    []: MDSOtherKeydiseases.obstetricComplication,
+    []: MDSOtherKeydiseases.severeAcuteMalnutrition,
+    []: MDSOtherKeydiseases.otherDiagnosis,
+    []: MDSProtection.vulnerableChild,
+    []: MDSProtection.vulnerableAdult,
+    []: MDSProtection.sexualGenderBasedViolence,
+    []: MDSProtection.violenceNonSGBV,
+  };
+
+  for (var entry in icdMap.entries) {
+    if (entry.key.any((prefix) => code.startsWith(prefix))) {
+      return entry.value;
+    }
   }
+
+  return null;
+}
 }
