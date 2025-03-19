@@ -26,8 +26,9 @@ class PatientListModel extends ChangeNotifier {
   //   _patients = newPatients;
   //   notifyListeners();
   // }
-  void add(Patient patient) {
+  Future<void> add(Patient patient) async {
     _patients.add(patient);
+    await PatientStorage.savePatient(patient);
     notifyListeners();
   }
 
@@ -81,9 +82,8 @@ class PatientListModel extends ChangeNotifier {
 
   List<Patient> getFilteredPatients(String text) {
    
-    List<Patient> _inactivePatients = _patients;
-    print(_inactivePatients.length);
-    return _inactivePatients;
+    List<Patient> _inactivePatients = [..._patients];
+    _inactivePatients.removeWhere((element) => element.active == true);
     return _inactivePatients.where((element) => element.surName.toLowerCase().contains(text.toLowerCase()) || element.preName.toLowerCase().contains(text.toLowerCase())).toList();
   }
 

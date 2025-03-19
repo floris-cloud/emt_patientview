@@ -138,7 +138,7 @@ class PatientInputView extends StatelessWidget {
           onPressed: () async {
             Provider.of<PatientListModel>(context, listen: false)
                 .add(controller.createPatient());
-           controller.savePatient();
+          //  controller.savePatient();
             const Spacer(flex: 1);
             Navigator.of(context).pop();
           },

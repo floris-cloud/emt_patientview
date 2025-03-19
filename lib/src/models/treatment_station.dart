@@ -20,11 +20,15 @@ class TreatmentStation extends ChangeNotifier {
   });
   factory TreatmentStation.fromJson(Map<String, dynamic> json) {
     print(json);
+    int i = int.parse(json['color'], radix: 16);
+    print(i);
+    Color c = Color(i);
+    print(c.value);
     return TreatmentStation(
         id: json["id"],
         name: json["name"],
         patient: json['patientId'] == null ? null : json['patientId'],
-        //color:  json['color'] == null ? null : Color(int.parse(json['color'].substring(1), radix: 16)),
+        color:  json['color'] == null ? null : Color(int.parse(json['color'], radix: 16)),
         dbId: json['dbId']==null ? null : json['dbId'],
   );
   }

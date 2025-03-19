@@ -42,32 +42,65 @@ class Protocol {
       'otherDiagnoses': otherDiagnoses,
       'firstContact': createdAt.toIso8601String(),
       'contacts' : contactsString,
+      'timeStamp': DateTime.now().toIso8601String()
     };
   }
 
   factory Protocol.fromJson(String json) {
     return Protocol.fromMap(jsonDecode(json));
   }
-
   factory Protocol.fromMap(Map<String, dynamic> map) {
-    var medicalValuesList = map['medicalValuesList'];
-    List<MedicalValues> valuesList = [];
-    Icd? mainDiagnose;
-    if (medicalValuesList != null && medicalValuesList is List) {
-      valuesList = medicalValuesList.map((item) {
-        return MedicalValues.fromMap(item);
-      }).toList();
-    }
-    if (map['mainDiagnose'] != null) {
-      mainDiagnose = Icd.fromJson(jsonDecode(map['mainDiagnose']));
-    }
-    return Protocol(
-      patientId: map['patientId'],
-      notes: map['notes'],
-      medicalValuesList: valuesList,
-      mainDiagnose: mainDiagnose,
-      );
+  // Korrekte Verarbeitung der MedicalValues
+  final medicalValuesList = map['medicalValuesList'] as List? ?? [];
+  final valuesList = medicalValuesList
+      .map((item) => MedicalValues.fromMap(item as Map<String, dynamic>))
+      .toList();
+
+  // Korrekte Verarbeitung der Hauptdiagnose
+  Icd? mainDiagnose;
+  if (map['mainDiagnose'] is Map<String, dynamic>) {
+    mainDiagnose = Icd.fromJson(map['mainDiagnose'] as Map<String, dynamic>);
   }
+
+  // Korrekte Verarbeitung anderer Diagnosen
+  final otherDiagnoses = (map['otherDiagnoses'] as List? ?? [])
+      .map((e) => Icd.fromJson(e as Map<String, dynamic>))
+      .toList();
+
+  Protocol p =  Protocol(
+    patientId: map['patientId'] as String,
+    notes: map['notes'] as String?,
+    medicalValuesList: valuesList,
+    mainDiagnose: mainDiagnose
+    );
+   
+    p.contacts = (map['contacts'] as Map<String, dynamic>).map((key, value) => MapEntry(DateTime.parse(key), value));
+    
+  p.otherDiagnoses = otherDiagnoses;
+  return p;
+}
+  // factory Protocol.fromMap(Map<String, dynamic> map) {
+  //   var medicalValuesList = map['medicalValuesList'];
+  //   List<MedicalValues> valuesList = [];
+  //   Icd? mainDiagnose;
+  //   if (medicalValuesList is List) {
+  //     if(medicalValuesList.isNotEmpty){
+  //     valuesList = medicalValuesList.map((item) {
+  //       return MedicalValues.fromMap(item);
+  //     }).toList();
+  //     }
+  //   }
+  //   if (map['mainDiagnose'] != '' && map['mainDiagnose'] != ' ') {
+  //     mainDiagnose = Icd.fromJson(jsonDecode(map['mainDiagnose']));
+  //   }
+
+  //   return Protocol(
+  //     patientId: map['patientId'],
+  //     notes: map['notes'],
+  //     medicalValuesList: valuesList,
+  //     mainDiagnose: mainDiagnose,
+  //     );
+  // }
   void addContact(String value) {
     contacts[DateTime.now()] = value;
   }

@@ -57,7 +57,48 @@ Map<String, dynamic> toJson() {
 };
 }
 
+  static List<MdsCategory> getMDSCategory(){
+    return [
+    MdsCategory(
+      title: 'Sex',
+      values: MDSSex.values,
+    ),
+    MdsCategory(
+      title: 'Trauma',
+      values: MDSTrauma.values,
+    ),
+    MdsCategory(
+      title: 'Infection',
+      values: MDSInfection.values,
+    ),
+    MdsCategory(
+      title: 'Additional',
+      values: MDSAdditional.values,
+    ),
+    MdsCategory(
+      title: 'Other Keydiseases',
+      values: MDSOtherKeydiseases.values,
+    ),
+    MdsCategory(
+      title: 'Procedure',
+      values: MDSProcedure.values,
+    ),
+    MdsCategory(
+      title: 'Outcome',
+      values: MDSOutcome.values,
+    ),
+    MdsCategory(
+      title: 'Relation',
+      values: MDSRelation.values,
+    ),
+    MdsCategory(
+      title: 'Protection',
+      values: MDSProtection.values,
+    ),
+  ];
+  }
 }
+
 
 enum MDSSex{
   unknown(name:"unkown", id:0),
@@ -71,6 +112,7 @@ const MDSSex({
   final String name;
   final int id;
 }
+
 
 enum MDSTrauma{
  majorHeadSpineInjury(name: "major head/spine injury", id:4),
@@ -196,4 +238,14 @@ enum MDSProtection{
     });
     final String name;
     final int id;
+}
+
+class MdsCategory {
+  final String title;
+  final List<dynamic> values;
+
+ MdsCategory({
+    required this.title,
+    required this.values,
+  });
 }

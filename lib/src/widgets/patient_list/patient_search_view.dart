@@ -3,9 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../../models/patient.dart';
 import '../../models/patient_list.dart';
+import '../treatment_station_widget/pop_up_patient_list.dart';
 class PopupPatientSearchView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       content: PatientSearchView(),
     );
@@ -24,7 +26,8 @@ class _PatientSearchViewState extends State<PatientSearchView>{
  
   @override
   Widget build(BuildContext context) {
-    PatientListModel patientListModel = context.watch<PatientListModel>();
+
+    
     return Column(
       children:[
         SearchAnchor(
@@ -40,13 +43,16 @@ class _PatientSearchViewState extends State<PatientSearchView>{
           leading: const Icon(Icons.search),
         ),
         suggestionsBuilder:  (BuildContext context, SearchController controller) {
-              List<Patient> filterdPatients = patientListModel.getFilteredPatients(controller.text);
+              List<Patient> filterdPatients = context.read<PatientListModel>().getFilteredPatients(controller.text);
               return filterdPatients.map((Patient patient) => ListTile(
                 title: Text('${patient.preName} ${patient.surName}'),
                 subtitle: Text('${patient.id}'),
                 onTap: () {
+                  setState(() {                  
                   patient.active = true;
-                  patientListModel.change(patient);
+                  context.read<PatientListModel>().change(patient);
+                  controller.closeView(patient.id);
+                  });           
                 },
               ),
               ).toList();

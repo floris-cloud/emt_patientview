@@ -33,11 +33,11 @@ class PatientInputController with ChangeNotifier {
     return patient;
   }
 
-  Future<void> savePatient() async {
-     Patient patient = createPatient();
-     await PatientStorage.savePatient(patient);
+  // Future<void> savePatient() async {
+  //    Patient patient = createPatient();
+  //    await PatientStorage.savePatient(patient);
 
-  }
+  // }
 
   void setGender(Gender newGender) {
     gender = newGender;

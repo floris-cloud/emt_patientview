@@ -49,7 +49,7 @@ class SettingsView extends StatelessWidget {
               onPressed: () {
                 RestApi.getMDS();
               },
-              child: Text('Add Treatment Place'),
+              child: Text('Download MDS'),
             ),
             DropdownButton<Locale>(
               value: controller.locale,

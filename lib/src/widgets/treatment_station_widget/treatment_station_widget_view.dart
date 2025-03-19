@@ -106,7 +106,6 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     onPatientSelected: (Patient patient) {
                       setState(() {
                         widget.treatmentStation.patient = patient;
-                        
                         patient.patTreatmentStationId = widget.treatmentStation.id;
                         context.read<PatientListModel>().change(widget.treatmentStation.patient!);
                       });

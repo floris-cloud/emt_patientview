@@ -104,12 +104,12 @@ class ProtocolEntryScreen extends StatefulWidget {
             title = AppLocalizations.of(context)!.medicalValues;  
             break;
           case 3:
-            w = AnamneseInputUserJourney(patient: widget.patient);
+            w = AnamneseInputUserJourney(patient: widget.patient, protocol: protocol);
             changeTitle = true;
             title = AppLocalizations.of(context)!.anamnese;
             break;
           case 4:
-            w = FinalProtocol(patient: widget.patient);
+            w = LastProtocol(patient: widget.patient);
             changeTitle = true;
             title = AppLocalizations.of(context)!.finalProtocol;
             break;

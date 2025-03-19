@@ -25,7 +25,7 @@ class Person {
     'preName': preName,
     'surName': surName,
     'birthDate': birthDate.toIso8601String(),
-    'gender': gender.toString(),
+    'gender': gender.name,
   };
    
 }

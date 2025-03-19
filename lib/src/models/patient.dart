@@ -10,22 +10,17 @@ import 'triage_category.dart';
 import 'person.dart';
 
 class Patient extends Person {
-   String? diagnose;
   final String id;
   TriageCategory triageCategory;
-  // final DateTime firstContact;
   int? treatmentStationId;
   List<r4.ContactPoint> contactPoints = [];
-  bool active = true;
+  bool active;
   List<Protocol> protocls;
-  // DateTime? lastContact;
-  MDS? mds;
-  // Map<DateTime, dynamic> contacts = {};
   Patient(
       {String? id,
       // DateTime? firstContact,
       List<Protocol>? protocls,
-      this.diagnose = "",
+      bool this.active = true,
       required super.surName,
       required super.preName,
       super.birthDate,
@@ -36,15 +31,17 @@ class Patient extends Person {
         // firstContact = firstContact ?? DateTime.now();
   //TODO wie bei toJSON
   factory Patient.fromMap(Map<String, dynamic> map) {
+    print(map);
     Patient p = Patient(
       preName: map['preName'],
       surName: map['surName'],
+      active: map['active'],
       birthDate: DateTime.parse(map['birthDate']),
       gender: Gender.values.byName('male'),
-      diagnose: map['diagnose'],
       id: map['id'],
       triageCategory: TriageCategory.values.byName(map['triageCategory']),
-      // firstContact: DateTime.tryParse(map['firstContact']) ?? DateTime.now(),
+      protocls: (map['protocls'] as List).map((e) => Protocol.fromMap(e)).toList(),
+  
     );
     return p;
   }
@@ -55,8 +52,8 @@ class Patient extends Person {
       surName: json['name'][0]['family'],
       gender: Gender.unknown,
       id: json['id'],
+      birthDate: DateTime.tryParse(json['birthDate']),
       triageCategory: TriageCategory.noTriageCategory,
-      // firstContact: DateTime.now(),
     );
     return p;
     
@@ -64,18 +61,11 @@ class Patient extends Person {
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = super.toJson();
-    map['diagnose'] = diagnose ?? '';
     map['id'] = id;
     map['triageCategory'] = triageCategory.name;
-    // map['firstContact'] = firstContact.toIso8601String();
-    // map['lastContact'] = lastContact?.toIso8601String();
     map['treatmentStationId'] = treatmentStationId;
     map['active'] = active;
-    map['protocls'] = protocls?.map((e) => e.toJson()).toList();
-    map['mds'] = mds?.toJson();
-    // map['contacts'] = contacts.map((key, value) => MapEntry(key.toIso8601String(), value is TriageCategory ? value.name : value));
-
-
+    map['protocls'] = protocls.map((e) => e.toJson()).toList();
     return map;
   }
 
@@ -87,15 +77,6 @@ class Patient extends Person {
   set patTreatmentStationId(int? id) {
     treatmentStationId = id;
   }
-  // Timer timer(Function callback) {
-  //   return Timer(
-  //     firstContact
-  //         .add(triageCategory.getDuration())
-  //         .difference(DateTime.now()), () {
-  //           callback();
-  //         }
-  //   );
-  // }
   addContactPoint(r4.ContactPointSystem system, String value, ){
     contactPoints.add(r4.ContactPoint(system: system,value: value));
   }

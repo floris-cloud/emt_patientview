@@ -32,7 +32,20 @@ class MedicalValues {
       'medicalValuesAdded': createdAt.toIso8601String(),
     };
   }
-
+  @override
+@override
+String toString() {
+  String date = '${createdAt.hour}:${createdAt.minute} ${createdAt.day}.${createdAt.month}.${createdAt.year}';
+  return '''
+    Systolic Blood Pressure: ${systolic ?? '-'} / ${diastolic ?? '-'} mmHg
+    Respiratory Rate: ${respiratoryRate ?? '-'} /min
+    Pulse: ${pulse ?? '-'} /min
+    Oxygen Saturation: ${oxygenSaturation ?? '-'} %
+    Body Temperature: ${temperature ?? '-'} °C
+    Blood Sugar Level: ${bloodSugar ?? '-'} mmol/L
+    Date and Time of measurement: $date
+  ''';
+}
   factory MedicalValues.fromMap(Map<String, dynamic> map) {
     return MedicalValues(
       systolic: map['systolic'],

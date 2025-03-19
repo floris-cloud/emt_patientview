@@ -79,5 +79,6 @@
   "overView": "Gesamtübersicht",
   "firstContact": "Erstkontakt",
   "lastContact": "Letzter Kontakt",
-  "allProtocolls": "Alle Protokolle"
+  "allProtocolls": "Alle Protokolle",
+  "downloadProtocol": "Protokoll herunterladen"
 }

@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../models/patient.dart';
 import '../models/treatment_station_list.dart';
 import 'protocoll/final_protocol.dart';
+import 'protocoll/medical_values_diagramm.dart';
 
 class PatientDetail extends StatefulWidget{
    final Patient? patient;
@@ -26,13 +27,18 @@ class PatientDetail extends StatefulWidget{
 
   @override
   Widget build(BuildContext context) {
-    print("100");
+    PdfProtocol pdfWidget;
     if(widget.patient == null){
       return         Text(AppLocalizations.of(context)!.noPatientSelected);
+    }else{
+      print(widget.patient!.id);
+      print(widget.patient!.protocls.last.createdAt);
+      pdfWidget = PdfProtocol(patient: widget.patient!);
+
     }
 
     double fontsize = 0.015*MediaQuery.of(context).size.width;
-    PdfProtocol pdfWidget = PdfProtocol(patient: widget.patient!);
+    
     return Column(
         children: [
          Row(
@@ -61,9 +67,9 @@ class PatientDetail extends StatefulWidget{
         SizedBox(height: fontsize,),
         Row(
           children: [
-            Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize, backgroundColor: widget.patient!.triageCategory.getColor()),),
+            Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize/2, backgroundColor: widget.patient!.triageCategory.getColor()),),
             SizedBox(width: fontsize,),
-            Text( AppLocalizations.of(context)!.arrivedAt+': '+formatedTime(widget.patient!.protocls!.last.createdAt), style: TextStyle(fontSize: fontsize),),
+            Text( AppLocalizations.of(context)!.arrivedAt+': '+formatedTime(widget.patient!.protocls.last.createdAt), style: TextStyle(fontSize: fontsize),),
          
           ],  
             ),
@@ -74,7 +80,7 @@ class PatientDetail extends StatefulWidget{
               children: [
             Text(AppLocalizations.of(context)!.mainDiagnose,
              style: TextStyle(fontSize: fontsize/2),),
-            Text(widget.patient!.protocls?[0].mainDiagnose?.title?? AppLocalizations.of(context)!.noData
+            Text(widget.patient!.protocls.last.mainDiagnose?.title?? AppLocalizations.of(context)!.noData
             , style: TextStyle(fontSize: fontsize),),
               ],),
           ],)
@@ -85,10 +91,16 @@ class PatientDetail extends StatefulWidget{
               children: [
             Text(AppLocalizations.of(context)!.anamnese,
              style: TextStyle(fontSize: fontsize/2),),
-            Text(widget.patient!.protocls?[0].notes??  AppLocalizations.of(context)!.noData, style: TextStyle(fontSize: fontsize),),
+            Text(widget.patient!.protocls.last.notes??  AppLocalizations.of(context)!.noData, style: TextStyle(fontSize: fontsize),),
               ],),
           ],),
-
+          Divider(
+            thickness: 2,
+          ),
+          Container(
+            height: 300,
+            child: MedicalValuesDiagramm(patient: widget.patient!,protocol:  widget.patient!.protocls.last),
+          ),  
           Divider(
             thickness: 2,
           ),
@@ -97,11 +109,14 @@ class PatientDetail extends StatefulWidget{
               Offstage(
                 child: pdfWidget,
               ),
+              Row(
+                children: [
+                  
               TextButton(
-                child: Row(children: [Icon(Icons.door_front_door),Text(AppLocalizations.of(context)!.discharge),]),
+                child: Row(children: [Icon(Icons.door_front_door),Text(AppLocalizations.of(context)!.discharge),
+                ]),
                 onPressed: (){
                   widget.patient!.discharge();
-                  pdfWidget.saveFile();
                   Provider.of<TreatmentStationList>(context, listen: false).removePatientFromTreatmentStation(widget.patient!);
                   Provider.of<TreatmentStationList>(context, listen: false).clearShowPatient();
                   setState(() {
@@ -109,7 +124,23 @@ class PatientDetail extends StatefulWidget{
                   );
                   
                 },
-              ) 
+              ), 
+               TextButton(
+                child: Row(children: [Icon(Icons.download),Text(AppLocalizations.of(context)!.downloadProtocol),
+                ]),
+                onPressed: (){
+                  print(widget.patient);
+                  print(pdfWidget.patient.id);
+                  pdfWidget.saveFile();
+
+                  setState(() {
+                  }
+                  );
+                  
+                },
+              )
+                ],
+              )
                
             ],
           ),

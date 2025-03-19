@@ -31,44 +31,7 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
       selectedValues.mdsFromPatient(widget.patient, widget.protocol);
   }
 
-  final categories = [
-    _MdsCategory(
-      title: 'Sex',
-      values: MDSSex.values,
-    ),
-    _MdsCategory(
-      title: 'Trauma',
-      values: MDSTrauma.values,
-    ),
-    _MdsCategory(
-      title: 'Infection',
-      values: MDSInfection.values,
-    ),
-    _MdsCategory(
-      title: 'Additional',
-      values: MDSAdditional.values,
-    ),
-    _MdsCategory(
-      title: 'Other Keydiseases',
-      values: MDSOtherKeydiseases.values,
-    ),
-    _MdsCategory(
-      title: 'Procedure',
-      values: MDSProcedure.values,
-    ),
-    _MdsCategory(
-      title: 'Outcome',
-      values: MDSOutcome.values,
-    ),
-    _MdsCategory(
-      title: 'Relation',
-      values: MDSRelation.values,
-    ),
-    _MdsCategory(
-      title: 'Protection',
-      values: MDSProtection.values,
-    ),
-  ];
+ List<MdsCategory> categories = MDS.getMDSCategory();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +45,7 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
           separatorBuilder: (context, _) => const Divider(height: 24),
           itemBuilder: (context, index) {
             final category = categories[index];
-            return _buildCategorySection(category, index);
+            return _buildCategorySection(category);
           },
         ),
       ),
@@ -99,7 +62,7 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
     );
   }
 
-  Widget _buildCategorySection(_MdsCategory category, int index) {
+  Widget _buildCategorySection(MdsCategory category ) {
     final type = category.values.first.runtimeType;
     final selectedInCategory =
         selectedValues.mdsList.where((item) => item.runtimeType == type).toList();
@@ -149,17 +112,10 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
   }
 
   void _saveSelection() {
-    widget.patient.protocls!.last.mds = selectedValues;
+    widget.protocol.mds = selectedValues;
     Navigator.pop(context);
   }
 }
 
-class _MdsCategory {
-  final String title;
-  final List<dynamic> values;
 
-  _MdsCategory({
-    required this.title,
-    required this.values,
-  });
-}
+

@@ -6,11 +6,13 @@ import '../../models/patient.dart';
 import '../../models/protocol.dart';
 import '../../repository/protocol_repository.dart';
 import '../../repository/icd_repository.dart';
+import 'mds_category_row.dart';
 
 class AnamneseInputUserJourney extends StatefulWidget {
   final Patient patient;
+  final Protocol protocol;
 
-   const AnamneseInputUserJourney({super.key, required this.patient});
+   const AnamneseInputUserJourney({super.key, required this.patient, required this.protocol});
 
   @override
   AnamneseInputUserJourneyState createState() => AnamneseInputUserJourneyState();
@@ -26,41 +28,28 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
     if (_notesController.text.isNotEmpty) {
       print(_notesController.text);
       setState(() {
-        widget.patient.protocls!.first.notes = _notesController.text;
+        widget.protocol.notes = _notesController.text;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-      _notesController.text = widget.patient.protocls!.first.notes??'';
+      _notesController.text = widget.protocol.notes??'';
     return Padding(
         padding: const EdgeInsets.all(16.0),
-        // child: Form(
+
           child: Column(
             children: <Widget>[
                Text(AppLocalizations.of(context)!
             .enterProtocol(widget.patient.preName),),
-  //  Text("Bestehende Anamesen"),
-  //   Container(
-  //     decoration: BoxDecoration(
-  //       border: Border.all(
-  //         color: Theme.of(context).dividerColor,
-  //         width: 1.0,
-  //       ),),
-  //               child:
-  //   Column(children: [
-                  
-  //                 ...widget.patient.protocls!.map((protocol) => Text(protocol.notes??''))
+  Expanded(
+    child:
+   SingleChildScrollView(
+    child: Column(
+      children: [
+             
 
-  //               ],),),
-  //               SizedBox(height: 8),
-               
-   Row (children: [Text(AppLocalizations.of(context)!.mainDiagnose+(widget.patient.protocls!.first.mainDiagnose?.title??'')), 
-   Text(AppLocalizations.of(context)!.otherDiagnose),
-   Text(widget.patient.protocls!.first.otherDiagnoses.map((e) => e.title).toString()),
-
-     ]),
    TextFormField(
                 controller: _notesController,
                 decoration: InputDecoration(
@@ -88,13 +77,13 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
                       border: const OutlineInputBorder(),
                         labelText: "${AppLocalizations.of(context)!.mainDiagnose} as ICD ID",
                       ),
-                      keyboardType: TextInputType.number,
-
                       onFieldSubmitted: (text)  async {
                         if (text.isNotEmpty) {
                           mainDiagnose = await IcdRepository.getIcd(text);
                           setState(() {
-                          widget.patient.protocls![0].mainDiagnose = mainDiagnose;
+                          widget.protocol.mainDiagnose = mainDiagnose;
+                          widget.protocol.mds!.mdsFromPatient(widget.patient, widget.protocol);
+
                         }
                         );
                         }
@@ -114,16 +103,26 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
                           
                           Icd icd  = await IcdRepository.getIcd(text);       
                           setState(() {
-                          widget.patient.protocls![0].otherDiagnoses.add(icd);
+                          widget.protocol.otherDiagnoses.add(icd);
+                          widget.protocol.mds!.mdsFromPatient(widget.patient, widget.protocol);
                               });
                                                }
                       },
                     ),
-    
-                     
+                       Row (children: [Text(AppLocalizations.of(context)!.mainDiagnose+": "+(widget.protocol.mainDiagnose?.title??'')), 
+                       
+   Text(AppLocalizations.of(context)!.otherDiagnose+": "),
+   Text(widget.protocol.otherDiagnoses.map((e) => e.title+", ").toString()),
+
+     ]),
+                                      MdsRows(patient: widget.patient, protocol: widget.protocol)                    
 ],
           ),
 
-    );
+    ),
+  ),
+      ],
+    ),
+   );    
   }
 }

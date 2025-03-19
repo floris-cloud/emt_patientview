@@ -1,6 +1,8 @@
 import 'package:emt_patientview/src/widgets/timer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/protocol.dart';
+import '../models/treatment_station_list.dart';
 import '../models/triage_category.dart';
 import '../screens/protocol_entry_screen.dart';
 import '../models/patient.dart';
@@ -66,7 +68,7 @@ class PatientCard extends StatelessWidget {
                   ),Icon(patient.gender.icon, color: Colors.black,),
                   SizedBox(height: 4.0),
                   Text(
-                    patient.diagnose ?? " ",
+                    patient.protocls.last.mainDiagnose?.title ?? " ",
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
@@ -77,7 +79,20 @@ class PatientCard extends StatelessWidget {
                 ],
               ),
           TimerWidget(patient: patient, showFirstContact: true),
-          IconButton(
+          Column(
+            children: [
+                Expanded(child: 
+                   IconButton(
+                      icon: Icon(Icons.info,),
+                      onPressed: () {
+                            
+                         Provider.of<TreatmentStationList>(context, listen: false).setShowPatient(patient);
+                     
+                      },
+                    ),
+                ),
+                Expanded(child: 
+                      IconButton(
             icon: Icon(Icons.edit, color: Colors.grey[600]),
             onPressed: () {
               Navigator.push(
@@ -87,6 +102,11 @@ class PatientCard extends StatelessWidget {
                 ),
               );
             },
+          ),
+                )
+            
+            ]
+          
           ),
         ],
       ),
