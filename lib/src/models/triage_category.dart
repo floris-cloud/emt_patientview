@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../themes/app_color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fhir/r4.dart' as r4;
 
-import 'patient.dart';
  enum TriageCategory {
   noTriageCategory,
   emergency,

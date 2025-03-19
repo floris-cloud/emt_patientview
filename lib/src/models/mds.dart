@@ -1,4 +1,4 @@
-import 'icd.dart';
+
 import 'patient.dart';
 import 'person.dart';
 import 'protocol.dart';
@@ -32,11 +32,11 @@ void mdsFromPatient(Patient patient, Protocol protocol){
         mdsList.add(protocol.mainDiagnose!.mdsFromDiagnose());
         }
       if(protocol.otherDiagnoses.isNotEmpty){
-        protocol.otherDiagnoses.forEach((element) {
+        for (var element in protocol.otherDiagnoses) {
           if (element.mdsFromDiagnose() != null){
         mdsList.add(element.mdsFromDiagnose());
           }
-        });
+        }
       
       }  
 protocol.mds!.mdsList.addAll(mdsList);}
@@ -47,9 +47,9 @@ protocol.mds!.mdsList.addAll(mdsList);}
 
 Map<String, dynamic> toJson() {
   List<int> mds = [];
-  mdsList.forEach((element) {
+  for (var element in mdsList) {
     mds.add(element.id);
-  });
+  }
  return {
   'id': id,
   'age': age,

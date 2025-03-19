@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'package:provider/provider.dart';
-
 import '../models/patient.dart';
 import '../repository/rest_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,22 +40,17 @@ class PatientStorage {
   }
 
   static Future<void> changePatient(Patient patient) async {
-    print(patient.id);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = await loadPatients();
-    print(patients.length);
-    
     patients.removeWhere((p) => p.id == patient.id);
     patients.add(patient);
-    print(patients.length);
-
     RestApi.changePatient(patient);
     String patientsJson = jsonEncode(patients);
     await prefs.setString(_key, patientsJson);
   }
 
   static Future<Patient> getPatientbyID(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = await loadPatients();
     return patients.firstWhere((p) => p.id== id);
 

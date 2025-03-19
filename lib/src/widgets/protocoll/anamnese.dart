@@ -110,9 +110,9 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
                       },
                     ),
                        Row (children: [Text(AppLocalizations.of(context)!.mainDiagnose+": "+(widget.protocol.mainDiagnose?.title??'')), 
-                       
-   Text(AppLocalizations.of(context)!.otherDiagnose+": "),
-   Text(widget.protocol.otherDiagnoses.map((e) => e.title+", ").toString()),
+                                      Text("    "),     
+                                      Text(AppLocalizations.of(context)!.otherDiagnose+": "),
+                                      Text(widget.protocol.otherDiagnoses.map((e) => e.title+", ").toString()),
 
      ]),
                                       MdsRows(patient: widget.patient, protocol: widget.protocol)                    

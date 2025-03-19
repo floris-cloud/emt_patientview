@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:file_saver/file_saver.dart';
 import 'package:http/http.dart' as http;
 import '../models/patient.dart';
@@ -7,8 +6,8 @@ import '../models/protocol.dart';
 import '../models/treatment_station.dart';
 
 class RestApi {
-  static String uri = 'localhost:8020';
-  // static String uri = 'floris-20df0051ge.local:8020';
+  // static String uri = 'localhost:8020';
+  static String uri = 'floris-20df0051ge.local:8020';
 
 
   static Future<List<Patient>> getPatientList() async {

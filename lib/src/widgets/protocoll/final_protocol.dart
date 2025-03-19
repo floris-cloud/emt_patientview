@@ -48,7 +48,6 @@ class _LastProtocolState extends State<LastProtocol> {
   @override
   Widget build(BuildContext context) {
     print("build");
-    // print(widget.patient.protocls.last.createdAt);
     return
     Column(
       children: [
@@ -108,7 +107,7 @@ Expanded(child:
       ),
         MdsRows(patient: patient,protocol: protocol,),
          ElevatedButton(onPressed: (){
-          patient.protocls.last.sendProtocol();
+          protocol.sendProtocol();
          }, child: Text('Send Protocoll'),)
       
       ],

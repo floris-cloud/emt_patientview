@@ -1,10 +1,8 @@
-import 'dart:async';
-import 'dart:io';
+
 import 'package:emt_patientview/src/repository/patient_repository.dart';
-import 'package:emt_patientview/src/widgets/protocoll/final_protocol.dart';
+
 import 'package:fhir/r4.dart' as r4;
 import 'package:uuid/uuid.dart';
-import 'mds.dart';
 import 'protocol.dart';
 import 'triage_category.dart';
 import 'person.dart';
@@ -20,7 +18,7 @@ class Patient extends Person {
       {String? id,
       // DateTime? firstContact,
       List<Protocol>? protocls,
-      bool this.active = true,
+      this.active = true,
       required super.surName,
       required super.preName,
       super.birthDate,
@@ -31,7 +29,6 @@ class Patient extends Person {
         // firstContact = firstContact ?? DateTime.now();
   //TODO wie bei toJSON
   factory Patient.fromMap(Map<String, dynamic> map) {
-    print(map);
     Patient p = Patient(
       preName: map['preName'],
       surName: map['surName'],
@@ -40,13 +37,13 @@ class Patient extends Person {
       gender: Gender.values.byName('male'),
       id: map['id'],
       triageCategory: TriageCategory.values.byName(map['triageCategory']),
-      protocls: (map['protocls'] as List).map((e) => Protocol.fromMap(e)).toList(),
-  
+      // protocls: (map['protocls'] as List).map((e) => Protocol.fromMap(e)).toList(),
     );
+
+      
     return p;
   }
   factory Patient.fhirJson(Map<String, dynamic> json) {
-    print(json);
     Patient p = Patient(
       preName: json['name'][0]['given'][0],
       surName: json['name'][0]['family'],

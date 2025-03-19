@@ -8,8 +8,8 @@ class IcdRepository {
   static Future<String> getEntityId(String code) async {
 
   
-    // var url = 'http://floris-20df0051ge.local/icd/release/11/2024-01/mms/codeinfo/$code';
-    var url = 'http://localhost/icd/release/11/2024-01/mms/codeinfo/$code';
+    var url = 'http://floris-20df0051ge.local/icd/release/11/2024-01/mms/codeinfo/$code';
+    // var url = 'http://localhost/icd/release/11/2024-01/mms/codeinfo/$code';
     var response = await http.get(Uri.parse(url), headers: {
       'accept': 'application/json',
       'Accept-language': 'en',
@@ -28,8 +28,8 @@ class IcdRepository {
   }
 
   static Future<Map<String, dynamic>> getEntity(String id) async {
-    // var url = 'http://floris-20df0051ge.local:80/icd/entity/$id';
-    var url = 'http://localhost:80/icd/entity/$id';
+    var url = 'http://floris-20df0051ge.local:80/icd/entity/$id';
+    // var url = 'http://localhost:80/icd/entity/$id';
 
     var response = await http.get(Uri.parse(url), headers: {
       'accept': 'application/json',
@@ -56,7 +56,7 @@ class IcdRepository {
     }
     catch(e){
       print(e);
-      return Icd(title: '', description: '', entity: '', code: code);
+      return Icd(title: code, description: '', entity: '', code: code);
     }
   }                   
 }

@@ -29,7 +29,7 @@ List<MedicalValues> data = [];
   @override
 Widget build(BuildContext context) {
   if(data.isEmpty){
-    
+  return Container();
   //  MedicalValues d1 = MedicalValues(createdAt: DateTime.now().subtract(Duration(minutes: 10)), systolic: 120, diastolic: 80, oxygenSaturation: 98, temperature: 36.5);
   //   MedicalValues d2 = MedicalValues(createdAt: DateTime.now().subtract(Duration(minutes: 5)), systolic: 130, diastolic: 85, oxygenSaturation: 97, temperature: 36.6);
   //   MedicalValues d3 = MedicalValues(createdAt: DateTime.now(), systolic: 125, diastolic: 82, oxygenSaturation: 99, temperature: 36.7);
