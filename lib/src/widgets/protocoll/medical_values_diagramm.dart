@@ -1,28 +1,43 @@
+import 'package:emt_patientview/src/models/protocol.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../models/patient.dart';
 import '../../models/medical_values.dart';
 
-class MedicalValuesDiagramm extends StatelessWidget{
+class MedicalValuesDiagramm extends StatefulWidget{
 
   final Patient patient;
-  late List<MedicalValues> data;
-  @override
+  final Protocol protocol;
+  const MedicalValuesDiagramm({Key? key, required this.patient, required this.protocol}) : super(key: key);
 
-  MedicalValuesDiagramm({super.key, required this.patient});
-  //TODO Diagramm
+  @override
+  State<StatefulWidget> createState() {
+    
+    return _MedicalValuesDiagrammState();
+  }
+}
+
+class _MedicalValuesDiagrammState extends State<MedicalValuesDiagramm>{
+List<MedicalValues> data = [];
+ //TODO Diagramm
+   @override
+  void initState() {
+    super.initState();
+    data  = widget.protocol.medicalValuesList;
+  }
   @override
 Widget build(BuildContext context) {
-   data = patient.protocls!.last.medicalValuesList;
+  if(data.isEmpty){
+    
    MedicalValues d1 = MedicalValues(createdAt: DateTime.now().subtract(Duration(minutes: 10)), systolic: 120, diastolic: 80, oxygenSaturation: 98, temperature: 36.5);
     MedicalValues d2 = MedicalValues(createdAt: DateTime.now().subtract(Duration(minutes: 5)), systolic: 130, diastolic: 85, oxygenSaturation: 97, temperature: 36.6);
     MedicalValues d3 = MedicalValues(createdAt: DateTime.now(), systolic: 125, diastolic: 82, oxygenSaturation: 99, temperature: 36.7);
     data.add(d1);
     data.add(d2);
     data.add(d3);
+  }
         return
-
      LineChart(
       LineChartData(
         lineBarsData: _getLineBars(),

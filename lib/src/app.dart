@@ -3,12 +3,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'repository/ws_api.dart';
 import 'screens/all_patients_desktop.dart';
 import 'settings/settings_controller.dart';
 
 class MyApp extends StatelessWidget {
+
    @override
   Widget build(BuildContext context) {
+ 
 return Consumer<SettingsController>(
         builder: (context, settingsController, child) {
           return MaterialApp(
@@ -29,6 +32,7 @@ return Consumer<SettingsController>(
             darkTheme: ThemeData.dark(),
             themeMode: settingsController.themeMode,
             home: AllPatDeskScreen(),
+            
           );
         },
     );

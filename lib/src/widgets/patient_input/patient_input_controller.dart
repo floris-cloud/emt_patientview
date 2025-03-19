@@ -1,3 +1,4 @@
+import 'package:emt_patientview/src/models/protocol.dart';
 import 'package:emt_patientview/src/models/treatment_station.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,8 @@ class PatientInputController with ChangeNotifier {
       gender: gender,
       triageCategory: triageCategory,
     );
+    Protocol protocol = Protocol(patientId: patient.id, createdAt: DateTime.now());
+    patient.protocls.add(protocol);
     return patient;
   }
 

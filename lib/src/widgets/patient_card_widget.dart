@@ -76,7 +76,7 @@ class PatientCard extends StatelessWidget {
                   ],)
                 ],
               ),
-          TimerWidget(patient: patient),
+          TimerWidget(patient: patient, showFirstContact: true),
           IconButton(
             icon: Icon(Icons.edit, color: Colors.grey[600]),
             onPressed: () {

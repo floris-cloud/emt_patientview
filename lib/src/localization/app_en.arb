@@ -77,6 +77,9 @@
   "noPatientSelected": "No patient selected",
   "addAnamnese": "Add anamnese",
   "finalProtocol": "send protocol",
-  "overView":"Overview"
+  "overView":"Overview",
+  "firstContact": "First Contact",
+  "lastContact": "Last Contact",
+  "allProtocolls": "All Protocolls"
 
 }

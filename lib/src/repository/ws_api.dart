@@ -1,18 +1,26 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 // TODO für Krankenkarte empfangen
 class WebSocketService {
-  final _channel = WebSocketChannel.connect(
-  Uri.parse('ws://127.0.0.1:8765'),
-  );
+  static String host = 'floris-20df0051ge.local:8020';
+  static String get url => 'ws://$host/ws';
+  late final WebSocketChannel _channel;
+
+  WebSocketService() {
+    try {
+      _channel = WebSocketChannel.connect(Uri.parse(url));
+      print('Connected to WebSocket');
+    } catch (e) {
+      print('Connection error: $e');
+      // Handle connection errors (e.g., retry logic)
+    }
+  }
 
   Stream getChangeStream() {
     return _channel.stream.asBroadcastStream();
   }
 
-  @override
-  void dispose() {
-    _channel.sink.close();
-  }
 }
+final Stream webSocketStream = WebSocketService().getChangeStream();

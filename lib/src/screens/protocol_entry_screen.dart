@@ -1,10 +1,11 @@
-import 'package:emt_patientview/src/screens/all_patients_desktop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/patient.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/protocol.dart';
+
+import 'all_patients_desktop.dart';
+
 import '../widgets/protocoll/anamnese.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/patient_change_user_journey.dart';

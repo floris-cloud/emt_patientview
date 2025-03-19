@@ -1,8 +1,11 @@
+import 'package:emt_patientview/src/repository/ws_api.dart';
+import 'package:emt_patientview/src/widgets/patient_list/patient_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../settings/settings_view.dart';
 import 'add_patient_button.dart';
 import '../settings/settings_controller.dart';
+import 'pop_up_new_Patient_from_card.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -41,9 +44,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
              IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              // do something
-            },
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PopupPatientSearchView();
+                  },
+                );
+              },
           ),
+        
+ 
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {

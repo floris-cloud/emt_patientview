@@ -1,25 +1,30 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/patient.dart';
 
 class TimerWidget extends StatefulWidget {
   final Patient patient;
-
-  const TimerWidget({Key? key, required this.patient}) : super(key: key);
+  bool showFirstContact;
+  TimerWidget({super.key, required this.patient, required this.showFirstContact});
 
   @override
-  _TimerWidgetState createState() => _TimerWidgetState();
+  TimerWidgetState createState() => TimerWidgetState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
+class TimerWidgetState extends State<TimerWidget> {
   late Timer _timer;
   late Duration _elapsed;
   late DateTime time;
   @override
   void initState() {
     super.initState();
-    time = widget.patient.firstContact;
+      if(!widget.showFirstContact && widget.patient.protocls.last.contacts.isNotEmpty){
+        time = widget.patient.protocls.last.contacts.keys.last;
+    }else{
+      time = widget.patient.protocls.last.createdAt;
+    }
     _elapsed = DateTime.now().difference(time);
     _startTimer();
   }
@@ -43,9 +48,31 @@ class _TimerWidgetState extends State<TimerWidget> {
     return 
     //TODO DropdownMenu für auswahl erst kontakt/ letzter Kontakt
     //DropdownMenu(dropdownMenuEntries: dropdownMenuEntries)
-    Text(
-      _formatDuration(_elapsed),
+    Column(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            setState(() {  
+              widget.showFirstContact = !widget.showFirstContact;
+                    if(!widget.showFirstContact && widget.patient.protocls.last.contacts.isNotEmpty){
+                      time = widget.patient.protocls.last.contacts.keys.last;
+                    }
+                    else{
+                      time = widget.patient.protocls.last.createdAt;
+                    }
+                              
+            });
+           
+          },
+          child: widget.showFirstContact ? Text(AppLocalizations.of(context)!.firstContact): Text(AppLocalizations.of(context)!.lastContact),
+        ),
+        Text(
+         _formatDuration(_elapsed),
       style: TextStyle(fontSize: 24.0),
+        ),
+    
+      ],
+     
     );
   }
 

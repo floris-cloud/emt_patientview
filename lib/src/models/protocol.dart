@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:emt_patientview/src/models/mds.dart';
+import 'package:emt_patientview/src/models/triage_category.dart';
 
 import '../repository/protocol_repository.dart';
 import 'icd.dart';
@@ -12,20 +13,26 @@ class Protocol {
   String? notes;
   Icd? mainDiagnose;
   List<Icd> otherDiagnoses = [];
-
+  DateTime createdAt;
   List<MedicalValues> medicalValuesList;
   MDS? mds;
-  Protocol({
+  Map<DateTime, dynamic> contacts = {};
+ Protocol({
     required this.patientId,
-     this.notes,
-    List<MedicalValues>? medicalValuesList, this.mainDiagnose,
-  }) : medicalValuesList = medicalValuesList ?? [];
+    DateTime? createdAt,
+    this.notes,
+    List<MedicalValues>? medicalValuesList,
+    this.mainDiagnose,
+  }) : 
+    createdAt = createdAt ?? DateTime.now(),
+    medicalValuesList = medicalValuesList ?? [];
 
   void addMedicalValues(MedicalValues values) {
     medicalValuesList.add(values);
   }
 
   Map<String, dynamic> toJson() {
+    Map<String, dynamic> contactsString = contacts.map((key, value) => MapEntry(key.toIso8601String(), value is TriageCategory ? value.name : value));
     return {
       'patientId': patientId,
       'notes': notes,
@@ -33,7 +40,8 @@ class Protocol {
       'mds': mds?? [],
       'mainDiagnose': mainDiagnose??' ',
       'otherDiagnoses': otherDiagnoses,
-      'timeStamp': DateTime.now().toIso8601String(),
+      'firstContact': createdAt.toIso8601String(),
+      'contacts' : contactsString,
     };
   }
 
@@ -60,7 +68,9 @@ class Protocol {
       mainDiagnose: mainDiagnose,
       );
   }
-
+  void addContact(String value) {
+    contacts[DateTime.now()] = value;
+  }
   void sendProtocol() {
     ProtocolRepository.saveProtocol(this);
     // send protocol to server

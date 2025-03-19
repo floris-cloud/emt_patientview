@@ -1,6 +1,7 @@
 import 'icd.dart';
 import 'patient.dart';
 import 'person.dart';
+import 'protocol.dart';
 
 class MDS{
 String id;
@@ -12,8 +13,8 @@ MDS({
   required this.age
 });
 
-void mdsFromPatient(Patient patient){
-  Set<dynamic> mdsList =  patient.protocls!.last.mds!.mdsList;
+void mdsFromPatient(Patient patient, Protocol protocol){
+  Set<dynamic> mdsList =  protocol.mds!.mdsList;
   //setGender
   if(patient.gender == Gender.male){
     mdsList.add(MDSSex.male); 
@@ -25,20 +26,20 @@ void mdsFromPatient(Patient patient){
   }
 
 
-  if(patient.protocls!.last.mainDiagnose != null){
+  if(protocol.mainDiagnose != null){
          //check if maindiagnose has a mds
-      if (patient.protocls!.last.mainDiagnose!.mdsFromDiagnose() != null){
-        mdsList.add(patient.protocls!.last.mainDiagnose!.mdsFromDiagnose());
+      if (protocol.mainDiagnose!.mdsFromDiagnose() != null){
+        mdsList.add(protocol.mainDiagnose!.mdsFromDiagnose());
         }
-      if(patient.protocls!.last.otherDiagnoses.isNotEmpty){
-        patient.protocls!.last.otherDiagnoses.forEach((element) {
+      if(protocol.otherDiagnoses.isNotEmpty){
+        protocol.otherDiagnoses.forEach((element) {
           if (element.mdsFromDiagnose() != null){
         mdsList.add(element.mdsFromDiagnose());
           }
         });
       
       }  
-patient.protocls!.last.mds!.mdsList.addAll(mdsList);}
+protocol.mds!.mdsList.addAll(mdsList);}
 
 }
 

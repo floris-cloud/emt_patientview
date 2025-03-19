@@ -10,11 +10,12 @@ import 'src/settings/settings_service.dart';
 void main() async {
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
-     
+   TreatmentStationList treatmentStationList = TreatmentStationList();
+  await treatmentStationList.loadTreatmentStations();
   runApp( MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PatientListModel()),
-        ChangeNotifierProvider(create: (_) => TreatmentStationList()),
+        ChangeNotifierProvider(create: (_) => treatmentStationList),
         ChangeNotifierProvider.value(value: settingsController),
       ],
       child: MyApp(),

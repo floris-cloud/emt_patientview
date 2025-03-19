@@ -76,5 +76,8 @@
   "noPatientSelected": "Kein Patient ausgewählt",
   "addAnamese": "Anamnese hinzufügen",
   "finalProtocol": "Protokoll abschließen",
-  "overView": "Gesamtübersicht"
+  "overView": "Gesamtübersicht",
+  "firstContact": "Erstkontakt",
+  "lastContact": "Letzter Kontakt",
+  "allProtocolls": "Alle Protokolle"
 }

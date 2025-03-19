@@ -25,10 +25,8 @@ class TreatmentStationList extends ChangeNotifier {
 
 
 
- static  Future<List<TreatmentStation>> loadTreatmentStations() async {
-
-    return await TreatmentStationRepository.getTreatmentStations();
-  
+   loadTreatmentStations() async {
+    _treatmentStations = await TreatmentStationRepository.getTreatmentStations();
   }
   void removePatientFromTreatmentStation(Patient patient) {
     _treatmentStations.forEach((treatmentStation) {
@@ -37,7 +35,12 @@ class TreatmentStationList extends ChangeNotifier {
     notifyListeners();
   }
   void setShowPatient(Patient patient) {
+    print(patient.id);
     showPatient = patient;
+    notifyListeners();
+  }
+  void clearShowPatient() {
+    showPatient = null;
     notifyListeners();
   }
 

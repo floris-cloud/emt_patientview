@@ -13,22 +13,23 @@ class TreatmentStationListView extends StatefulWidget {
 
 class TreatmentStationListViewState extends State<TreatmentStationListView> {
 
-  late TreatmentStationList treatmentStationList;
-  @override
-void initState() {
-    super.initState();
-    _loadTreatmentStations();
-  }
-  void _loadTreatmentStations() async {
-    List<TreatmentStation> ts = await TreatmentStationList.loadTreatmentStations();
-    setState(() {
-      treatmentStationList.treatmentStations = ts;
-    });
-  }
+  // late  treatmentStationList;
+//   @override
+// void initState() {
+//     super.initState();
+//     _loadTreatmentStations();
+//   }
+//   void _loadTreatmentStations() async {
+//     List<TreatmentStation> ts = await TreatmentStationList.loadTreatmentStations();
+//     setState(() {
+//       treatmentStationList.treatmentStations = ts;
+//     });
+//   }
 
   @override
   Widget build(BuildContext context) {
-     treatmentStationList = context.watch<TreatmentStationList>();
+    TreatmentStationList treatmentStationList = context.watch<TreatmentStationList>();
+    print(treatmentStationList.treatmentStations.length);
     return    Column(
           children: [
           Wrap(

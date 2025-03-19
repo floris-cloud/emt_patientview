@@ -71,7 +71,7 @@ class ProtocollInputUserJourneyState extends State<ProtocollInputUserJourney> {
         Container(
           height: 300,
           width: 600,
-          child: MedicalValuesDiagramm(patient: widget.patient)),
+          child: MedicalValuesDiagramm(patient: widget.patient, protocol: widget.protocol),),
     //AB
      Row(
      children: [  //AF

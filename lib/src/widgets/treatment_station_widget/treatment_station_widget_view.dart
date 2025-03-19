@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/patient_list.dart';
 import '../../models/treatment_station_list.dart';
 import '../../models/triage_category.dart';
 import '../../models/treatment_station.dart';
@@ -57,6 +58,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.info),
                       onPressed: () {
+                    
                         if(widget.treatmentStation.patient != null){           
                          Provider.of<TreatmentStationList>(context, listen: false).setShowPatient(widget.treatmentStation.patient!);
                         }
@@ -65,6 +67,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
+                        
                             if(widget.treatmentStation.patient != null) {
              
                                     Navigator.push(
@@ -84,7 +87,10 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                        color: widget.treatmentStation.patient != null ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
                       onPressed: () {
                         widget.treatmentStation.patient!.patTreatmentStationId = null;
+                        context.read<PatientListModel>().change(widget.treatmentStation.patient!);
+                        
                         widget.treatmentStation.patient = null;
+                        context.read<TreatmentStationList>().clearShowPatient();
                         setState((){});
                       },
                     ),
@@ -100,6 +106,9 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                     onPatientSelected: (Patient patient) {
                       setState(() {
                         widget.treatmentStation.patient = patient;
+                        
+                        patient.patTreatmentStationId = widget.treatmentStation.id;
+                        context.read<PatientListModel>().change(widget.treatmentStation.patient!);
                       });
                     },
                   );
@@ -146,7 +155,7 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                             // ),
                           ],
                         ),
-                        TimerWidget(patient: widget.treatmentStation.patient!),
+                        TimerWidget(patient: widget.treatmentStation.patient!, showFirstContact: false),
                         // Text(
                         //   AppLocalizations.of(context)!.diagnose + (widget.treatmentStation.patient?.diagnose ?? " ")
                         //   ),

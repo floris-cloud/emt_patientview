@@ -164,12 +164,11 @@ class _PatientChangeUserJourneyState extends State<PatientChangeUserJourney> {
                       DateTime.parse(birthDateController.text);
                   widget.patient.gender = gender;
                   if(widget.patient.triageCategory != _triageCategory){
-                    widget.patient.lastContact = DateTime.now();
-                    widget.patient.contacts[widget.patient.lastContact!] = widget.patient.triageCategory;
+                    widget.patient.protocls.last.addContact(_triageCategory.name);
                     widget.patient.triageCategory = _triageCategory;
                   }
 
-                PatientStorage.changePatient(widget.patient);
+                // PatientStorage.changePatient(widget.patient);
                 Provider.of<PatientListModel>(context, listen: false)
                 .change(widget.patient);
                 },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/patient_list.dart';
 import '../../models/treatment_station.dart';
 import '../../models/patient.dart';
 import 'treatment_station_widget_view.dart';
@@ -19,6 +20,7 @@ class TreatmentStationWidgetDrop extends StatelessWidget {
             onAcceptWithDetails: (details) {
               treatmentStation.patient = details.data;
               details.data.patTreatmentStationId = treatmentStation.id;
+              context.read<PatientListModel>().change(details.data);
             },
             builder: (context, candidateData, rejectedData) {
               return TreatmentStationView(treatmentStation: treatmentStation);

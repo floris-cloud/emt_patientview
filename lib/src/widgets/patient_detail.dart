@@ -10,29 +10,29 @@ import 'package:provider/provider.dart';
 
 import '../models/patient.dart';
 import '../models/treatment_station_list.dart';
+import 'protocoll/final_protocol.dart';
 
 class PatientDetail extends StatefulWidget{
-   Patient? p;
+   final Patient? patient;
   
 
-   PatientDetail({super.key,  this.p});
+   PatientDetail({super.key,  this.patient});
   @override
   State<StatefulWidget> createState() {
     return _PatientDetailState();
   }
 }
  class _PatientDetailState extends State<PatientDetail>{
+
   @override
   Widget build(BuildContext context) {
-    Patient patient;
-     bool isPatientDischarged = false;
-    if(widget.p == null){
+    print("100");
+    if(widget.patient == null){
       return         Text(AppLocalizations.of(context)!.noPatientSelected);
     }
-    else{
-       patient = widget.p!;
-    }
+
     double fontsize = 0.015*MediaQuery.of(context).size.width;
+    PdfProtocol pdfWidget = PdfProtocol(patient: widget.patient!);
     return Column(
         children: [
          Row(
@@ -44,12 +44,12 @@ class PatientDetail extends StatefulWidget{
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('ID: '+patient.id.split('-').first, style: TextStyle(fontSize: fontsize),),
-                        Text(patient.surName+', '+patient.preName, style: TextStyle(fontSize: fontsize),),
+                        Text('ID: '+widget.patient!.id.split('-').first, style: TextStyle(fontSize: fontsize),),
+                        Text(widget.patient!.surName+', '+widget.patient!.preName, style: TextStyle(fontSize: fontsize),),
                         Row(
                           children: [
-                            Text(patient.formatedBirthDate(), style: TextStyle(fontSize: fontsize),),
-                            Icon(patient.gender.icon, size: fontsize,),
+                            Text(widget.patient!.formatedBirthDate(), style: TextStyle(fontSize: fontsize),),
+                            Icon(widget.patient!.gender.icon, size: fontsize,),
                           ],
                         ),
                       ],
@@ -61,9 +61,10 @@ class PatientDetail extends StatefulWidget{
         SizedBox(height: fontsize,),
         Row(
           children: [
-            Text(patient.triageCategory.name, style: TextStyle(fontSize: fontsize, backgroundColor: patient.triageCategory.getColor()),),
+            Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize, backgroundColor: widget.patient!.triageCategory.getColor()),),
             SizedBox(width: fontsize,),
-            Text( AppLocalizations.of(context)!.arrivedAt+': '+patient.formatedFirstContact(), style: TextStyle(fontSize: fontsize),),
+            Text( AppLocalizations.of(context)!.arrivedAt+': '+formatedTime(widget.patient!.protocls!.last.createdAt), style: TextStyle(fontSize: fontsize),),
+         
           ],  
             ),
            SizedBox(height: fontsize,),
@@ -73,7 +74,7 @@ class PatientDetail extends StatefulWidget{
               children: [
             Text(AppLocalizations.of(context)!.mainDiagnose,
              style: TextStyle(fontSize: fontsize/2),),
-            Text(patient.protocls?[0].mainDiagnose?.title?? AppLocalizations.of(context)!.noData
+            Text(widget.patient!.protocls?[0].mainDiagnose?.title?? AppLocalizations.of(context)!.noData
             , style: TextStyle(fontSize: fontsize),),
               ],),
           ],)
@@ -84,7 +85,7 @@ class PatientDetail extends StatefulWidget{
               children: [
             Text(AppLocalizations.of(context)!.anamnese,
              style: TextStyle(fontSize: fontsize/2),),
-            Text(patient.protocls?[0].notes??  AppLocalizations.of(context)!.noData, style: TextStyle(fontSize: fontsize),),
+            Text(widget.patient!.protocls?[0].notes??  AppLocalizations.of(context)!.noData, style: TextStyle(fontSize: fontsize),),
               ],),
           ],),
 
@@ -93,20 +94,18 @@ class PatientDetail extends StatefulWidget{
           ),
           Row(
             children: [
-              isPatientDischarged?
-               TextButton(
-                  child:Text("Test"),
-                  onPressed: () {}
-                ):
+              Offstage(
+                child: pdfWidget,
+              ),
               TextButton(
                 child: Row(children: [Icon(Icons.door_front_door),Text(AppLocalizations.of(context)!.discharge),]),
                 onPressed: (){
-                  patient.active = false;
-                  patient.lastContact = DateTime.now();
-                  Provider.of<TreatmentStationList>(context, listen: false).removePatientFromTreatmentStation(patient);
-                  setState((){
-                      isPatientDischarged = true;
-                    }
+                  widget.patient!.discharge();
+                  pdfWidget.saveFile();
+                  Provider.of<TreatmentStationList>(context, listen: false).removePatientFromTreatmentStation(widget.patient!);
+                  Provider.of<TreatmentStationList>(context, listen: false).clearShowPatient();
+                  setState(() {
+                  }
                   );
                   
                 },
@@ -120,3 +119,7 @@ class PatientDetail extends StatefulWidget{
   }
 
 }
+
+  String formatedTime(DateTime time) { 
+    return "${time.day.toString().padLeft(2, '0')}${time.hour.toString().padLeft(2, '0')}${time.minute.toString().padLeft(2, '0')}";
+  }

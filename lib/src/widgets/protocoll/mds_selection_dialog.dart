@@ -1,12 +1,14 @@
+import 'package:emt_patientview/src/models/protocol.dart';
 import 'package:flutter/material.dart';
 import '../../models/mds.dart';
 import '../../models/patient.dart';
 
 class MdsSelectionDialog extends StatefulWidget {
+  final Protocol protocol;
   final Patient patient;
   const MdsSelectionDialog({
     super.key,
-    required this.patient,
+    required this.protocol, required this.patient
   });
 
   @override
@@ -19,14 +21,14 @@ class _MdsSelectionDialogState extends State<MdsSelectionDialog> {
   @override
   void initState() {
     super.initState();
-    if (widget.patient.protocls!.last.mds != null) {
-      selectedValues = widget.patient.protocls!.last.mds!;
+    if (widget.protocol.mds != null) {
+      selectedValues = widget.protocol.mds!;
     } else {
-      widget.patient.protocls!.last.mds =
+      widget.protocol.mds =
           MDS(age: widget.patient.getAge(), id: widget.patient.id);
-      selectedValues = widget.patient.protocls!.last.mds!;
+      selectedValues = widget.protocol.mds!;
     }
-      selectedValues.mdsFromPatient(widget.patient);
+      selectedValues.mdsFromPatient(widget.patient, widget.protocol);
   }
 
   final categories = [
