@@ -31,5 +31,5 @@ jobs:
     - name: Github Actions Create Release
       uses: idev-coder/github-actions-release@v1.0.0
       with:
-          tag_name: ${{ github.ref }}
-          name: web-build
+          tag: ${{ github.ref }}
+          body: web-build
