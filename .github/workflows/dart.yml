@@ -21,7 +21,7 @@ jobs:
       run: flutter pub get
 
     - name: Build Flutter web
-      run: flutter build web
+      run: flutter build web --profile --dart-define=Dart2jsOptimization=O0
 
     - name: Zip build artifacts
       run: zip -r web-build.zip build/web
