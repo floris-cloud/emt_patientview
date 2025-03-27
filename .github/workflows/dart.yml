@@ -2,7 +2,8 @@ name: Flutter Web Build
 
 on:
   workflow_dispatch:
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +15,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.24.5' # Specify the Flutter version you want to use
+        flutter-version: '3.29.2'
 
     - name: Install dependencies
       run: flutter pub get
@@ -22,8 +23,33 @@ jobs:
     - name: Build Flutter web
       run: flutter build web
 
+    - name: Zip build artifacts
+      run: zip -r web-build.zip build/web
+
     - name: Upload build artifacts
       uses: actions/upload-pages-artifact@v3
       with:
         name: web-build
         path: build/web
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.1  # Dynamically set the tag name
+        release_name: "Release v1.0.1"  # Dynamically set the release name
+        body: 'Release of the Flutter web application'
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: web-build.zip  # Path to the zipped file
+        asset_name: web-build.zip
+        asset_content_type: application/zip
