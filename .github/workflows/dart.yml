@@ -23,6 +23,9 @@ jobs:
     - name: Build Flutter web
       run: flutter build web
 
+    - name: Zip build artifacts
+      run: zip -r web-build.zip build/web
+
     - name: Upload build artifacts
       uses: actions/upload-pages-artifact@v3
       with:
@@ -35,8 +38,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: 'v1.0.0'  # You can set this dynamically
-        release_name: 'Release v1.0.0'
+        tag_name: "${{ github.ref }}"  # Dynamically set the tag name
+        release_name: "Release ${{ github.ref }}"  # Dynamically set the release name
         body: 'Release of the Flutter web application'
         draft: false
         prerelease: false
@@ -47,6 +50,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: web-build.zip
-        asset_name: web-build.zip  # Make sure to zip the build folder
+        asset_path: web-build.zip  # Path to the zipped file
+        asset_name: web-build.zip
         asset_content_type: application/zip
