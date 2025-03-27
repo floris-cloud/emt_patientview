@@ -1,4 +1,4 @@
-name: Flutter Web Build
+ame: Flutter Web Build
 
 on:
   workflow_dispatch:
@@ -30,8 +30,7 @@ jobs:
       
     - name: Github Actions Create Release
       uses: idev-coder/github-actions-release@v1.0.0
-          with:
-            tag: ${{ github.ref }}
-            name: web-build
-            body: "Release of web build"
-          
+      with:
+          tag_name: ${{ github.ref }}
+          name: web-build
+          path: build/web
