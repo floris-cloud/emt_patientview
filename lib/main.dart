@@ -8,6 +8,8 @@ import 'src/settings/settings_service.dart';
 
 
 void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
    TreatmentStationList treatmentStationList = TreatmentStationList();

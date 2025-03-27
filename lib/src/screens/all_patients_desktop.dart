@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart'; 
 
 import 'package:emt_patientview/src/models/triage_category.dart';
 import 'package:emt_patientview/src/widgets/pop_up_new_Patient_from_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../models/patient.dart';
 import '../models/patient_list.dart';
@@ -39,7 +40,7 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
           Consumer<PatientListModel>(
     builder: (context, patientListModel, child) {
       return PatientListView();
-    },
+    }
   ),
 
         ]
@@ -50,7 +51,8 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
             indent: 20,
             endIndent: 0,
           ),
-       StreamBuilder(
+  if(false)...[
+  StreamBuilder(
   stream: webSocketStream,
   builder: (context, snapshot) {
     if (snapshot.hasData) {
@@ -64,7 +66,8 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
     }
     return Container();
   },
-),
+)
+  ],
     
         Expanded(flex: 2, child: 
           TreatmentStationListView(),),
@@ -81,7 +84,7 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
     },
   )),
       ]),);
-    
+  
   }
 }
 

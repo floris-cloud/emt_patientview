@@ -1,8 +1,7 @@
 import 'package:emt_patientview/src/models/triage_category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import '../../models/patient_list.dart';
 import '../../models/person.dart';
 import '../../themes/app_color.dart';

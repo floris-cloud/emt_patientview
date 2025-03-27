@@ -3,7 +3,7 @@ import '../../models/medical_values.dart';
 import '../../models/patient.dart';
 import '../../models/protocol.dart';
 import '../../repository/protocol_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'medical_values_diagramm.dart';
 import '../medicalValueView.dart';
 class ProtocollInputUserJourney extends StatefulWidget {

@@ -1,6 +1,6 @@
 
 import 'package:fhir/r4/general_types/general_types.dart' as r4;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 extension ContactPointSystemExtension on r4.ContactPointSystem {

@@ -4,7 +4,7 @@ import '../models/treatment_station_list.dart';
 import '../repository/rest_api.dart';
 import 'pop_up_treatment_station.dart';
 import 'settings_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key, required this.controller});

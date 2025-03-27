@@ -7,7 +7,7 @@ import '../models/triage_category.dart';
 import '../repository/patient_repository.dart';
 
 import '../models/patient.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import '../themes/app_color.dart';
 
 class PatientChangeUserJourney extends StatefulWidget {

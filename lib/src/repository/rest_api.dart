@@ -8,7 +8,8 @@ import '../models/treatment_station.dart';
 class RestApi {
   // static String uri = 'localhost:8020';
   static String uri = 'floris-20df0051ge.local:8020';
-
+  // static String uri = 'api';
+  
 
   static Future<List<Patient>> getPatientList() async {
     var url = 'http://$uri/patients';
@@ -55,9 +56,12 @@ static postTreatmentStation(TreatmentStation ts) async {
 }
 static Future<List<TreatmentStation>> getTreatmentStations() async {
   var url = 'http://$uri/treatmentStation';
+  try {
+    
+  
   var response = await http.get(Uri.parse(url));
   if(response.statusCode != 200) {
-    throw Exception('Failed to load TreatmentStations');
+    return [];
   }
   List<TreatmentStation> treatmentStations = [];
   List<dynamic> json = jsonDecode(response.body);
@@ -67,6 +71,10 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   print(json);
   json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));});
   return treatmentStations;
+  }
+  catch(e){
+    return [];
+  }
 }
 
   static void postTreatmentStations(List<TreatmentStation> treatmentStations) async {

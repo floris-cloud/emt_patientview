@@ -2,7 +2,7 @@
 
 import 'package:emt_patientview/src/models/treatment_station.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 
 import 'package:emt_patientview/src/models/triage_category.dart';
 import 'package:flutter/material.dart';
