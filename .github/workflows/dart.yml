@@ -1,4 +1,4 @@
-ame: Flutter Web Build
+name: Flutter Web Build
 
 on:
   workflow_dispatch:
@@ -33,4 +33,3 @@ jobs:
       with:
           tag_name: ${{ github.ref }}
           name: web-build
-          path: build/web
