@@ -38,8 +38,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: "${{ github.ref_name }}"  # Dynamically set the tag name
-        release_name: "Release ${{ github.ref_name }}"  # Dynamically set the release name
+        tag_name: v1.0.1  # Dynamically set the tag name
+        release_name: "Release v1.0.1"  # Dynamically set the release name
         body: 'Release of the Flutter web application'
         draft: false
         prerelease: false
