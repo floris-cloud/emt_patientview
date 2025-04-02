@@ -80,7 +80,6 @@ class Patient extends Person {
   discharge(){
     active = false;
     protocls.last.addContact("discharged");
-    PatientStorage.changePatient(this);
   }
 
   getAge() {

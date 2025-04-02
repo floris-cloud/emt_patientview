@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/patient.dart';
+import '../models/patient_list.dart';
 import '../models/treatment_station_list.dart';
 import 'protocoll/final_protocol.dart';
 import 'protocoll/medical_values_diagramm.dart';
@@ -31,10 +32,7 @@ class PatientDetail extends StatefulWidget{
     if(widget.patient == null){
       return         Text(AppLocalizations.of(context)!.noPatientSelected);
     }else{
-      print(widget.patient!.id);
-      print(widget.patient!.protocls.last.createdAt);
       pdfWidget = PdfProtocol(patient: widget.patient!);
-
     }
 
     double fontsize = 0.015*MediaQuery.of(context).size.width;
@@ -50,8 +48,8 @@ class PatientDetail extends StatefulWidget{
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('ID: '+widget.patient!.id.split('-').first, style: TextStyle(fontSize: fontsize),),
-                        Text(widget.patient!.surName+', '+widget.patient!.preName, style: TextStyle(fontSize: fontsize),),
+                        Text('ID: ${widget.patient!.id.split('-').first}', style: TextStyle(fontSize: fontsize),),
+                        Text('${widget.patient!.surName}, ${widget.patient!.preName}', style: TextStyle(fontSize: fontsize),),
                         Row(
                           children: [
                             Text(widget.patient!.formatedBirthDate(), style: TextStyle(fontSize: fontsize),),
@@ -69,7 +67,7 @@ class PatientDetail extends StatefulWidget{
           children: [
             Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize/2, backgroundColor: widget.patient!.triageCategory.getColor()),),
             SizedBox(width: fontsize,),
-            Text( AppLocalizations.of(context)!.arrivedAt+': '+formatedTime(widget.patient!.protocls.last.createdAt), style: TextStyle(fontSize: fontsize),),
+            Text( '${AppLocalizations.of(context)!.arrivedAt}: ${formatedTime(widget.patient!.protocls.last.createdAt)}', style: TextStyle(fontSize: fontsize),),
          
           ],  
             ),
@@ -97,7 +95,7 @@ class PatientDetail extends StatefulWidget{
           Divider(
             thickness: 2,
           ),
-          Container(
+          SizedBox(
             height: 300,
             child: MedicalValuesDiagramm(patient: widget.patient!,protocol:  widget.patient!.protocls.last),
           ),  
@@ -117,9 +115,11 @@ class PatientDetail extends StatefulWidget{
                 ]),
                 onPressed: (){
                   widget.patient!.discharge();
+                  Provider.of<PatientListModel>(context, listen: false).change(widget.patient!);
                   Provider.of<TreatmentStationList>(context, listen: false).removePatientFromTreatmentStation(widget.patient!);
                   Provider.of<TreatmentStationList>(context, listen: false).clearShowPatient();
                   setState(() {
+
                   }
                   );
                   
@@ -129,8 +129,6 @@ class PatientDetail extends StatefulWidget{
                 child: Row(children: [Icon(Icons.download),Text(AppLocalizations.of(context)!.downloadProtocol),
                 ]),
                 onPressed: (){
-                  print(widget.patient);
-                  print(pdfWidget.patient.id);
                   pdfWidget.saveFile();
 
                   setState(() {

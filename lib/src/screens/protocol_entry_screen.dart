@@ -50,9 +50,7 @@ class ProtocolEntryScreen extends StatefulWidget {
       appBar: CustomAppBar(
         title: title,
       ),
-      body:Expanded(
-     
-        child: Row(
+      body: Row(
           children: [
          NavigationRail(
           backgroundColor: Theme.of(context).secondaryHeaderColor,
@@ -130,7 +128,6 @@ class ProtocolEntryScreen extends StatefulWidget {
                    
        
         )
-      ),
     );
   }
   

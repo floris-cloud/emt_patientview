@@ -30,15 +30,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       // ),
       leadingWidth: 112,
       title: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: 
       [
-        Text(title),
-        SizedBox(width: 0.25* MediaQuery.of(context).size.width,),
-        Container(
+           Container(
           constraints: BoxConstraints(maxHeight: kToolbarHeight-8),
           child:
         Image(image: AssetImage('assets/images/johanniter_international_logo.png'), fit: BoxFit.fitHeight,)),
+        SizedBox(width: 0.25* MediaQuery.of(context).size.width,),
+        Text(title),
+     
         ]),
       actions: <Widget>[
              IconButton(

@@ -28,19 +28,18 @@ class PatientListModel extends ChangeNotifier {
   // }
   Future<void> add(Patient patient) async {
     _patients.add(patient);
-    await PatientStorage.savePatient(patient);
     notifyListeners();
+    await PatientStorage.savePatient(patient);
   }
 
-  void remove(Patient patient) {
-    print("remove");
-    _patients.remove(patient);
-    notifyListeners();
-  }
+  // void remove(Patient patient) {
+  //   _patients.remove(patient);
+  //   notifyListeners();
+  // }
   void change(Patient patient) {
     _patients[_patients.indexWhere((element) => element.id == patient.id)] = patient;   
-    PatientStorage.changePatient(patient);
     notifyListeners();
+    PatientStorage.changePatient(patient);
   }
   
   List<Patient> filteredPatients(bool filterNoTreatmentStation, {bool filterInactive=true}) {

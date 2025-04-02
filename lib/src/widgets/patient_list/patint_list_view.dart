@@ -43,6 +43,8 @@ class _PatientListViewState extends State<PatientListView> {
           children: [
             Text(AppLocalizations.of(context)!.allPatients, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
             Wrap(
+              spacing: 5.0,
+              runSpacing: 5.0,
             children: [                
               ...TriageCategory.values.map((TriageCategory triageCategory) =>
         

@@ -51,13 +51,14 @@ class _AllPatDeskcreenState extends State<AllPatDeskScreen> {
             indent: 20,
             endIndent: 0,
           ),
-  if(false)...[
+  
+  //TODO check if role = triage
+  if(true)...[
   StreamBuilder(
   stream: webSocketStream,
   builder: (context, snapshot) {
     if (snapshot.hasData) {
-      // Dialog nach dem Build-Prozess anzeigen
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
           builder: (_) => PopUpNewPatientFromCard(pateintData: snapshot.data)
