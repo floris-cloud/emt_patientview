@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import '../models/patient.dart';
 import '../models/treatment_station.dart';
 import '../models/treatment_station_list.dart';
@@ -13,18 +13,6 @@ class TreatmentStationListView extends StatefulWidget {
 
 class TreatmentStationListViewState extends State<TreatmentStationListView> {
 
-  // late  treatmentStationList;
-//   @override
-// void initState() {
-//     super.initState();
-//     _loadTreatmentStations();
-//   }
-//   void _loadTreatmentStations() async {
-//     List<TreatmentStation> ts = await TreatmentStationList.loadTreatmentStations();
-//     setState(() {
-//       treatmentStationList.treatmentStations = ts;
-//     });
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +20,7 @@ class TreatmentStationListViewState extends State<TreatmentStationListView> {
     print(treatmentStationList.treatmentStations.length);
     return    Column(
           children: [
+          Text(AppLocalizations.of(context)!.treatmentStations, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
           Wrap(
             spacing: 8.0,
             runSpacing: 4.0,

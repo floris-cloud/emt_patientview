@@ -80,5 +80,6 @@
   "firstContact": "Erstkontakt",
   "lastContact": "Letzter Kontakt",
   "allProtocolls": "Alle Protokolle",
-  "downloadProtocol": "Protokoll herunterladen"
+  "downloadProtocol": "Protokoll herunterladen",
+  "treatmentStations": "Behandlungsstationen"
 }

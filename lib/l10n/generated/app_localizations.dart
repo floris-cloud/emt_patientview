@@ -526,6 +526,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'download protocol'**
   String get downloadProtocol;
+
+  /// No description provided for @treatmentStations.
+  ///
+  /// In en, this message translates to:
+  /// **'treatmentstations'**
+  String get treatmentStations;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

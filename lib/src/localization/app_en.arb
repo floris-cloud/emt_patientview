@@ -81,6 +81,7 @@
   "firstContact": "first Contact",
   "lastContact": "last contact",
   "allProtocolls": "all protocolls",
-  "downloadProtocol":"download protocol"
+  "downloadProtocol":"download protocol",
+  "treatmentStations": "treatmentstations"
 
 }

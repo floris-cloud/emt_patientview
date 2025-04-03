@@ -26,7 +26,8 @@ class TreatmentStationList extends ChangeNotifier {
 
 
    loadTreatmentStations() async {
-    _treatmentStations = await TreatmentStationRepository.getTreatmentStations();
+    _treatmentStations = await TreatmentStationRepository.loadTreatmentStations();
+    notifyListeners();
   }
   void removePatientFromTreatmentStation(Patient patient) {
     _treatmentStations.forEach((treatmentStation) {

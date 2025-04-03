@@ -9,7 +9,6 @@ environment:
 dependencies:
   #body_part_selector: ^0.2.0
   collection: ^1.18.0
-  download: ^1.0.1
   fhir: ^0.12.0
   file_saver: ^0.2.14
   fl_chart: ^0.69.2
@@ -34,10 +33,19 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^5.0.0
-
+  dependency_validator: ^3.0.0
 flutter:
   uses-material-design: true
-
+  fonts:
+    - family: MavenJohanniter
+      fonts:
+        - asset: assets/fonts/MavenJohanniter-Regular.ttf
+        - asset: assets/fonts/MavenJohanniter-Bold.ttf
+          weight: 700
+        # - asset: assets/fonts/MavenJohanniter-Medium.ttf
+        #   style: medium
+        # - asset: assets/fonts/MavenJohanniter-SemiBold.ttf
+        #   style: semibold
   # Enable generation of localized Strings from arb files.
   generate: true
 

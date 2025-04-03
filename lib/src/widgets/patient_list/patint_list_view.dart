@@ -1,11 +1,9 @@
-import 'package:emt_patientview/src/repository/patient_repository.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 
-import '../../models/patient.dart';
 import '../../models/patient_list.dart';
 import '../../models/triage_category.dart';
 import '../add_patient_button.dart';

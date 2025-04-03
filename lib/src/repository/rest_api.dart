@@ -68,8 +68,11 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   if(json.isEmpty) {
     return treatmentStations;
   }
-  print(json);
-  json.forEach((jsonP) {treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));});
+
+  for (var jsonP in json) {
+    treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));
+    }
+
   return treatmentStations;
   }
   catch(e){

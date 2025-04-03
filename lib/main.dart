@@ -12,12 +12,11 @@ void main() async {
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
-   TreatmentStationList treatmentStationList = TreatmentStationList();
-  await treatmentStationList.loadTreatmentStations();
+
   runApp( MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PatientListModel()),
-        ChangeNotifierProvider(create: (_) => treatmentStationList),
+        ChangeNotifierProvider(create: (_) => TreatmentStationList()),
         ChangeNotifierProvider.value(value: settingsController),
       ],
       child: MyApp(),

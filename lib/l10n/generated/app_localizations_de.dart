@@ -225,4 +225,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get downloadProtocol => 'Protokoll herunterladen';
+
+  @override
+  String get treatmentStations => 'Behandlungsstationen';
 }

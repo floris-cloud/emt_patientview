@@ -17,20 +17,32 @@ class TreatmentStation extends ChangeNotifier {
     this.dbId
   });
   factory TreatmentStation.fromJson(Map<String, dynamic> json) {
+    print(json);
+    Color? color;
+      if (json['color'] != null && json['color'].isNotEmpty) {
     String colorstring = json['color'].split("0x").last;
     int i = (int.parse(colorstring, radix: 16));
+      color = Color(i);
+      }
+      print(json["id"]);
+      print(json["name"]);
     return TreatmentStation(
         id: json["id"],
         name: json["name"],
-        patient: json['patientId'],
-        color:  json['color'] == null ? null :  Color(i),
+        // patient: json['patientId'],
+        color:  color,
         dbId: json['dbId'],
   );
   }
 
+  //TODO add color
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name
+        "name": name,
+        "dbId": dbId,
+        "color": color != null 
+        ? '0x${color!.toARGB32().toRadixString(16).padLeft(8, '0')}' 
+        : null
         // 'patient': patient?.toJson(),
         // 'color': color?.value,
       };

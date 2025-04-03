@@ -37,16 +37,16 @@ class TreatmentStationRepository {
     List<TreatmentStation> treatmentStationList= await getTreatmentStations();
   
     String? treatmentStationsJson = prefs.getString(_key);
-    
-    if (treatmentStationsJson == null) {
+    if (treatmentStationsJson == null || treatmentStationsJson.isEmpty) {
       await prefs.setString(_key, jsonEncode(treatmentStationList));
+      print(100);
       return treatmentStationList;
     }
     List<dynamic> treatStationListMap = jsonDecode(treatmentStationsJson);
     for (dynamic treatmentStationMap in treatStationListMap) {
       treatmentStations.add(TreatmentStation.fromJson(treatmentStationMap));
     }
-     
+      treatmentStations.addAll(treatmentStationList);
       return treatmentStations;
   }
   static rearrangeTreatmentStations(List<TreatmentStation> treatmentStations) async {
