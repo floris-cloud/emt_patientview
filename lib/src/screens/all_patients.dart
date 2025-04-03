@@ -11,7 +11,6 @@ class AllPatScreen extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
  bool isDesktop = kIsWeb && MediaQuery.of(context).size.width > 1000;
- print(isDesktop);
 return isDesktop ? AllPatDeskScreen() : AllPatMobileScreen();
 }
 }

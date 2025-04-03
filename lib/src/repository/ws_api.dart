@@ -5,8 +5,8 @@ import 'package:web/web.dart';
 class WebSocketService {
   static String host = 'floris-20df0051ge.local:8020';
   // static String host = 'localhost:8020';
-  static String get url => 'ws://${window.location.host}/api/ws/chat';
-  // static String get url => 'ws://$host/ws';
+  // static String get url => 'ws://${window.location.host}/api/ws/chat';
+  static String get url => 'ws://$host/ws';
   late final WebSocketChannel _channel;
 
   WebSocketService() {
@@ -15,7 +15,6 @@ class WebSocketService {
       print('Connected to WebSocket');
     } catch (e) {
       print('Connection error: $e');
-      // Handle connection errors (e.g., retry logic)
     }
   }
 

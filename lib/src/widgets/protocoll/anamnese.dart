@@ -26,7 +26,6 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
 
   void _saveNotes() {
     if (_notesController.text.isNotEmpty) {
-      print(_notesController.text);
       setState(() {
         widget.protocol.notes = _notesController.text;
       });

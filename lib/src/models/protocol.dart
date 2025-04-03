@@ -50,25 +50,20 @@ class Protocol {
     return Protocol.fromMap(jsonDecode(json));
   }
   factory Protocol.fromMap(Map<String, dynamic> map) {
-  // Korrekte Verarbeitung der MedicalValues
   final medicalValuesList = map['medicalValuesList'] as List? ?? [];
   final valuesList = medicalValuesList
       .map((item) => MedicalValues.fromMap(item as Map<String, dynamic>))
       .toList();
 
-  // Korrekte Verarbeitung der Hauptdiagnose
   Icd? mainDiagnose;
-  if (map['mainDiagnose'] is Map<String, dynamic>) {
-    mainDiagnose = Icd.fromJson(map['mainDiagnose'] as Map<String, dynamic>);
-  }
-
-  // Korrekte Verarbeitung anderer Diagnosen
+  // if (map['mainDiagnose'] is Map<String, dynamic>) {
+  //   mainDiagnose = Icd.fromJson(map['mainDiagnose'] as Map<String, dynamic>);
+  // }
   final otherDiagnoses = (map['otherDiagnoses'] as List? ?? [])
       .map((e) => Icd.fromJson(e as Map<String, dynamic>))
       .toList();
 
   Protocol p =  Protocol(
-    createdAt: DateTime.parse(map['firstContact'] as String),
     patientId: map['patientId'] as String,
     notes: map['notes'] as String?,
     medicalValuesList: valuesList,
@@ -80,34 +75,21 @@ class Protocol {
   p.otherDiagnoses = otherDiagnoses;
   return p;
 }
-  // factory Protocol.fromMap(Map<String, dynamic> map) {
-  //   var medicalValuesList = map['medicalValuesList'];
-  //   List<MedicalValues> valuesList = [];
-  //   Icd? mainDiagnose;
-  //   if (medicalValuesList is List) {
-  //     if(medicalValuesList.isNotEmpty){
-  //     valuesList = medicalValuesList.map((item) {
-  //       return MedicalValues.fromMap(item);
-  //     }).toList();
-  //     }
-  //   }
-  //   if (map['mainDiagnose'] != '' && map['mainDiagnose'] != ' ') {
-  //     mainDiagnose = Icd.fromJson(jsonDecode(map['mainDiagnose']));
-  //   }
 
-  //   return Protocol(
-  //     patientId: map['patientId'],
-  //     notes: map['notes'],
-  //     medicalValuesList: valuesList,
-  //     mainDiagnose: mainDiagnose,
-  //     );
-  // }
   void addContact(String value) {
     contacts[DateTime.now()] = value;
   }
   void sendProtocol() {
     ProtocolRepository.saveProtocol(this);
     // send protocol to server
+  }
+
+  static List<Protocol>  protocolListfromMap(List<dynamic> list) {
+    List<Protocol> protocols = [];
+    for(var protocolMap in list){
+      protocols.add(Protocol.fromMap(protocolMap));
+    }
+    return protocols;
   }
 }
 

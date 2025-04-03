@@ -50,7 +50,7 @@ class PatientCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    patient.surName+", "+patient.preName,
+                    "${patient.surName}, ${patient.preName}",
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,

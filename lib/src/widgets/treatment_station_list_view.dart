@@ -17,7 +17,6 @@ class TreatmentStationListViewState extends State<TreatmentStationListView> {
   @override
   Widget build(BuildContext context) {
     TreatmentStationList treatmentStationList = context.watch<TreatmentStationList>();
-    print(treatmentStationList.treatmentStations.length);
     return    Column(
           children: [
           Text(AppLocalizations.of(context)!.treatmentStations, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),

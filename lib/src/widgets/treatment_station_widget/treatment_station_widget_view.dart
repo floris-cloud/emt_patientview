@@ -11,7 +11,6 @@ import '../../models/patient.dart';
 
 
 import '../../screens/protocol_entry_screen.dart';
-import '../pop_up_change_patient.dart';
 import 'pop_up_patient_list.dart';
 
 class TreatmentStationView extends StatefulWidget {
@@ -128,7 +127,13 @@ class _TreatmentStationViewState extends State<TreatmentStationView> {
                   ? Column(
                       children: [
                         Text(
-                          (widget.treatmentStation.patient?.surName ?? "") + ", " + (widget.treatmentStation.patient?.preName ?? ""),
+                      widget.treatmentStation.patient!.id.split('-').first,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                    ),
+                  ),
+                        Text(
+                          "${widget.treatmentStation.patient!.surName}, ${widget.treatmentStation.patient!.preName}",
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,

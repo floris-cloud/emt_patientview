@@ -35,18 +35,20 @@ class TreatmentStationRepository {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<TreatmentStation> treatmentStations = [];
     List<TreatmentStation> treatmentStationList= await getTreatmentStations();
-  
     String? treatmentStationsJson = prefs.getString(_key);
     if (treatmentStationsJson == null || treatmentStationsJson.isEmpty) {
       await prefs.setString(_key, jsonEncode(treatmentStationList));
       return treatmentStationList;
     }
+
     List<dynamic> treatStationListMap = jsonDecode(treatmentStationsJson);
     for (dynamic treatmentStationMap in treatStationListMap) {
       treatmentStations.add(TreatmentStation.fromJson(treatmentStationMap));
     }
+    Iterable<String> dbIds = treatmentStations.map((station) => station.dbId?? '');
+
     treatmentStations.addAll(
-    treatmentStationList.where((station) => !treatmentStations.any((s) => s.dbId == station.dbId)));
+    treatmentStationList.where((station) => !dbIds.contains(station.dbId ?? '' )));
       return treatmentStations;
   }
   static rearrangeTreatmentStations(List<TreatmentStation> treatmentStations) async {

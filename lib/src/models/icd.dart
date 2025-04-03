@@ -19,6 +19,8 @@ class Icd {
   Map<String, dynamic> toJson() => {
     'title': title,
     'description': description,
+    'entity': entity,
+    'code': code
   };
 
   @override
@@ -29,10 +31,10 @@ class Icd {
 
   dynamic mdsFromDiagnose() {
   Map<List<String>, dynamic> icdMap = {
-     ['NA00','NA01','NA02','NA03', 'NA06', 'NA08', 'NA09','NA0A']: MDSTrauma.majorHeadSpineInjury,
+     ['NA01','NA02','NA03', 'NA06', 'NA08', 'NA09','NA0A']: MDSTrauma.majorHeadSpineInjury,
     []: MDSTrauma.majorTorsoInjury,
     []: MDSTrauma.majorExtremityInjury,
-    []: MDSTrauma.moderateInjury,
+    ['NA00']: MDSTrauma.moderateInjury,
     []: MDSTrauma.minorInjury,
     []: MDSInfection.acuteRespiratoryInfection,
     ['ME05.1','1A40']: MDSInfection.acuteWateryDiarrhea,

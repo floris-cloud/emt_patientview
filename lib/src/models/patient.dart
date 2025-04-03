@@ -28,7 +28,7 @@ class Patient extends Person {
       protocls = protocls ?? [Protocol(patientId: id!, createdAt: DateTime.now())];
         // firstContact = firstContact ?? DateTime.now();
   //TODO wie bei toJSON
-  factory Patient.fromMap(Map<String, dynamic> map, List<Protocol>? protoclList) {
+  factory Patient.fromMap(Map<String, dynamic> map) {
     Patient p = Patient(
       preName: map['preName'],
       surName: map['surName'],
@@ -37,7 +37,7 @@ class Patient extends Person {
       gender: Gender.values.byName('male'),
       id: map['id'],
       triageCategory: TriageCategory.values.byName(map['triageCategory']),
-      protocls: protoclList,
+      protocls: Protocol.protocolListfromMap(map['protocls']),
     );
     return p;
   }

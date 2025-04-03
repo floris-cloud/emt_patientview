@@ -20,9 +20,8 @@ class RestApi {
       List<dynamic> json = jsonDecode(response.body);
       
       json.forEach((jsonP) async {
-      
-        List<Protocol> protocols = await RestApi.getProtocolsbyId(jsonP['id']);
-        patients.add(Patient.fromMap(jsonP, protocols));
+        // List<Protocol> protocols = await RestApi.getProtocolsbyId(jsonP['id']);
+        patients.add(Patient.fromMap(jsonP));
         });
       return patients;
       
@@ -37,7 +36,6 @@ class RestApi {
 }
 static postPatient(Patient patient) async {
   var url = 'http://$uri/patient';
-  print(jsonEncode(patient.getFhirPatient()));
   var response = await http.post(Uri.parse(url), body: jsonEncode(patient));
   if(response.statusCode != 200) {
     throw Exception('Failed to post Patient');
@@ -52,8 +50,6 @@ static changePatient(Patient patient) async {
 }
 static postTreatmentStation(TreatmentStation ts) async {
   var url = 'http://$uri/treatmentStation';
-  print(jsonEncode(ts));
-
   var response = await http.post(Uri.parse(url), body: jsonEncode(ts.toJson()));
   if(response.statusCode != 200) {
     throw Exception('Failed to post TreatmentStation');
@@ -137,11 +133,8 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
     throw Exception('Failed to get Protocol: ${response.statusCode}');
   }
       List<Protocol> protocols = [];
-      return protocols;
-      //TODO gibt ein TypeError
-
-      List<dynamic> json = jsonDecode(response.body);
-    for (var jsonP in json) {protocols.add(Protocol.fromMap(jsonP));}
+      var jsondecoded = jsonDecode(jsonDecode(response.body));
+    for (var jsonP in jsondecoded) {protocols.add(Protocol.fromMap(jsonP));}
     return protocols;
 }
   
@@ -161,9 +154,6 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
     
     String filename = response.headers['filename']?? 'mds.xlsm';
     await FileSaver.instance.saveFile(name: filename, bytes: response.bodyBytes, customMimeType: response.headers['media_type']);
-
-    print(response.headers);
-    print('MDS downloaded');
   }
 
 

@@ -17,6 +17,7 @@ class _PopUpPatientListState extends State<PopUpPatientList> {
   @override
   Widget build(BuildContext context) {
     var patientListModel = Provider.of<PatientListModel>(context);
+    List<Patient> patientList = patientListModel.filteredPatients(true);
     return AlertDialog(
       title: Text(AppLocalizations.of(context)!.allPatients,),
       content: Container(
@@ -24,13 +25,13 @@ class _PopUpPatientListState extends State<PopUpPatientList> {
         child: ListView.builder(
          itemExtent: 50,
           shrinkWrap: true,
-          itemCount: patientListModel.patients.length,
+          itemCount: patientList.length,
           itemBuilder: (context, index) {
-            final patient = patientListModel.patients[index];
+            final patient = patientList[index];
             return ListTile(
               tileColor: Theme.of(context).colorScheme.primaryContainer,
               hoverColor: Theme.of(context).colorScheme.secondaryContainer,
-              title: Text('${patient.preName} ${patient.surName}'),
+              title: Text('${patient.id} ${patient.preName} ${patient.surName}'),
               onTap: () {
                 widget.onPatientSelected(patient);
                 Navigator.of(context).pop();

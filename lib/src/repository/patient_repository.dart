@@ -29,7 +29,7 @@ class PatientStorage {
     List<dynamic> patientListMap = jsonDecode(patientsJson);
 
     for (dynamic patientMap in patientListMap) {
-      patients.add(Patient.fromMap(patientMap, null));
+      patients.add(Patient.fromMap(patientMap));
     }
       patientList.where((p) => !patients.any((patient) => patient.id == p.id)).forEach((p) => patients.add(p));
       return patients;

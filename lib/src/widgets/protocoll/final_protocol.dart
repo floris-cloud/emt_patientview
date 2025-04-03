@@ -37,7 +37,6 @@ class _LastProtocolState extends State<LastProtocol> {
   initState(){
     super.initState();
     if(widget.patient.protocls.isEmpty){
-      print("no protocol");
       protocol = Protocol(patientId: widget.patient.id);
       widget.patient.protocls.add(protocol);
     }
@@ -47,7 +46,6 @@ class _LastProtocolState extends State<LastProtocol> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
     return
     Column(
       children: [
@@ -59,7 +57,6 @@ class _LastProtocolState extends State<LastProtocol> {
               Text(AppLocalizations.of(context)?.allProtocolls??"Alle Protokolle"),
             ...widget.patient.protocls.map((Protocol p)
               {
-                print(p.toJson());
               return  
               ElevatedButton(onPressed: (){
                   setState(() {

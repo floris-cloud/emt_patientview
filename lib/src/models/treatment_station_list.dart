@@ -36,7 +36,6 @@ class TreatmentStationList extends ChangeNotifier {
     notifyListeners();
   }
   void setShowPatient(Patient patient) {
-    print(patient.id);
     showPatient = patient;
     notifyListeners();
   }
