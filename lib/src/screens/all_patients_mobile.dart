@@ -1,3 +1,4 @@
+import 'package:emt_patientview/src/widgets/patient_list/patint_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 
@@ -13,13 +14,11 @@ class _AllPatMobileScreenState extends State<AllPatMobileScreen> {
 
 
   @override
-
-  @override
   Widget build(BuildContext context) {
     return
     Scaffold(
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.allPatients),
-      body:   Text("Mobile"),
+      body:   PatientListView(),
     );
   }
 }

@@ -68,6 +68,7 @@ class Protocol {
       .toList();
 
   Protocol p =  Protocol(
+    createdAt: DateTime.parse(map['firstContact'] as String),
     patientId: map['patientId'] as String,
     notes: map['notes'] as String?,
     medicalValuesList: valuesList,

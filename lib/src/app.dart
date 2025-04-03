@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'screens/all_patients_desktop.dart';
+import 'screens/all_patients.dart';
 import 'settings/settings_controller.dart';
 
 class MyApp extends StatelessWidget {
@@ -33,7 +33,7 @@ return Consumer<SettingsController>(
             theme: ThemeData(fontFamily: "MavenJohanniter"),
             darkTheme: ThemeData.dark(),
             themeMode: settingsController.themeMode,
-            home: AllPatDeskScreen(),
+            home: AllPatScreen(),
             
           );
         },

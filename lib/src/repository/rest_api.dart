@@ -18,7 +18,12 @@ class RestApi {
       if(response.statusCode == 200) {
       List<Patient> patients = [];
       List<dynamic> json = jsonDecode(response.body);
-      json.forEach((jsonP) {patients.add(Patient.fromMap(jsonP));});
+      
+      json.forEach((jsonP) async {
+      
+        List<Protocol> protocols = await RestApi.getProtocolsbyId(jsonP['id']);
+        patients.add(Patient.fromMap(jsonP, protocols));
+        });
       return patients;
       
       }
@@ -68,7 +73,6 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
   if(json.isEmpty) {
     return treatmentStations;
   }
-
   for (var jsonP in json) {
     treatmentStations.add(TreatmentStation.fromJson(jsonDecode(jsonP)));
     }
@@ -112,19 +116,34 @@ static Future<List<TreatmentStation>> getTreatmentStations() async {
     var url = 'http://$uri/treatmentStation/';
     http.delete(Uri.parse(url), body: jsonEncode(treatmentStation));
   }
-  static Future<List<Protocol>> getProtocols(Patient patient) async {
-    var url = 'http://$uri/protocol/';
-    var request = http.Request('GET', Uri.parse(url));
-    request.body = patient.id;
-    var response = await request.send();
-    if(response.statusCode != 200) {
-      throw Exception('Failed to get Protocol');
-    }
-    List<Protocol> protocols = [];
-    List<dynamic> json = jsonDecode(response.stream.toString());
-    json.forEach((jsonP) {protocols.add(Protocol.fromMap(jsonP));});
-    return protocols;
+  // static Future<List<Protocol>> getProtocols(Patient patient) async {
+  //   var url = 'http://$uri/protocol/';
+  //   var request = http.Request('GET', Uri.parse(url));
+  //   request.body = patient.id;
+  //   var response = await request.send();
+  //   if(response.statusCode != 200) {
+  //     throw Exception('Failed to get Protocol');
+  //   }
+  //   List<Protocol> protocols = [];
+  //   List<dynamic> json = jsonDecode(response.stream.toString());
+  //   for (var jsonP in json) {protocols.add(Protocol.fromMap(jsonP));}
+  //   return protocols;
+  // }
+
+   static Future<List<Protocol>> getProtocolsbyId(String id) async {
+    var url = Uri.parse('http://$uri/protocol/?id=$id'); 
+  final response = await http.get(url); 
+  if (response.statusCode != 200) {
+    throw Exception('Failed to get Protocol: ${response.statusCode}');
   }
+      List<Protocol> protocols = [];
+      return protocols;
+      //TODO gibt ein TypeError
+
+      List<dynamic> json = jsonDecode(response.body);
+    for (var jsonP in json) {protocols.add(Protocol.fromMap(jsonP));}
+    return protocols;
+}
   
   static void postProtocol(Protocol protocol) async {
     var url = 'http://$uri/protocol';

@@ -11,17 +11,17 @@ class ProtocolRepository {
   static Future<void> saveProtocol(Protocol protocol) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(protocol.patientId, jsonEncode(protocol));
-
     RestApi.postProtocol(protocol);
   }
 
   static Future<Protocol?> loadProtocol(Patient patient) async {
-    List<Protocol> protocols = await RestApi.getProtocols(patient);
     
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? protocolJson = prefs.getString(patient.id);
     Protocol protocol = Protocol.fromJson(protocolJson!);
     return protocol;
-
   }
+  static Future<List<Protocol>> loadProtocols(Patient patient) async {
+    return await RestApi.getProtocolsbyId(patient.id);
+}
 }

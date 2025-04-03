@@ -10,10 +10,8 @@ class AllPatScreen extends StatelessWidget {
   const AllPatScreen({super.key});
    @override
   Widget build(BuildContext context) {
-    if(kIsWeb){
-      return AllPatDeskScreen();
-    } else {
-      return AllPatMobileScreen();
-    }
-  }
+ bool isDesktop = kIsWeb && MediaQuery.of(context).size.width > 1000;
+ print(isDesktop);
+return isDesktop ? AllPatDeskScreen() : AllPatMobileScreen();
+}
 }

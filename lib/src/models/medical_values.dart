@@ -36,15 +36,26 @@ class MedicalValues {
 @override
 String toString() {
   String date = '${createdAt.hour}:${createdAt.minute} ${createdAt.day}.${createdAt.month}.${createdAt.year}';
-  return '''
-    Systolic Blood Pressure: ${systolic ?? '-'} / ${diastolic ?? '-'} mmHg
-    Respiratory Rate: ${respiratoryRate ?? '-'} /min
-    Pulse: ${pulse ?? '-'} /min
-    Oxygen Saturation: ${oxygenSaturation ?? '-'} %
-    Body Temperature: ${temperature ?? '-'} °C
-    Blood Sugar Level: ${bloodSugar ?? '-'} mmol/L
-    Date and Time of measurement: $date
-  ''';
+
+  return [
+  if (systolic != null || diastolic != null)
+    'Systolic Blood Pressure: ${systolic ?? '-'} / ${diastolic ?? '-'} mmHg',
+  if (respiratoryRate != null) 'Respiratory Rate: $respiratoryRate /min',
+  if (pulse != null) 'Pulse: $pulse /min',
+  if (oxygenSaturation != null) 'Oxygen Saturation: $oxygenSaturation %',
+  if (temperature != null) 'Body Temperature: $temperature °C',
+  if (bloodSugar != null) 'Blood Sugar Level: $bloodSugar mmol/L',
+  'Date and Time of measurement: $date',
+].join('\n');
+  // return '''
+  //   Systolic Blood Pressure: ${systolic ?? '-'} / ${diastolic ?? '-'} mmHg
+  //   Respiratory Rate: ${respiratoryRate ?? '-'} /min
+  //   Pulse: ${pulse ?? '-'} /min
+  //   Oxygen Saturation: ${oxygenSaturation ?? '-'} %
+  //   Body Temperature: ${temperature ?? '-'} °C
+  //   Blood Sugar Level: ${bloodSugar ?? '-'} mmol/L
+  //   Date and Time of measurement: $date
+  // ''';
 }
   factory MedicalValues.fromMap(Map<String, dynamic> map) {
     return MedicalValues(

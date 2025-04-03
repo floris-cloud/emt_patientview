@@ -68,7 +68,7 @@ class _LastProtocolState extends State<LastProtocol> {
                   });
                 },
                  child: 
-                Text(p.createdAt.day.toString()+"."+p.createdAt.month.toString()));
+                Text("${p.createdAt.day}.${p.createdAt.month}"));
               } 
             ),
           ],
@@ -95,9 +95,9 @@ Expanded(child:
       children: [
         
     Text('Anamnese: ${protocol.notes ?? ''}',),
-    Text(AppLocalizations.of(context)?.mainDiagnose??"Hauptdiagnose"+": "+(protocol.mainDiagnose?.title??'')), 
+    Text(AppLocalizations.of(context)?.mainDiagnose??"Hauptdiagnose: ${protocol.mainDiagnose?.title??''}"), 
     Text(AppLocalizations.of(context)?.otherDiagnose??"Nebendiagnose"+": "),
-   Text(protocol.otherDiagnoses.map((e) => e.title+", ").toString()),
+   Text(protocol.otherDiagnoses.map((e) => "${e.title}, ").toString()),
        Center(child: 
         Container(
           width: 600,
@@ -136,26 +136,26 @@ class PdfProtocol extends StatelessWidget{
           children: [
               Text("Alle Protokolle"),
             ...patient.protocls.map((Protocol p)
-               => Text(p.createdAt.day.toString()+"."+p.createdAt.month.toString())
+               => Text("${p.createdAt.day}.${p.createdAt.month}")
               
             ),
           ],
         ),
         Text('Anamnese: ${protocol.notes ?? ''}',),
         Row(children: [
-        Text(AppLocalizations.of(context)?.mainDiagnose??"Hauptdiagnose"+": "),
+        Text("${AppLocalizations.of(context)!.mainDiagnose}: "),
         Text(protocol.mainDiagnose?.title??''), 
         Spacer(),
-        Text(protocol.otherDiagnoses.map((e) => e.title+", ").toString()),
+        Text(protocol.otherDiagnoses.map((e) => "${e.title}, ").toString()),
           
         ],),
-            Text(AppLocalizations.of(context)?.otherDiagnose??"Nebendiagnose"+": "), 
-                  ...protocol.medicalValuesList.map((medicalValue) => Text(medicalValue.toString())
+            Text("${AppLocalizations.of(context)!.otherDiagnose}: "), 
+                  ...protocol.medicalValuesList.map((medicalValue) => Column(children: [Text(medicalValue.toString()),Divider() ])
 ),
     ...MDS.getMDSCategory().map((category){
       return Row(
         children:[
-        Text(category.title+": "),
+        Text("${category.title}: "),
          
           ...(protocol.mds?.mdsList.where((mds) => category.values.contains(mds)).map((e) => Text(e.name)) ?? [Text(" ")]),
         ] 
@@ -174,7 +174,7 @@ class PdfProtocol extends StatelessWidget{
 saveFile() async{
 final pdf = await exportDelegate.exportToPdfDocument('someFrameId');
 final bytes  = await pdf.save();
-String name = patient.surName+"_"+patient.preName+"_"+patient.protocls.last.createdAt.day.toString()+"."+patient.protocls.last.createdAt.month.toString()+"_protocoll.pdf";
+String name = "${patient.surName}_${patient.preName}_${patient.protocls.last.createdAt.day}.${patient.protocls.last.createdAt.month}_protocoll.pdf";
 FileSaver.instance.saveFile(name: name, bytes:bytes, customMimeType: 'application/pdf');
 }
 }

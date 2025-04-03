@@ -20,20 +20,16 @@ class PatientStorage {
   static Future<List<Patient>> loadPatients() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<Patient> patients = [];
-    
     List<Patient> patientList = await RestApi.getPatientList();
-  
     String? patientsJson = prefs.getString(_key);
-    
     if (patientsJson == null) {
       await prefs.setString(_key, jsonEncode(patientList));
       return patientList;
     }
-
     List<dynamic> patientListMap = jsonDecode(patientsJson);
 
     for (dynamic patientMap in patientListMap) {
-      patients.add(Patient.fromMap(patientMap));
+      patients.add(Patient.fromMap(patientMap, null));
     }
       patientList.where((p) => !patients.any((patient) => patient.id == p.id)).forEach((p) => patients.add(p));
       return patients;
