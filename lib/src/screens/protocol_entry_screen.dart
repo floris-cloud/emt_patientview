@@ -30,10 +30,10 @@ class ProtocolEntryScreen extends StatefulWidget {
     @override
     void initState() {
       super.initState();
-      if(widget.patient.protocls != null){
-        if(widget.patient.protocls!.isNotEmpty)
-        protocol = widget.patient.protocls!.last;
-      }
+    
+        if(widget.patient.protocls.isNotEmpty){
+        protocol = widget.patient.protocls.last;
+        }
       else{
      protocol = Protocol(patientId: widget.patient.id);
      widget.patient.protocls = [protocol];

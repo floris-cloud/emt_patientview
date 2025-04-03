@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
-import '../models/patient.dart';
-import '../models/treatment_station.dart';
 import '../models/treatment_station_list.dart';
 import 'treatment_station_widget/treatment_station_widget_drop.dart';
 import 'package:provider/provider.dart';
 class TreatmentStationListView extends StatefulWidget {
-
+  const TreatmentStationListView({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => TreatmentStationListViewState();
 }

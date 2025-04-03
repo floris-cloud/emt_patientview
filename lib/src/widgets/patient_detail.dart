@@ -1,7 +1,4 @@
-// ignore_for_file: dead_code
 
-import 'package:emt_patientview/src/models/treatment_station.dart';
-import 'package:flutter/rendering.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 
 import 'package:emt_patientview/src/models/triage_category.dart';

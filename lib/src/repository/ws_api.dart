@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web/web.dart';
 // TODO für Krankenkarte empfangen
 class WebSocketService {
   static String host = 'floris-20df0051ge.local:8020';

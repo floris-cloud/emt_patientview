@@ -1,6 +1,3 @@
-
-import 'package:emt_patientview/src/repository/patient_repository.dart';
-
 import 'package:fhir/r4.dart' as r4;
 import 'package:uuid/uuid.dart';
 import 'protocol.dart';

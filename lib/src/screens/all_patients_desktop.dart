@@ -1,14 +1,9 @@
-import 'dart:async';
-import 'package:flutter/foundation.dart'; 
 
-import 'package:emt_patientview/src/models/triage_category.dart';
 import 'package:emt_patientview/src/widgets/pop_up_new_Patient_from_card.dart';
 import 'package:flutter/material.dart';
 import 'package:emt_patientview/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
-import '../models/patient.dart';
 import '../models/patient_list.dart';
-import '../models/person.dart';
 import '../models/treatment_station_list.dart';
 import '../repository/ws_api.dart';
 import '../widgets/patient_detail.dart';

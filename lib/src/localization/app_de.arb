@@ -71,7 +71,7 @@
   "filterTreatmentStation":"Patienten mit und ohne Behandlungsstation",
   "filterInactive":"Nur aktive Patienten",
   "filterNoInactive":"Inaktive Patienten anzeigen",
-  "arrivedAt": "Aaufnahme um",
+  "arrivedAt": "Aufnahme um",
   "discharge": "Entlassen",
   "noPatientSelected": "Kein Patient ausgewählt",
   "addAnamese": "Anamnese hinzufügen",
