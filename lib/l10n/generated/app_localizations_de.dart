@@ -197,7 +197,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get filterNoInactive => 'Inaktive Patienten anzeigen';
 
   @override
-  String get arrivedAt => 'Aaufnahme um';
+  String get arrivedAt => 'Aufnahme um';
 
   @override
   String get discharge => 'Entlassen';

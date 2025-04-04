@@ -51,6 +51,7 @@ class TimerWidgetState extends State<TimerWidget> {
     Column(
       children: [
         ElevatedButton(
+  
           onPressed: () {
             setState(() {  
               widget.showFirstContact = !widget.showFirstContact;
@@ -68,7 +69,7 @@ class TimerWidgetState extends State<TimerWidget> {
         ),
         Text(
          _formatDuration(_elapsed),
-      style: TextStyle(fontSize: 24.0),
+      style: TextStyle(fontSize: 18.0),
         ),
     
       ],

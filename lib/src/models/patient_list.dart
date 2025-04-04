@@ -50,7 +50,7 @@ class PatientListModel extends ChangeNotifier {
     if (filterNoTreatmentStation) {
      filterdPatients.removeWhere((element) => element.treatmentStationId != null);
     }
-    // filterdPatients.removeWhere((element) => !filterTriageCategory.contains(element.triageCategory));
+    filterdPatients.removeWhere((element) => !filterTriageCategory.contains(element.triageCategory));
    return filterdPatients;
     
   }

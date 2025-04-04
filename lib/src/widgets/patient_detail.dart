@@ -60,14 +60,41 @@ class PatientDetail extends StatefulWidget{
           )
         ,
         SizedBox(height: fontsize,),
-        Row(
-          children: [
-            Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize/2, backgroundColor: widget.patient!.triageCategory.getColor()),),
-            SizedBox(width: fontsize,),
+    
+            // SizedBox(
+            //   height: fontsize*2,
+            //   width: MediaQuery.of(context).size.width/8,
+            //   child: 
+              // Text(widget.patient!.triageCategory.name),),
+             DropdownButtonFormField(
+                        value: widget.patient!.triageCategory,
+                        items: [
+                         ...TriageCategory.values.map((category) {
+                            return DropdownMenuItem(
+                              value: category,
+                              child: Text(
+                                category.name, 
+                                style: TextStyle(
+                                   backgroundColor: category.getColor(),
+                                  fontSize: fontsize
+                                ),
+                              ),
+                              );
+                            })],
+                          onChanged: (value) {
+                            widget.patient!.triageCategory = (value!);
+                           Provider.of<PatientListModel>(context, listen: false).change(widget.patient!);
+                           Provider.of<TreatmentStationList>(context, listen:false).notify();
+
+                        },
+                      // ),
+                      ),
+            // Text(widget.patient!.triageCategory.name, style: TextStyle(fontSize: fontsize/2, backgroundColor: widget.patient!.triageCategory.getColor()),),
+        
             Text( '${AppLocalizations.of(context)!.arrivedAt}: ${formatedTime(widget.patient!.protocls.last.createdAt)}', style: TextStyle(fontSize: fontsize),),
          
-          ],  
-            ),
+       
+          
            SizedBox(height: fontsize,),
           Row(children: [
             Column(

@@ -22,17 +22,16 @@ class TreatmentStationList extends ChangeNotifier {
     
     notifyListeners();
   }
-
-
-
    loadTreatmentStations() async {
     _treatmentStations = await TreatmentStationRepository.loadTreatmentStations();
     notifyListeners();
   }
   void removePatientFromTreatmentStation(Patient patient) {
-    _treatmentStations.forEach((treatmentStation) {
-      treatmentStations.firstWhere((ts) => ts.id == patient.treatmentStationId).patient = null;
-    });
+    treatmentStations.firstWhere((ts) => ts.id == patient.treatmentStationId).patient = null;
+    notifyListeners();
+  }
+
+  void notify(){
     notifyListeners();
   }
   void setShowPatient(Patient patient) {

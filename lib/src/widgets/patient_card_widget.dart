@@ -68,9 +68,9 @@ class PatientCard extends StatelessWidget {
                   ),Icon(patient.gender.icon, color: Colors.black,),
                   SizedBox(height: 4.0),
                   Text(
-                    patient.protocls.last.mainDiagnose?.title ?? " ",
+                    patient.protocls.last.mainDiagnose?.code ?? " ",
                     style: TextStyle(
-                      fontSize: 14.0,
+                      fontSize: 10.0,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey[800],
                     ),

@@ -28,8 +28,8 @@ class PatientInputController with ChangeNotifier {
       gender: gender,
       triageCategory: triageCategory,
     );
-    // Protocol protocol = Protocol(patientId: patient.id, createdAt: DateTime.now());
-    // patient.protocls.add(protocol);
+    Protocol protocol = Protocol(patientId: patient.id, createdAt: DateTime.now());
+    patient.protocls.add(protocol);
     return patient;
   }
 

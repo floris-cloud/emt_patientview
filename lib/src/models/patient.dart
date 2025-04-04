@@ -74,6 +74,7 @@ class Patient extends Person {
   }
   discharge(){
     active = false;
+    treatmentStationId = null;
     protocls.last.addContact("discharged");
   }
 

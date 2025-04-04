@@ -63,6 +63,15 @@ class AnamneseInputUserJourneyState extends State<AnamneseInputUserJourney> {
                   }
                   return null;
                 },
+                onTapOutside: (_) {
+                  print("save");
+                  _saveNotes();
+                },
+                onSaved:  (_) {
+                  print("save1");
+                  _saveNotes();
+                },
+
               ),
               SizedBox(height: 8),
               ElevatedButton(
