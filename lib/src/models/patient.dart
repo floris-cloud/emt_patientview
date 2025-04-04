@@ -62,8 +62,9 @@ class Patient extends Person {
   }
 
 
-  set patTriageCategory(TriageCategory triageCategory) {
-    triageCategory = triageCategory;
+    setTriageCategory(TriageCategory category) {
+    protocls.last.addContact(category.name);
+    triageCategory = category;
   }
 
   set patTreatmentStationId(int? id) {

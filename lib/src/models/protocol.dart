@@ -81,7 +81,6 @@ class Protocol {
   }
   void sendProtocol() {
     ProtocolRepository.saveProtocol(this);
-    // send protocol to server
   }
 
   static List<Protocol>  protocolListfromMap(List<dynamic> list) {

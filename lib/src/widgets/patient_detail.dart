@@ -76,13 +76,13 @@ class PatientDetail extends StatefulWidget{
                                 category.name, 
                                 style: TextStyle(
                                    backgroundColor: category.getColor(),
-                                  fontSize: fontsize
+                                  fontSize: fontsize *0.75,
                                 ),
                               ),
                               );
                             })],
                           onChanged: (value) {
-                            widget.patient!.triageCategory = (value!);
+                            widget.patient!.setTriageCategory(value!);
                            Provider.of<PatientListModel>(context, listen: false).change(widget.patient!);
                            Provider.of<TreatmentStationList>(context, listen:false).notify();
 
